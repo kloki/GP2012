@@ -11,9 +11,7 @@ function love.load()
    water=love.graphics.newImage("sprites/water.gif")
    world=createworld()
 
-
-
-
+   speed = 200
    xplane=300
    yplane=300
    width=plane:getWidth()
