@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 require('generateworld')
+=======
+require('movementHandler')
+
+function love.load()
+   love.graphics.setBackgroundColor(255,255,255)
+>>>>>>> 03e4bde7f3b883437d9242d51acdc11b99eb9fa7
 
 function love.load()
    plane=love.graphics.newImage("sprites/planesmall.gif")
@@ -24,6 +31,7 @@ function love.draw()
 end
 
 function love.update(dt)
+<<<<<<< HEAD
 
    if love.keyboard.isDown("up") then
       yplane = yplane - 100*dt
@@ -39,6 +47,9 @@ function love.update(dt)
       headingplane=math.rad(270)
    end
  
+=======
+   movementHandler(dt)
+>>>>>>> 03e4bde7f3b883437d9242d51acdc11b99eb9fa7
 end
 
 
