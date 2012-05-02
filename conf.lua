@@ -1,11 +1,11 @@
 function love.conf(t)
-    t.title = "Koens kankervette shit"        -- The title of the window the game is in (string)
-    t.author = "Koen"        -- The author of the game (string)
+    t.title = "procZELDA"        -- The title of the window the game is in (string)
+    t.author = "kriepy, tobyhijzen kloki"        -- The author of the game (string)
     t.identity = nil            -- The name of the save directory (string)
     t.version = "0.8.0"         -- The LÖVE version this game was made for (string)
     t.console = false           -- Attach a console (boolean, Windows only)
     t.release = false           -- Enable release mode (boolean)
-    t.screen.width = 800        -- The window width (number)
+    t.screen.width = 800        -- The window width (number) Dont change the settings of the screen size
     t.screen.height = 640       -- The window height (number)
     t.screen.fullscreen = false -- Enable fullscreen (boolean)
     t.screen.vsync = true       -- Enable vertical sync (boolean)
@@ -21,3 +21,8 @@ function love.conf(t)
     t.modules.sound = true      -- Enable the sound module (boolean)
     t.modules.physics = true    -- Enable the physics module (boolean)
 end
+
+
+
+
+
