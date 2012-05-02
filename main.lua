@@ -14,23 +14,7 @@ function love.draw()
 end
 
 function love.update(dt)
-   if love.keyboard.isDown("up") and love.keyboard.isDown("left")  then
-      yplane = yplane - 71.1*dt
-      xplane = xplane - 71.1*dt
-      headingplane=math.rad(315)
-   elseif love.keyboard.isDown("up") and love.keyboard.isDown("right")  then
-      yplane = yplane - 71.1*dt
-      xplane = xplane + 71.1*dt
-      headingplane=math.rad(45)
-   elseif love.keyboard.isDown("down") and love.keyboard.isDown("left")  then
-      yplane = yplane + 71.1*dt
-      xplane = xplane - 71.1*dt
-      headingplane=math.rad(225)
-   elseif love.keyboard.isDown("down") and love.keyboard.isDown("right")  then
-      yplane = yplane + 71.1*dt
-      xplane = xplane + 71.1*dt
-      headingplane=math.rad(135)
-   elseif love.keyboard.isDown("up") then
+   if love.keyboard.isDown("up") then
       yplane = yplane - 100*dt
       headingplane=0
    elseif love.keyboard.isDown("down") then
