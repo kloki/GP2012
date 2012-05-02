@@ -14,9 +14,7 @@ function love.load()
    loadtiles()
    world=createworld()
 
-
-
-
+   speed = 200
    xplane=300
    yplane=300
    width=plane:getWidth()
