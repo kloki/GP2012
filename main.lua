@@ -1,11 +1,13 @@
 require('generateworld')
 require('movementHandler')
+require('SpriteAnima')
 
 function love.load()
    plane=love.graphics.newImage("sprites/planesmall.gif")
  
    --setup world
    loadtiles()
+    loadSprite()
    world=createworld()
 
    speed = 200
