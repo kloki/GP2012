@@ -44,10 +44,7 @@ function love.draw()
 end
 
 function love.update(dt)
-<<<<<<< HEAD
-=======
    updateSprite(dt)
->>>>>>> 4ebc52b5865e7d50e6f9b50c34fbe1c4013cfcf3
    movementHandler(dt)
 end
 
