@@ -1,15 +1,15 @@
 function loadtiles()
    --for i=0,9
    -- grass[1] = love.graphics.newImage("tiles.png")
-   grass = {}
+   images = {}
    for i=0,9 do
-      grass[i] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
+      images[i] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
    end
-   mud=love.graphics.newImage("sprites/mud.gif")
-   leaves=love.graphics.newImage("sprites/leaves.gif")
-   water=love.graphics.newImage("sprites/water.gif")
-   wall=love.graphics.newImage("sprites/wall.gif")
-
+   images[10]=love.graphics.newImage("sprites/wall.gif")
+   images[11]=love.graphics.newImage("tiles/bushes/bush.png")
+   images[12]=love.graphics.newImage("tiles/bushes/redberrybush.png")
+   images[13]=love.graphics.newImage("tiles/bushes/purpleberrybush.png")
+   images[14]=love.graphics.newImage("tiles/bushes/yellowberrybush.png")
 end
 
 
@@ -30,15 +30,19 @@ function createworld()
    for i=1,verticaltiles do
       world[i]={}
       for n=1,horizontaltiles do
-	 world[i][n]=1
+	 if math.random()<0.86 then
+	    world[i][n]=1
+	 else
+	    world[i][n]=math.random(0,9)
+	 end
 	 if i==1 or i ==verticaltiles or n==1 or n==horizontaltiles then
-	    world[i][n]=4 --wall around world
+	    world[i][n]=10 --wall around world
 	 end
       end
    end
    --add forrest
    for i=0,math.random(0,10) do
-      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=2
+      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=math.random(11,14)
    end
 
    --add water
@@ -83,18 +87,8 @@ end
 function drawworld(world1)
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 if world1[i][n]== 1 then
-	    love.graphics.draw(grass[1],(n-1)*tilesize,(i-1)*tilesize)
-	 end
-	 if world1[i][n]== 2 then
-	    love.graphics.draw(leaves,(n-1)*tilesize,(i-1)*tilesize)
-	 end
-	 if world1[i][n]== 3 then
-	    love.graphics.draw(water,(n-1)*tilesize,(i-1)*tilesize)
-	 end
-	 if world1[i][n]== 4 then
-	    love.graphics.draw(wall,(n-1)*tilesize,(i-1)*tilesize)
-	 end
+	 love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
+	 love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)	 
       end
    end   
 end
