@@ -4,9 +4,6 @@ function movementHandler(dt,coor)
    r = love.keyboard.isDown("right")
    l = love.keyboard.isDown("left")
    
-   w_height= love.graphics.getHeight()
-   w_width = love.graphics.getWidth()
-   
    if u then
       if r then
          ysprite = ysprite - d_speed*dt
@@ -33,8 +30,8 @@ function movementHandler(dt,coor)
       xsprite = xsprite - speed*dt
    end
    --prevent walking outside of screen
-   ysprite = math.max(math.min(ysprite,w_height - tilesize - height_sprite/2),height_sprite/2)
-   xsprite = math.max(math.min(xsprite,w_width  - width_sprite/2),width_sprite/2)
+   ysprite = math.max(math.min(ysprite,w_height - 2*tilesize - height_sprite/2),height_sprite/2)
+   xsprite = math.max(math.min(xsprite,w_width  - tilesize - width_sprite/2),width_sprite/2)
 
    --walking through gate
    --needs to use globals instead of being hardcoded

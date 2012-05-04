@@ -16,6 +16,8 @@ function love.load()
    worlds=createworlds()
    currentworld=1
    coor={3,6}
+   w_height= love.graphics.getHeight()
+   w_width = love.graphics.getWidth()
 
    --setup sprites
    loadSprite()
@@ -23,13 +25,14 @@ function love.load()
    spawnEnemy()
 
    --temporary stuff
-   sprite=love.graphics.newImage("sprites/planesmall.gif")  
    speed = 200
+   goron_speed = 30
    d_speed = 140
    xsprite=300
    ysprite=300
-   width_sprite  =sprite:getWidth()
-   height_sprite =sprite:getHeight()
+   --change this to good variables
+   width_sprite = 60
+   height_sprite = 60
    headingplane=0
    move = 'none'
    stop = 'down'
@@ -46,6 +49,7 @@ end
 
 function love.update(dt)
    updateSprite(dt)
+   updateEnemy(dt)
    movementHandler(dt,coor)
 end
 
