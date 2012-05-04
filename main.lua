@@ -15,6 +15,7 @@ function love.load()
    worlds=createworlds()
    overworld=createoverworld()
    currentworld=1
+   coor={3,6}
 
    --setup sprites
    loadSprite()
@@ -43,7 +44,7 @@ end
 
 function love.update(dt)
    updateSprite(dt)
-   movementHandler(dt)
+   movementHandler(dt,coor)
 end
 
 function love.keypressed(k)

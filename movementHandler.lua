@@ -1,4 +1,4 @@
-function movementHandler(dt)
+function movementHandler(dt,coor)
    u = love.keyboard.isDown("up")
    d = love.keyboard.isDown("down")
    r = love.keyboard.isDown("right")
@@ -32,7 +32,36 @@ function movementHandler(dt)
    elseif l then
       xsprite = xsprite - speed*dt
    end
-   
+   --prevent walking outside of screen
    ysprite = math.max(math.min(ysprite,w_height - tilesize - height_sprite/2),height_sprite/2)
    xsprite = math.max(math.min(xsprite,w_width  - width_sprite/2),width_sprite/2)
+
+   --changing world
+   --up
+   if ysprite < 50 and overworld[coor[1]-1][coor[2]]~=0 then
+      currentworld=overworld[coor[1]-1][coor[2]]
+      coor[1]=coor[1]-1
+      ysprite=500
+   end
+   --left
+   if xsprite < 50 and overworld[coor[1]][coor[2]-1]~=0 then
+      currentworld=overworld[coor[1]][coor[2]-1]
+      coor[2]=coor[2]-1
+      xsprite=600
+   end
+   --right
+   if xsprite > 750 and overworld[coor[1]][coor[2]+1]~=0 then
+      currentworld=overworld[coor[1]][coor[2]+1]
+      coor[2]=coor[2]+1
+      xsprite=100
+   end
+   --down
+   if ysprite > 540 and overworld[coor[1]+1][coor[2]]~=0 then
+      currentworld=overworld[coor[1]+1][coor[2]]
+      coor[1]=coor[1]+1
+      ysprite=100
+   end
+
 end
+
+
