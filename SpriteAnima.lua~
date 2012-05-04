@@ -1,0 +1,5 @@
+function drawSprite()
+end
+
+function loadSprite()
+    sheet = love.graphics.newImage("sprites/sprites.png")
