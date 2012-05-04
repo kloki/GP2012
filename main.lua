@@ -1,6 +1,7 @@
 require('generateworld')
 require('movementHandler')
 require('SpriteAnima')
+require('enemy')
 
 function love.load()
 
@@ -17,7 +18,7 @@ function love.load()
 
    --setup sprites
    loadSprite()
-
+   spawnEnemie()
 
 
    --temporary stuff
@@ -40,7 +41,6 @@ function love.draw()
 end
 
 function love.update(dt)
-
    movementHandler(dt)
 end
 
