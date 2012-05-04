@@ -1,6 +1,6 @@
 require('generateworld')
 require('movementHandler')
-require('SpriteAnima')
+require('sprite')
 
 function love.load()
    plane=love.graphics.newImage("sprites/planesmall.gif")
