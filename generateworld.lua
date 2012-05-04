@@ -8,7 +8,7 @@ end
 
 function createworld()
    world = {}
-   for i=1,20 do
+   for i=1,19 do
       world[i]={}
       for n=1,25 do
 	 world[i][n]=math.random(1,3)
@@ -18,7 +18,7 @@ return world
 end
 
 function drawworld(world)
-   for i=1,20 do
+   for i=1,19 do
       for n=1,25 do
 	 if world[i][n]== 1 then
 	    love.graphics.draw(mud,(n-1)*32,(i-1)*32)

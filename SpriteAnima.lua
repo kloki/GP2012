@@ -1,6 +1,6 @@
-require ('AnAl')
+require ('lAnA')
 function loadSprite()
-    sheet = love.graphics.newImage("Graphics/LinkMC2.gif")
+    sheet = love.graphics.newImage("sprites/LinkMC2.gif")
     linkfrontS = love.graphics.newQuad(24,12,20,30,720,2630)
     linkfrontRun = newAnimation(sheet,24,32,0.1,10,56,12)
     
