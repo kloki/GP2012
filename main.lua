@@ -32,6 +32,7 @@ function love.load()
    height_sprite =sprite:getHeight()
    headingplane=0
    move = 'none'
+   stop = 'down'
 end
 
 function love.draw()
@@ -52,6 +53,11 @@ function love.keypressed(k)
    if k == 'q' then
       love.event.push("quit")
    end
+end
+
+function love.keyreleased(k)
+   move = 'none'
+   stop = k
 end
 
 function love.quit()
