@@ -36,7 +36,8 @@ function movementHandler(dt,coor)
    ysprite = math.max(math.min(ysprite,w_height - tilesize - height_sprite/2),height_sprite/2)
    xsprite = math.max(math.min(xsprite,w_width  - width_sprite/2),width_sprite/2)
 
-   --changing world
+   --walking through gate
+   --needs to use globals instead of being hardcoded
    --up
    if ysprite < 50 and overworld[coor[1]-1][coor[2]]~=0 then
       currentworld=overworld[coor[1]-1][coor[2]]
