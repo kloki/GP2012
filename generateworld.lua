@@ -6,7 +6,9 @@ function loadtiles()
 
 end
 
-function createworlds()
+
+--creates an array of worlds
+function createworlds() 
    worlds = {}
    for m=1,15 do
       worlds[m]=createworld()
@@ -15,6 +17,8 @@ function createworlds()
 return gatedworlds
 end
 
+
+--creates a world and adds environment
 function createworld()
    world = {}
    for i=1,verticaltiles do
@@ -22,7 +26,7 @@ function createworld()
       for n=1,horizontaltiles do
 	 world[i][n]=1
 	 if i==1 or i ==verticaltiles or n==1 or n==horizontaltiles then
-	    world[i][n]=4
+	    world[i][n]=4 --wall around world
 	 end
       end
    end
@@ -53,19 +57,22 @@ function createoverworld()
 	 if count==15 then break end
 	 for n=1, sizeoverworld[2]do
 	    if count==15 then break end
+	    --This needs work create nicer more branching worlds
 	    if (overworld[i-1][n]~=0 or overworld[i+1][n]~=0 or overworld[i][n+1]~=0 or overworld[i][n-1]~=0) and overworld[i][n]==0 then
 	       if math.random()>0.1 then 
 		     overworld[i][n]=count
 		     count=count+1
 	       end
 	    end
-
 	 end
       end
       if count==15 then break end
    end
 return overworld
 end
+
+
+
 
 function drawworld(world1)
    for i=1,verticaltiles do
@@ -87,6 +94,7 @@ function drawworld(world1)
 end
 
 function drawmap(overworld)
+   --Needs to change the map that unvisited areas are hidden for the player
    love.graphics.setColor(238,221,130)
    love.graphics.rectangle('fill',0,608,800,tilesize)
    for i=1,sizeoverworld[1] do
@@ -102,7 +110,7 @@ function drawmap(overworld)
       end
    end
 end
-
+--creates gates between worlds, can only be generated after all worlds are generated
 function buildgates(worlds)
    gatedworlds=worlds
    for i=1,sizeoverworld[1] do
