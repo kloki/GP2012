@@ -2,6 +2,7 @@ function loadtiles()
    mud=love.graphics.newImage("sprites/mud.gif")
    leaves=love.graphics.newImage("sprites/leaves.gif")
    water=love.graphics.newImage("sprites/water.gif")
+   wall=love.graphics.newImage("sprites/wall.gif")
 
 end
 
@@ -10,16 +11,28 @@ function createworlds()
    for m=1,15 do
       worlds[m]=createworld()
    end
-return worlds
+   gatedworlds= buildgates(worlds)
+return gatedworlds
 end
+
 function createworld()
    world = {}
    for i=1,verticaltiles do
       world[i]={}
       for n=1,horizontaltiles do
-	 world[i][n]=math.random(1,3)
+	 world[i][n]=1
+	 if i==1 or i ==verticaltiles or n==1 or n==horizontaltiles then
+	    world[i][n]=4
+	 end
       end
-   end  
+   end
+   --add forrest
+   for i=0,math.random(0,10) do
+      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=2
+   end
+
+   --add water
+   
 return world
 end
 
@@ -66,7 +79,9 @@ function drawworld(world1)
 	 if world1[i][n]== 3 then
 	    love.graphics.draw(water,(n-1)*tilesize,(i-1)*tilesize)
 	 end
-
+	 if world1[i][n]== 4 then
+	    love.graphics.draw(wall,(n-1)*tilesize,(i-1)*tilesize)
+	 end
       end
    end   
 end
@@ -86,4 +101,38 @@ function drawmap(overworld)
 	 love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
       end
    end
+end
+
+function buildgates(worlds)
+   gatedworlds=worlds
+   for i=1,sizeoverworld[1] do
+      for n=1,sizeoverworld[2]do
+	 if overworld[i][n]~=0 then
+	    --add north gate
+	    if overworld[i-1][n]~=0 then
+	        worlds[overworld[i][n]][1][12]=1
+		worlds[overworld[i][n]][1][13]=1
+		worlds[overworld[i][n]][1][14]=1
+	    end
+	    --add south gate
+	    if overworld[i+1][n]~=0 then
+	        worlds[overworld[i][n]][19][12]=1
+		worlds[overworld[i][n]][19][13]=1
+		worlds[overworld[i][n]][19][14]=1
+	    end
+	    --add west gate
+	    if overworld[i][n+1]~=0 then
+	        worlds[overworld[i][n]][10][25]=1
+		worlds[overworld[i][n]][11][25]=1
+	    end	    
+	    --add east gate
+	    if overworld[i][n-1]~=0 then
+	        worlds[overworld[i][n]][10][1]=1
+		worlds[overworld[i][n]][11][1]=1
+	    end	
+	 end
+      end
+   end
+
+return gatedworlds
 end
