@@ -26,20 +26,24 @@ function love.load()
    width=plane:getWidth()
    height =plane:getHeight()
    headingplane=0
+   move = 'none'
 end
 
 function love.draw()
-
+    
    drawworld(world)
-   love.graphics.draw(plane,xsprite,ysprite,headingplane,1,1,width/2,height/2)
+   drawSprite()
+
+   --love.graphics.draw(plane,xsprite,ysprite,headingplane,1,1,width/2,height/2)
 end
 
 function love.update(dt)
-
+   updateSprite(dt)
    movementHandler(dt)
 end
 
 function love.keypressed(k)
+   move = k
    if k == 'q' then
       love.event.push("quit")
    end
