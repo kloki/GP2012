@@ -1,4 +1,10 @@
 function loadtiles()
+   --for i=0,9
+   -- grass[1] = love.graphics.newImage("tiles.png")
+   grass = {}
+   for i=0,9 do
+      grass[i] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
+   end
    mud=love.graphics.newImage("sprites/mud.gif")
    leaves=love.graphics.newImage("sprites/leaves.gif")
    water=love.graphics.newImage("sprites/water.gif")
@@ -78,7 +84,7 @@ function drawworld(world1)
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
 	 if world1[i][n]== 1 then
-	    love.graphics.draw(mud,(n-1)*tilesize,(i-1)*tilesize)
+	    love.graphics.draw(grass[1],(n-1)*tilesize,(i-1)*tilesize)
 	 end
 	 if world1[i][n]== 2 then
 	    love.graphics.draw(leaves,(n-1)*tilesize,(i-1)*tilesize)

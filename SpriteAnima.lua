@@ -1,13 +1,14 @@
 require ('lAnA')
 function loadSprite()
-   sheet = love.graphics.newImage("sprites/LinkMC2.gif")
-   linkfrontS = love.graphics.newQuad(24,12,20,30,720,2630)
-   linkleftS = love.graphics.newQuad(24,44,20,30,720,2630)
-   linkbackS = love.graphics.newQuad(25,80,20,30,720,2630)
+
+   sheet = love.graphics.newImage("sprites/LinkMC1.gif")
+   linkfrontS = love.graphics.newQuad(24,12,20,30,720,1024)
+   linkleftS = love.graphics.newQuad(24,44,20,30,720,1024)
+   linkbackS = love.graphics.newQuad(25,80,20,30,720,1024)
    local x = true
    local y = false
    linkleftS:flip(x,y)
-   linkrightS = love.graphics.newQuad(24,44,20,30,720,2630)
+   linkrightS = love.graphics.newQuad(24,44,20,30,720,1024)
     
    linkfrontRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12,false)
    linkrightRun = newAnimation(sheet,27,32,0.1,10,52,44,false)
