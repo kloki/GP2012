@@ -8,8 +8,10 @@ function love.load()
    --setup world
    horizontaltiles=25
    verticaltiles=19
+   sizeoverworld={6,12}
    loadtiles()
    world=createworld()
+   overworld=createoverworld()
    currentworld=0
 
    --setup sprites
@@ -30,6 +32,8 @@ end
 
 function love.draw()
 
+
+   drawmap(overworld)
    drawworld(world)
    love.graphics.draw(plane,xsprite,ysprite,headingplane,1,1,width/2,height/2)
 end
