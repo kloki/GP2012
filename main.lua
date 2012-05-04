@@ -30,21 +30,29 @@ function love.load()
    width_sprite  =sprite:getWidth()
    height_sprite =sprite:getHeight()
    headingplane=0
+   move = 'none'
 end
 
 function love.draw()
 
-
-   drawmap(overworld)
+    
    drawworld(world)
-   love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
+   drawmap(overworld)
+   drawSprite()
+   --love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
+
 end
 
 function love.update(dt)
+<<<<<<< HEAD
+=======
+   updateSprite(dt)
+>>>>>>> 4ebc52b5865e7d50e6f9b50c34fbe1c4013cfcf3
    movementHandler(dt)
 end
 
 function love.keypressed(k)
+   move = k
    if k == 'q' then
       love.event.push("quit")
    end
