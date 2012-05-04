@@ -5,7 +5,13 @@ function loadtiles()
 
 end
 
-
+function createworlds()
+   worlds = {}
+   for m=1,15 do
+      worlds[m]=createworld()
+   end
+return worlds
+end
 function createworld()
    world = {}
    for i=1,verticaltiles do
@@ -48,16 +54,16 @@ function createoverworld()
 return overworld
 end
 
-function drawworld(world)
+function drawworld(world1)
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 if world[i][n]== 1 then
+	 if world1[i][n]== 1 then
 	    love.graphics.draw(mud,(n-1)*tilesize,(i-1)*tilesize)
 	 end
-	 if world[i][n]== 2 then
+	 if world1[i][n]== 2 then
 	    love.graphics.draw(leaves,(n-1)*tilesize,(i-1)*tilesize)
 	 end
-	 if world[i][n]== 3 then
+	 if world1[i][n]== 3 then
 	    love.graphics.draw(water,(n-1)*tilesize,(i-1)*tilesize)
 	 end
 
