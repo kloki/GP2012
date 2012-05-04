@@ -9,7 +9,7 @@ function loadSprite()
     
    linkfrontRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12)
    linksideRun = newAnimation(sheet,27,32,0.1,10,52,44)
-   linkbackRun = newAnimation(sheet,23,32,0.1,10,59.5,12)
+   linkbackRun = newAnimation(sheet,23,32,0.1,10,59.5,76)
     
 
     
