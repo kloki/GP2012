@@ -72,7 +72,6 @@ function newAnimation(image, fw, fh, delay, frames, startx, starty, flip)
             local frame = love.graphics.newQuad(startx+i*fw-fw, starty, fw,fh, imgw,imgh)
             if flip then
                frame:flip(true,false)
-            end
 	    	table.insert(a.frames, frame)
 	    	table.insert(a.delays, delay)
         end

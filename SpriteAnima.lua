@@ -1,15 +1,18 @@
 require ('lAnA')
 function loadSprite()
-   sheet = love.graphics.newImage("sprites/LinkMC.gif")
+   sheet = love.graphics.newImage("sprites/LinkMC2.gif")
    linkfrontS = love.graphics.newQuad(24,12,20,30,720,2630)
    linkleftS = love.graphics.newQuad(24,44,20,30,720,2630)
-   linkbackS = love.graphics.newQuad(24,76,20,30,720,2630)
-   --linkleftS = linksideS:flip(true,false)
+   linkbackS = love.graphics.newQuad(25,80,20,30,720,2630)
+   local x = true
+   local y = false
+   linkleftS:flip(x,y)
    linkrightS = love.graphics.newQuad(24,44,20,30,720,2630)
     
-   linkfrontRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12)
-   linksideRun = newAnimation(sheet,27,32,0.1,10,52,44)
-   linkbackRun = newAnimation(sheet,23,32,0.1,10,59.5,76)
+   linkfrontRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12,false)
+   linkrightRun = newAnimation(sheet,27,32,0.1,10,52,44,false)
+   linkbackRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
+   linkleftRun = newAnimation(sheet,27,32,0.1,10,52,44,true)
     
 
     
@@ -28,13 +31,15 @@ function drawSprite()
          love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
       end
    elseif move == 'right' then
-      linksideRun:draw(xsprite,ysprite)
+      linkrightRun:draw(xsprite,ysprite)
    elseif move == 'down' then
       linkfrontRun:draw(xsprite,ysprite)
    elseif move == 'up' then
       linkbackRun:draw(xsprite,ysprite)
    elseif move == 'left' then
-      linksideRun:draw(xsprite,ysprite)
+      linkleftRun:draw(xsprite,ysprite)
+   else
+      love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
    end   
 end
 
@@ -42,9 +47,9 @@ function updateSprite(dt)
    if move == 'down' then
       linkfrontRun:update(dt)
    elseif move == 'right' then
-      linksideRun:update(dt)
+      linkrightRun:update(dt)
    elseif move == 'left' then
-      linksideRun:update(dt)
+      linkleftRun:update(dt)
    elseif move == 'up' then
       linkbackRun:update(dt)
    end
