@@ -6,10 +6,13 @@ function love.load()
 
  
    --setup world
+   tilesize=32
    horizontaltiles=25
    verticaltiles=19
+   sizeoverworld={6,12}
    loadtiles()
    world=createworld()
+   overworld=createoverworld()
    currentworld=0
 
    --setup sprites
@@ -18,23 +21,25 @@ function love.load()
 
 
    --temporary stuff
-   plane=love.graphics.newImage("sprites/planesmall.gif")  
+   sprite=love.graphics.newImage("sprites/planesmall.gif")  
    speed = 200
    d_speed = 140
    xsprite=300
    ysprite=300
-   width=plane:getWidth()
-   height =plane:getHeight()
+   width_sprite  =sprite:getWidth()
+   height_sprite =sprite:getHeight()
    headingplane=0
    move = 'none'
 end
 
 function love.draw()
+
     
    drawworld(world)
+   drawmap(overworld)
    drawSprite()
+   --love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
 
-   --love.graphics.draw(plane,xsprite,ysprite,headingplane,1,1,width/2,height/2)
 end
 
 function love.update(dt)
