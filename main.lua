@@ -19,8 +19,8 @@ function love.load()
 
    --setup sprites
    loadSprite()
-   spawnEnemie()
-
+   loadEnemySprites()
+   spawnEnemy()
 
    --temporary stuff
    sprite=love.graphics.newImage("sprites/planesmall.gif")  
@@ -39,6 +39,7 @@ function love.draw()
    drawworld(worlds[currentworld])
    drawmap(overworld)
    drawSprite()
+   drawEnemy()
    --love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
 
 end
