@@ -6,6 +6,7 @@ function love.load()
 
  
    --setup world
+   tilesize=32
    horizontaltiles=25
    verticaltiles=19
    sizeoverworld={6,12}
