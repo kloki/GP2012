@@ -1,6 +1,7 @@
 require('generateworld')
 require('movementHandler')
 require('SpriteAnima')
+require('enemy')
 
 function love.load()
 
@@ -11,13 +12,14 @@ function love.load()
    verticaltiles=19
    sizeoverworld={6,12}
    loadtiles()
-   world=createworld()
+   worlds=createworlds()
    overworld=createoverworld()
-   currentworld=0
+   currentworld=1
+   coor={3,6}
 
    --setup sprites
    loadSprite()
-
+   spawnEnemie()
 
 
    --temporary stuff
@@ -33,9 +35,7 @@ function love.load()
 end
 
 function love.draw()
-
-    
-   drawworld(world)
+   drawworld(worlds[currentworld])
    drawmap(overworld)
    drawSprite()
    --love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
@@ -44,7 +44,7 @@ end
 
 function love.update(dt)
    updateSprite(dt)
-   movementHandler(dt)
+   movementHandler(dt,coor)
 end
 
 function love.keypressed(k)

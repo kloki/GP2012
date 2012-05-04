@@ -5,7 +5,13 @@ function loadtiles()
 
 end
 
-
+function createworlds()
+   worlds = {}
+   for m=1,15 do
+      worlds[m]=createworld()
+   end
+return worlds
+end
 function createworld()
    world = {}
    for i=1,verticaltiles do
@@ -28,15 +34,15 @@ function createoverworld()
    --starting point
    overworld[3][6]=1
    --automated generation
-   count = 0
+   count = 2
    while true do
       for i=1,sizeoverworld[1] do
 	 if count==15 then break end
 	 for n=1, sizeoverworld[2]do
 	    if count==15 then break end
-	    if overworld[i-1][n]==1 or overworld[i+1][n]==1 or overworld[i][n+1]==1 or overworld[i][n-1]==1 then
+	    if (overworld[i-1][n]~=0 or overworld[i+1][n]~=0 or overworld[i][n+1]~=0 or overworld[i][n-1]~=0) and overworld[i][n]==0 then
 	       if math.random()>0.1 then 
-		     overworld[i][n]=1
+		     overworld[i][n]=count
 		     count=count+1
 	       end
 	    end
@@ -48,17 +54,17 @@ function createoverworld()
 return overworld
 end
 
-function drawworld(world)
+function drawworld(world1)
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 if world[i][n]== 1 then
-	    love.graphics.draw(mud,(n-1)*32,(i-1)*32)
+	 if world1[i][n]== 1 then
+	    love.graphics.draw(mud,(n-1)*tilesize,(i-1)*tilesize)
 	 end
-	 if world[i][n]== 2 then
-	    love.graphics.draw(leaves,(n-1)*32,(i-1)*32)
+	 if world1[i][n]== 2 then
+	    love.graphics.draw(leaves,(n-1)*tilesize,(i-1)*tilesize)
 	 end
-	 if world[i][n]== 3 then
-	    love.graphics.draw(water,(n-1)*32,(i-1)*32)
+	 if world1[i][n]== 3 then
+	    love.graphics.draw(water,(n-1)*tilesize,(i-1)*tilesize)
 	 end
 
       end
@@ -67,11 +73,13 @@ end
 
 function drawmap(overworld)
    love.graphics.setColor(238,221,130)
-   love.graphics.rectangle('fill',0,608,800,32)
+   love.graphics.rectangle('fill',0,608,800,tilesize)
    for i=1,sizeoverworld[1] do
       for n=1, sizeoverworld[2] do
 	 if overworld[i][n]==0 then
-	    love.graphics.setColor(255,255,255)
+	    love.graphics.setColor(255,255,255)	 
+	 elseif overworld[i][n]==currentworld then 
+	    love.graphics.setColor(255,0,0)
 	 else
 	    love.graphics.setColor(0,0,0)
 	 end
