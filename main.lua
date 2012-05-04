@@ -20,13 +20,13 @@ function love.load()
 
 
    --temporary stuff
-   plane=love.graphics.newImage("sprites/planesmall.gif")  
+   sprite=love.graphics.newImage("sprites/planesmall.gif")  
    speed = 200
    d_speed = 140
    xsprite=300
    ysprite=300
-   width=plane:getWidth()
-   height =plane:getHeight()
+   width=sprite:getWidth()
+   height =sprite:getHeight()
    headingplane=0
 end
 
@@ -35,7 +35,7 @@ function love.draw()
 
    drawmap(overworld)
    drawworld(world)
-   love.graphics.draw(plane,xsprite,ysprite,headingplane,1,1,width/2,height/2)
+   love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width/2,height/2)
 end
 
 function love.update(dt)
