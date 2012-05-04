@@ -12,8 +12,8 @@ function love.load()
    verticaltiles=19
    sizeoverworld={6,12}
    loadtiles()
-   worlds=createworlds()
    overworld=createoverworld()
+   worlds=createworlds()
    currentworld=1
    coor={3,6}
 
