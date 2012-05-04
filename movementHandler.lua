@@ -31,7 +31,7 @@ function movementHandler(dt,coor)
    end
    --prevent walking outside of screen
    ysprite = math.max(math.min(ysprite,w_height - 2*tilesize - height_sprite/2),height_sprite/2)
-   xsprite = math.max(math.min(xsprite,w_width  - tilesize - width_sprite/2),width_sprite/2)
+   xsprite = math.max(math.min(xsprite,w_width  - 0.5*tilesize - width_sprite/2),width_sprite/2)
 
    --walking through gate
    --needs to use globals instead of being hardcoded

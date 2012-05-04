@@ -3,13 +3,13 @@ function loadtiles()
    -- grass[1] = love.graphics.newImage("tiles.png")
    images = {}
    for i=0,9 do
-      images[i] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
+      images[i+1] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
    end
-   images[10]=love.graphics.newImage("sprites/wall.gif")
-   images[11]=love.graphics.newImage("tiles/bushes/bush.png")
-   images[12]=love.graphics.newImage("tiles/bushes/redberrybush.png")
-   images[13]=love.graphics.newImage("tiles/bushes/purpleberrybush.png")
-   images[14]=love.graphics.newImage("tiles/bushes/yellowberrybush.png")
+   images[11]=love.graphics.newImage("sprites/wall.gif")
+   images[12]=love.graphics.newImage("tiles/bushes/bush.png")
+   images[13]=love.graphics.newImage("tiles/bushes/redberrybush.png")
+   images[14]=love.graphics.newImage("tiles/bushes/purpleberrybush.png")
+   images[15]=love.graphics.newImage("tiles/bushes/yellowberrybush.png")
 end
 
 
@@ -31,18 +31,18 @@ function createworld()
       world[i]={}
       for n=1,horizontaltiles do
 	 if math.random()<0.86 then
-	    world[i][n]=1
+	    world[i][n]=math.random(1,3)
 	 else
-	    world[i][n]=math.random(0,9)
+	    world[i][n]=math.random(4,10)
 	 end
 	 if i==1 or i ==verticaltiles or n==1 or n==horizontaltiles then
-	    world[i][n]=10 --wall around world
+	    world[i][n]=11 --wall around world
 	 end
       end
    end
    --add forrest
    for i=0,math.random(0,10) do
-      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=math.random(11,14)
+      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=math.random(12,15)
    end
 
    --add water
