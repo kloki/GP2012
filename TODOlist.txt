@@ -18,7 +18,6 @@ If item has been completed but in the done list.
   
 
 * Map
-  -improve overworld to be more branching
   -implement bigger structures
   -implement going inside houses
   -implement dunguons
@@ -35,3 +34,4 @@ If item has been completed but in the done list.
 
 
 * Done
+  -improve overworld to be more branching

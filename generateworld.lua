@@ -16,7 +16,7 @@ end
 --creates an array of worlds
 function createworlds() 
    worlds = {}
-   for m=1,15 do
+   for m=1,numberofworlds do
       worlds[m]=createworld()
    end
    gatedworlds= buildgates(worlds)
@@ -64,19 +64,25 @@ function createoverworld()
    count = 2
    while true do
       for i=1,sizeoverworld[1] do
-	 if count==15 then break end
+	 if count==numberofworlds then break end
 	 for n=1, sizeoverworld[2]do
-	    if count==15 then break end
-	    --This needs work create nicer more branching worlds
-	    if (overworld[i-1][n]~=0 or overworld[i+1][n]~=0 or overworld[i][n+1]~=0 or overworld[i][n-1]~=0) and overworld[i][n]==0 then
-	       if math.random()>0.1 then 
+	    if count==numberofworlds then break end
+	    if overworld[i][n]==0 then
+	       x=0
+	       if overworld[i-1][n]~=0 then x=x+1 end
+	       if overworld[i+1][n]~=0 then x=x+1 end
+	       if overworld[i][n-1]~=0 then x=x+1 end
+	       if overworld[i][n+1]~=0 then x=x+1 end
+	       if x~=0 then
+		  if math.random()<(0.42/x) then
 		     overworld[i][n]=count
 		     count=count+1
+		  end
 	       end
 	    end
 	 end
       end
-      if count==15 then break end
+      if count==numberofworlds then break end
    end
 return overworld
 end
