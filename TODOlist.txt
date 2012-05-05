@@ -1,0 +1,37 @@
+TODO list for procZELDA.
+
+If item has been completed but in the done list.
+
+* Artwork
+  -create lots of art work, Bigger object(beyond 32*32) like housed are fine.
+  -create an spriteatlas for the tiles just like the sprites.
+
+* Zelda
+  -complete animations
+  -implements attacking. Make a system that shoots projectiles, and have the sword have an extreme small range this way the attacking is one system.
+  -create inventory
+  -create object to interact with
+
+* Enemies
+  -create some sort of spawning system
+  -write simple AIs for them
+  
+
+* Map
+  -improve overworld to be more branching
+  -implement bigger structures
+  -implement going inside houses
+  -implement dunguons
+  -find a solution for the ugly walls
+
+* HUD
+  -these things shoulde be done at the end
+  -show inventory and such
+  -make unvisited parts of the map not show on the minimap
+
+* Procedural stuff
+  -Implement some sort of difficulty function
+  -generate quests
+
+
+* Done
