@@ -1,6 +1,4 @@
 function loadtiles()
-   --for i=0,9
-   -- grass[1] = love.graphics.newImage("tiles.png")
    images = {}
    for i=0,9 do
       images[i+1] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
@@ -10,6 +8,8 @@ function loadtiles()
    images[13]=love.graphics.newImage("tiles/bushes/redberrybush.png")
    images[14]=love.graphics.newImage("tiles/bushes/purpleberrybush.png")
    images[15]=love.graphics.newImage("tiles/bushes/yellowberrybush.png")
+   images[16]=love.graphics.newImage("tiles/cliff/cliff-top.png")
+   images[17]=love.graphics.newImage("tiles/cliff/cliff-base.png")
 end
 
 
@@ -35,9 +35,19 @@ function createworld()
 	 else
 	    world[i][n]=math.random(4,10)
 	 end
-	 if i==1 or i ==verticaltiles or n==1 or n==horizontaltiles then
-	    world[i][n]=11 --wall around world
+	 --create the edges
+	 if i==1 then
+	    if n==1 then world[i][n]=11 --lefttopcorner
+	    elseif n==horizontaltiles then world[i][n]=11 --righttopcorner
+	    else world[i][n]=16 end --top edge
 	 end
+	 if i==verticaltiles then
+	    if n==1 then world[i][n]=11 --leftbottomcorner
+	    elseif n==horizontaltiles then world[i][n]=11 --rightbottomcorner
+	    else world[i][n]=17 end --bottom edge
+	 end
+	 if n==1 then world[i][n]=11 end --left edge
+	 if n==horizontaltiles then world[i][n]=11 end --rightedge
       end
    end
    --add forrest
