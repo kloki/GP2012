@@ -37,6 +37,7 @@ end
 
 
 --creates a world and adds environment
+--world[verticaltiles][horizantaltiles]
 function createworld()
    world = {}
    for i=1,verticaltiles do
@@ -61,8 +62,27 @@ function createworld()
       end
    end
    --add bushes
-   for i=0,math.random(0,10) do
-      world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=math.random(12,15)
+   for i=1,math.random(0,4) do
+      typebush=math.random(12,15)
+      width=math.random(2,5)
+      height=math.random(2,5)
+      typeblob=math.random(0,1)
+      patch=createblob(typeblob,height,width)
+      locationbush={math.random(height+1,horizontaltiles-width-1),math.random(width+1,verticaltiles-height)-1}
+      if typeblob ==0 then
+	 for n=1,height do
+	    for i=1,patch[n]do
+	       world[n+locationbush[2]][i + locationbush[1]-math.floor(i/2)]=typebush
+	    end
+	 end
+      else
+	 for n=1,width do
+	    for i=1,patch[n]do
+	       world[i + locationbush[2]-math.floor(i/2)][n+locationbush[1]]=typebush
+	    end
+	 end
+      end
+
    end
    
    --add water
@@ -194,3 +214,21 @@ return gatedworlds
 end
 
 
+
+--creates of blob for random patches. typeblob 0 is a veritcal  patch typeblob 1 horizantal 
+function createblob(typeblob,height,width)
+   blob={}
+   if typeblob ==0 then
+      for i=1,height do
+	 blob[i]=math.random(1,width)
+      end
+   end
+   if typeblob ==1 then
+      for i=1,width do
+	 blob[i]=math.random(1,height)
+      end
+   end
+return blob
+end
+   
+   
