@@ -5,6 +5,7 @@ If item has been completed but in the done list.
 * Artwork
   -create lots of art work, Bigger object(beyond 32*32) like housed are fine.
   -create an spriteatlas for the tiles just like the sprites.
+  -also create outside edges
 
 * Zelda
   -complete animations
@@ -20,7 +21,8 @@ If item has been completed but in the done list.
   -implement bigger structures
   -implement going inside houses
   -implement dunguons
-  -find a solution for the ugly walls
+  -find a solution for the ugly walls clifss are pretty good
+  -write blob function for nicer looking worlds
 
 * GUI
   -these things shoulde be done at the end
