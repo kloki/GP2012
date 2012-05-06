@@ -10,7 +10,19 @@ function loadtiles()
    images[15]=love.graphics.newImage("tiles/bushes/yellowberrybush.png")
    images[16]=love.graphics.newImage("tiles/cliff/cliff-top.png")
    images[17]=love.graphics.newImage("tiles/cliff/cliff-base.png")
+   images[18]=love.graphics.newImage("tiles/sea/sea1.png")
+   images[19]=love.graphics.newImage("tiles/sea/sea2.png")
+   images[20]=love.graphics.newImage("tiles/sea/sea3.png")
+   images[21]=love.graphics.newImage("tiles/sea/sea-grass-bottom.png")
+   images[22]=love.graphics.newImage("tiles/sea/sea-grass-top.png")
+   images[23]=love.graphics.newImage("tiles/sea/sea-grass-left.png")
+   images[24]=love.graphics.newImage("tiles/sea/sea-grass-right.png")
+   images[25]=love.graphics.newImage("tiles/sea/sea-grass-corner-tl.png")
+   images[26]=love.graphics.newImage("tiles/sea/sea-grass-corner-tr.png")
+   images[27]=love.graphics.newImage("tiles/sea/sea-grass-corner-bl.png")
+   images[28]=love.graphics.newImage("tiles/sea/sea-grass-corner-br.png")
 end
+
 
 
 --creates an array of worlds
@@ -40,22 +52,42 @@ function createworld()
 	    if n==1 then world[i][n]=11 --lefttopcorner
 	    elseif n==horizontaltiles then world[i][n]=11 --righttopcorner
 	    else world[i][n]=16 end --top edge
-	 end
-	 if i==verticaltiles then
+	 elseif i==verticaltiles then
 	    if n==1 then world[i][n]=11 --leftbottomcorner
 	    elseif n==horizontaltiles then world[i][n]=11 --rightbottomcorner
 	    else world[i][n]=17 end --bottom edge
-	 end
-	 if n==1 then world[i][n]=11 end --left edge
-	 if n==horizontaltiles then world[i][n]=11 end --rightedge
+	 elseif n==1 then world[i][n]=11 --left edge
+	 elseif n==horizontaltiles then world[i][n]=11 end --rightedge
       end
    end
-   --add forrest
+   --add bushes
    for i=0,math.random(0,10) do
       world[math.random(2,verticaltiles-2)][math.random(2,horizontaltiles-2)]=math.random(12,15)
    end
-
+   
    --add water
+   if math.random()<0.4 then
+      lx=math.random(3,21)
+      ly=math.random(3,16)
+      rx=math.random(lx+1,23)
+      ry=math.random(ly+1,18)
+      
+      for n=lx,rx do
+	 for i=ly,ry do
+	     if i==ly then
+		if n==lx then world[i][n]=25 --lefttopcorner
+		elseif n==rx then world[i][n]=26 --righttopcorner
+		else world[i][n]=22 end --top edge
+	     elseif i==ry then
+		if n==lx then world[i][n]=27 --leftbottomcorner
+		elseif n==rx then world[i][n]=28 --rightbottomcorner
+		else world[i][n]=21 end --bottom edge
+	     elseif n==lx then world[i][n]=23 --left edge
+	     elseif n==rx then world[i][n]=24 --rightedge
+	     else world[i][n]=math.random(18,20) end
+	 end
+      end
+   end
    
 return world
 end
@@ -160,3 +192,5 @@ function buildgates(worlds)
 
 return gatedworlds
 end
+
+
