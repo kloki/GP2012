@@ -18,7 +18,7 @@ If item has been completed but in the done list.
   -write simple AIs for them
   
 * Map
-  -implement bigger structures
+  -find a solution for overlapping
   -implement going inside houses
   -implement dunguons
   -find a solution for the ugly walls clifss are pretty good
@@ -37,3 +37,4 @@ If item has been completed but in the done list.
 
 * Done
   -improve overworld to be more branching
+  -implement bigger structures
