@@ -21,6 +21,7 @@ function loadtiles()
    images[26]=love.graphics.newImage("tiles/sea/sea-grass-corner-tr.png")
    images[27]=love.graphics.newImage("tiles/sea/sea-grass-corner-bl.png")
    images[28]=love.graphics.newImage("tiles/sea/sea-grass-corner-br.png")
+   images[29]=love.graphics.newImage("tiles/misc/tree.png")
 end
 
 
@@ -84,13 +85,22 @@ function createworld()
       end
 
    end
-   
+   -- add tree
+   for i=1,math.random(0,4) do
+      x=math.random(2,horizontaltiles-2)
+      y=math.random(2,verticaltiles-2)
+      world[y][x]=29
+      world[y][x+1]=-1
+      world[y+1][x+1]=-1
+      world[y+1][x]=-1
+   end
+
    --add water
-   if math.random()<0.4 then
-      lx=math.random(3,21)
-      ly=math.random(3,16)
-      rx=math.random(lx+1,23)
-      ry=math.random(ly+1,18)
+   if math.random()<0.2 then
+      lx=math.random(3,19)
+      ly=math.random(3,14)
+      rx=math.random(lx+4,23)
+      ry=math.random(ly+4,18)
       
       for n=lx,rx do
 	 for i=ly,ry do
@@ -155,8 +165,10 @@ end
 function drawworld(world1)
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
-	 love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)	 
+	 if world1[i][n]~=-1 then
+	    love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
+	    love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)
+	 end
       end
    end   
 end
