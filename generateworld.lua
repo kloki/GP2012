@@ -22,6 +22,15 @@ function loadtiles()
    images[27]=love.graphics.newImage("tiles/sea/sea-grass-corner-bl.png")
    images[28]=love.graphics.newImage("tiles/sea/sea-grass-corner-br.png")
    images[29]=love.graphics.newImage("tiles/misc/tree.png")
+   images[30]=love.graphics.newImage("tiles/edges/trees-bottom.png")
+   images[31]=love.graphics.newImage("tiles/edges/trees-top.png")
+   images[32]=love.graphics.newImage("tiles/edges/trees-left.png")
+   images[33]=love.graphics.newImage("tiles/edges/trees-right.png")
+   images[34]=love.graphics.newImage("tiles/edges/trees-bottom-gate.png")
+   images[35]=love.graphics.newImage("tiles/edges/trees-top-gate.png")
+   images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
+   images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
+
 end
 
 
@@ -50,16 +59,7 @@ function createworld()
 	    world[i][n]=math.random(4,10)
 	 end
 	 --create the edges
-	 if i==1 then
-	    if n==1 then world[i][n]=11 --lefttopcorner
-	    elseif n==horizontaltiles then world[i][n]=11 --righttopcorner
-	    else world[i][n]=16 end --top edge
-	 elseif i==verticaltiles then
-	    if n==1 then world[i][n]=11 --leftbottomcorner
-	    elseif n==horizontaltiles then world[i][n]=11 --rightbottomcorner
-	    else world[i][n]=17 end --bottom edge
-	 elseif n==1 then world[i][n]=11 --left edge
-	 elseif n==horizontaltiles then world[i][n]=11 end --rightedge
+	 if i==1 or i==verticaltiles or n==1 or n==horizontaltiles then world[i][n]=-1 end
       end
    end
    --add bushes
@@ -163,10 +163,16 @@ end
 
 
 function drawworld(world1)
+   --this is ugly make one big green background
+   for i=1,verticaltiles do
+      for n=1,horizontaltiles do
+	    love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
+      end
+   end
+
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
 	 if world1[i][n]~=-1 then
-	    love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
 	    love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)
 	 end
       end
@@ -198,25 +204,28 @@ function buildgates(worlds)
 	 if overworld[i][n]~=0 then
 	    --add north gate
 	    if overworld[i-1][n]~=0 then
-	        worlds[overworld[i][n]][1][12]=1
-		worlds[overworld[i][n]][1][13]=1
-		worlds[overworld[i][n]][1][14]=1
+	       worlds[overworld[i][n]][1][1]=35
+	    else
+	       worlds[overworld[i][n]][1][1]=31
 	    end
 	    --add south gate
 	    if overworld[i+1][n]~=0 then
-	        worlds[overworld[i][n]][19][12]=1
-		worlds[overworld[i][n]][19][13]=1
-		worlds[overworld[i][n]][19][14]=1
+	       worlds[overworld[i][n]][verticaltiles][1]=34
+	    else
+	       worlds[overworld[i][n]][verticaltiles][1]=30
 	    end
 	    --add west gate
-	    if overworld[i][n+1]~=0 then
-	        worlds[overworld[i][n]][10][25]=1
-		worlds[overworld[i][n]][11][25]=1
+	    if overworld[i][n-1]~=0 then
+	       worlds[overworld[i][n]][2][1]=36
+	    else
+	       worlds[overworld[i][n]][2][1]=32
 	    end	    
 	    --add east gate
-	    if overworld[i][n-1]~=0 then
-	        worlds[overworld[i][n]][10][1]=1
-		worlds[overworld[i][n]][11][1]=1
+	    if overworld[i][n+1]~=0 then
+	       worlds[overworld[i][n]][2][horizontaltiles]=37
+	    else
+	       worlds[overworld[i][n]][2][horizontaltiles]=33
+
 	    end	
 	 end
       end
