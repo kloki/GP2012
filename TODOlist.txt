@@ -22,7 +22,7 @@ If item has been completed but in the done list.
   -implement going inside houses
   -implement dunguons
   -find a solution for the ugly walls clifss are pretty good
-  -write blob function for nicer looking worlds
+  -write a better blob function for nicer looking worlds
 
 * GUI
   -these things shoulde be done at the end
