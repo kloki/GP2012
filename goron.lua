@@ -6,6 +6,7 @@ Goron.__index = Goron
 function Goron.create()
    local gor = {}             -- our new object
    setmetatable(gor,Goron)  -- make Account handle lookup
+   --TODO handle possibility off gorons spawning at the same place
    gor.x_loc = tilesize + math.random() * (love.graphics.getWidth()  - 2*tilesize)
    gor.y_loc = tilesize + math.random() * (love.graphics.getHeight() - 4*tilesize)
    if math.random() > 0.5 then
@@ -17,6 +18,7 @@ function Goron.create()
    --TODO move this to out so not every goron has to load this stuff
    function gor:loadSprites()
       w_goron = 24
+      h_goron = 30
       goron_sheet = love.graphics.newImage("sprites/goron.png")
       gor.goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
        
@@ -47,6 +49,18 @@ function Goron.create()
          if gor.x_loc < tilesize + w_goron then
             gor.facing = 'right'
          end
+      end
+   end
+   
+   function gor:getPosition()
+      return gor.x_loc, gor.y_loc, w_goron, h_goron
+   end
+   
+   function gor:collision()
+      if gor.facing == 'right' then
+         gor.facing = 'left'
+      elseif gor.facing == 'left' then
+         gor.facing = 'right'
       end
    end
    

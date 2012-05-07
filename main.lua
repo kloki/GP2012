@@ -2,10 +2,10 @@ require('generateworld')
 require('movementHandler')
 require('SpriteAnima')
 require('goron')
+require('collision_detection')
 
 function love.load()
 
- 
    --setup world
    tilesize=32
    horizontaltiles=25
@@ -23,18 +23,13 @@ function love.load()
    --setup sprites
    loadSprite()
    gorons = {}
-   --spawnGoron(30)
-   --spawnGoron(30)
-   table.insert(gorons, Goron.create())
-   table.insert(gorons, Goron.create())
-   table.insert(gorons, Goron.create())
-   table.insert(gorons, Goron.create())
+   table.insert(gorons, Goron.create(100,100))
+   table.insert(gorons, Goron.create(200,100))
+   table.insert(gorons, Goron.create(300,100))
+   table.insert(gorons, Goron.create(400,100))
    for k,v in pairs(gorons) do
       v:loadSprites()
    end
-   --goron2 = Goron.create()
-   --goron:loadSprites()
-   --goron2:loadSprites()
 
    --temporary stuff
    speed = 200
@@ -54,16 +49,10 @@ function love.draw()
    drawworld(worlds[currentworld])
    drawmap(overworld)
    drawSprite()
-   --for k,v in pairs(gorons) do
-   --   love.graphics.drawq(goron_sheet,goronfrontS, v:getX(), v:getY())
-	--end
    for k,v in pairs(gorons) do
       v:draw()
    end
-   --goron2:draw()
-   --drawEnemy()
-   --love.graphics.draw(sprite,xsprite,ysprite,headingplane,1,1,width_sprite/2,height_sprite/2)
-
+   
 end
 
 function love.update(dt)
@@ -71,7 +60,7 @@ function love.update(dt)
    for k,v in pairs(gorons) do
       v:update(dt)
    end
-   --goron2:update(dt)
+   collisionDetection(gorons)
    movementHandler(dt,coor)
 end
 
