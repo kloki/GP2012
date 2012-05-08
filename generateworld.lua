@@ -64,59 +64,16 @@ function createworld()
    end
    --add bushes
    for i=1,math.random(0,4) do
-      typebush=math.random(12,15)
-      width=math.random(2,5)
-      height=math.random(2,5)
-      typeblob=math.random(0,1)
-      patch=createblob(typeblob,height,width)
-      locationbush={math.random(height+1,horizontaltiles-width-1),math.random(width+1,verticaltiles-height)-1}
-      if typeblob ==0 then
-	 for n=1,height do
-	    for i=1,patch[n]do
-	       world[n+locationbush[2]][i + locationbush[1]-math.floor(i/2)]=typebush
-	    end
-	 end
-      else
-	 for n=1,width do
-	    for i=1,patch[n]do
-	       world[i + locationbush[2]-math.floor(i/2)][n+locationbush[1]]=typebush
-	    end
-	 end
-      end
-
+      world=addbushes(world)
    end
    -- add tree
    for i=1,math.random(0,4) do
-      x=math.random(2,horizontaltiles-2)
-      y=math.random(2,verticaltiles-2)
-      world[y][x]=29
-      world[y][x+1]=-1
-      world[y+1][x+1]=-1
-      world[y+1][x]=-1
+      world=addtrees(world)
    end
 
    --add water
    if math.random()<0.2 then
-      lx=math.random(3,19)
-      ly=math.random(3,14)
-      rx=math.random(lx+4,23)
-      ry=math.random(ly+4,18)
-      
-      for n=lx,rx do
-	 for i=ly,ry do
-	     if i==ly then
-		if n==lx then world[i][n]=25 --lefttopcorner
-		elseif n==rx then world[i][n]=26 --righttopcorner
-		else world[i][n]=22 end --top edge
-	     elseif i==ry then
-		if n==lx then world[i][n]=27 --leftbottomcorner
-		elseif n==rx then world[i][n]=28 --rightbottomcorner
-		else world[i][n]=21 end --bottom edge
-	     elseif n==lx then world[i][n]=23 --left edge
-	     elseif n==rx then world[i][n]=24 --rightedge
-	     else world[i][n]=math.random(18,20) end
-	 end
-      end
+      world=addwater(world)
    end
    
 return world
@@ -160,42 +117,6 @@ return overworld
 end
 
 
-
-
-function drawworld(world1)
-   --this is ugly make one big green background
-   for i=1,verticaltiles do
-      for n=1,horizontaltiles do
-	    love.graphics.draw(images[1],(n-1)*tilesize,(i-1)*tilesize)	 
-      end
-   end
-
-   for i=1,verticaltiles do
-      for n=1,horizontaltiles do
-	 if world1[i][n]~=-1 then
-	    love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)
-	 end
-      end
-   end   
-end
-
-function drawmap(overworld)
-   --Needs to change the map that unvisited areas are hidden for the player
-   love.graphics.setColor(238,221,130)
-   love.graphics.rectangle('fill',0,608,800,tilesize)
-   for i=1,sizeoverworld[1] do
-      for n=1, sizeoverworld[2] do
-	 if overworld[i][n]==0 then
-	    love.graphics.setColor(255,255,255)	 
-	 elseif overworld[i][n]==currentworld then 
-	    love.graphics.setColor(255,0,0)
-	 else
-	    love.graphics.setColor(0,0,0)
-	 end
-	 love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
-      end
-   end
-end
 --creates gates between worlds, can only be generated after all worlds are generated
 function buildgates(worlds)
    gatedworlds=worlds
@@ -252,4 +173,58 @@ function createblob(typeblob,height,width)
 return blob
 end
    
-   
+function addbushes(world)
+   typebush=math.random(12,15)
+   width=math.random(2,5)
+   height=math.random(2,5)
+   typeblob=math.random(0,1)
+   patch=createblob(typeblob,height,width)
+   locationbush={math.random(height+1,horizontaltiles-width-1),math.random(width+1,verticaltiles-height)-1}
+   if typeblob ==0 then
+      for n=1,height do
+	 for i=1,patch[n]do
+	    world[n+locationbush[2]][i + locationbush[1]-math.floor(i/2)]=typebush
+	 end
+      end
+   else
+      for n=1,width do
+	 for i=1,patch[n]do
+	    world[i + locationbush[2]-math.floor(i/2)][n+locationbush[1]]=typebush
+	 end
+      end
+   end
+return world
+end   
+
+function addtrees(world)
+   x=math.random(2,horizontaltiles-2)
+   y=math.random(2,verticaltiles-2)
+   world[y][x]=29
+   world[y][x+1]=-1
+   world[y+1][x+1]=-1
+   world[y+1][x]=-1
+return world
+end
+
+function addwater(world)
+   lx=math.random(3,19)
+   ly=math.random(3,14)
+   rx=math.random(lx+4,23) 
+   ry=math.random(ly+4,18)
+   for n=lx,rx do
+      for i=ly,ry do
+	 if i==ly then
+	    if n==lx then world[i][n]=25 --lefttopcorner
+	    elseif n==rx then world[i][n]=26 --righttopcorner
+	    else world[i][n]=22 end --top edge
+	 elseif i==ry then
+	    if n==lx then world[i][n]=27 --leftbottomcorner
+	    elseif n==rx then world[i][n]=28 --rightbottomcorner
+	    else world[i][n]=21 end --bottom edge
+	 elseif n==lx then world[i][n]=23 --left edge
+	 elseif n==rx then world[i][n]=24 --rightedge
+	 else world[i][n]=math.random(18,20) end
+      end
+   end
+return world
+end
