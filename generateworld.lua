@@ -222,9 +222,9 @@ function buildgates(worlds)
 	    end	    
 	    --add east gate
 	    if overworld[i][n+1]~=0 then
-	       worlds[overworld[i][n]][2][horizontaltiles]=37
+	       worlds[overworld[i][n]][1][horizontaltiles]=37
 	    else
-	       worlds[overworld[i][n]][2][horizontaltiles]=33
+	       worlds[overworld[i][n]][1][horizontaltiles]=33
 
 	    end	
 	 end
