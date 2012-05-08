@@ -3,7 +3,7 @@ require('movementHandler')
 require('SpriteAnima')
 require('goron')
 require('collision_detection')
-
+require('drawing')
 function love.load()
 
    --setup world
