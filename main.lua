@@ -68,6 +68,7 @@ function love.keypressed(k)
    move = k
    if k == 'q' then
       love.event.push("quit")
+      love.event.push("q")
    end
 end
 
