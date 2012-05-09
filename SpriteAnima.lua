@@ -98,30 +98,10 @@ function updateSprite(dt)
       heading = 'down'
    end
    if u and d then
-      if heading == 'up' then
-         linkupRun:update(dt)
-         sprite = 'moveup'
-      elseif heading == 'down' then
-         linkdownRun:update(dt)
-         sprite = 'movedown'
-      else
-         linkdownRun:update(dt)
-         heading = 'down'
-         sprite = 'movedown'
-      end
+      sprite = 'standdown'
    end
    if r and l then
-      if heading == 'left' then
-         linkleftRun:update(dt)
-         sprite = 'moveleft'
-      elseif heading == 'right' then
-         linkrightRun:update(dt)
-         sprite = 'moveright'
-      else
-         linkrightRun:update(dt)
-         heading = 'right'
-         sprite = 'moveright'
-      end
+      sprite = 'standdown'
    end
    if s then
       if heading == 'down' then
