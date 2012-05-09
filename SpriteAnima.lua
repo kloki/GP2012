@@ -1,57 +1,159 @@
 require ('lAnA')
 function loadSprite()
+   sheet = love.graphics.newImage("sprites/LinkMC2.gif")
 
-   sheet = love.graphics.newImage("sprites/LinkMC1.gif")
-   linkfrontS = love.graphics.newQuad(24,12,20,30,720,1024)
-   linkleftS = love.graphics.newQuad(24,44,20,30,720,1024)
-   linkbackS = love.graphics.newQuad(25,80,20,30,720,1024)
-   local x = true
-   local y = false
-   linkleftS:flip(x,y)
-   linkrightS = love.graphics.newQuad(24,44,20,30,720,1024)
+   linkdownS = love.graphics.newQuad(24,12,20,30,720,2630)
+   linkleftS = love.graphics.newQuad(24,44,20,30,720,2630)
+   linkupS = love.graphics.newQuad(25,80,20,30,720,2630)
+   linkleftS:flip(true,false)
+   linkrightS = love.graphics.newQuad(24,44,20,30,720,2630)
     
-   linkfrontRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12,false)
+   linkdownRun = newAnimation(sheet,23.5,32,0.1,10,59.5,12,false)
    linkrightRun = newAnimation(sheet,27,32,0.1,10,52,44,false)
-   linkbackRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
+   linkupRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
    linkleftRun = newAnimation(sheet,27,32,0.1,10,52,44,true)
-    
+   
+   linkupSword = newAnimation(sheet,32,38,0.1,8,20,126,false)
+   linkdownSword = newAnimation(sheet,32,38,0.1,8,20,126,false)
+   linkrightSword = newAnimation(sheet,32,38,0.1,8,20,126,false)
+   linkleftSword = newAnimation(sheet,32,38,0.1,8,20,126,false)
+   linkupSword:setMode("once")
+   --
+   sprite = 'standdown'
+   heading = 'down'
 
     
 end
 
 function drawSprite()
    --love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
-   if move == 'none' then
-      if stop == 'up' then
-         love.graphics.drawq(sheet,linkbackS,xsprite,ysprite)
-      elseif stop == 'right' then
-         love.graphics.drawq(sheet,linkrightS,xsprite,ysprite)
-      elseif stop == 'left' then
-         love.graphics.drawq(sheet,linkleftS,xsprite,ysprite)
-      else
-         love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
-      end
-   elseif move == 'right' then
+   if sprite == 'moveup' then
+      linkupRun:draw(xsprite,ysprite)
+   elseif sprite == 'movedown' then
+      linkdownRun:draw(xsprite,ysprite)
+   elseif sprite == 'moveright' then
       linkrightRun:draw(xsprite,ysprite)
-   elseif move == 'down' then
-      linkfrontRun:draw(xsprite,ysprite)
-   elseif move == 'up' then
-      linkbackRun:draw(xsprite,ysprite)
-   elseif move == 'left' then
+   elseif sprite == 'moveleft' then
       linkleftRun:draw(xsprite,ysprite)
-   else
-      love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
-   end   
+
+   elseif sprite == 'swordup' then
+      linkupSword:draw(xsprite,ysprite)
+      linkupSword:play()
+   elseif sprite == 'sworddown' then
+      linkdownSword:draw(xsprite,ysprite)
+   elseif sprite == 'swordright' then
+      linkrightSword:draw(xsprite,ysprite)
+   elseif sprite == 'swordleft' then
+      linkleftSword:draw(xsprite,ysprite)
+
+   elseif sprite == 'standup' then
+      love.graphics.drawq(sheet,linkupS,xsprite,ysprite)
+   elseif sprite == 'standright' then
+      love.graphics.drawq(sheet,linkrightS,xsprite,ysprite)
+   elseif sprite == 'standleft' then
+      love.graphics.drawq(sheet,linkleftS,xsprite,ysprite)
+   elseif sprite == 'standdown' then
+      love.graphics.drawq(sheet,linkdownS,xsprite,ysprite)
+   end      
 end
 
 function updateSprite(dt)
-   if move == 'down' then
-      linkfrontRun:update(dt)
-   elseif move == 'right' then
-      linkrightRun:update(dt)
-   elseif move == 'left' then
-      linkleftRun:update(dt)
-   elseif move == 'up' then
-      linkbackRun:update(dt)
+   u = love.keyboard.isDown("up")
+   d = love.keyboard.isDown("down")
+   r = love.keyboard.isDown("right")
+   l = love.keyboard.isDown("left")
+   s = love.keyboard.isDown(" ")
+   b = love.keyboard.isDown("lctrl")
+   -- hier logica
+   --linkupSword:update(dt)]]
+
+   if u then
+      linkupRun:update(dt)
+      sprite = 'moveup'
+      heading = 'up'
    end
+   if d then
+      linkdownRun:update(dt)
+      sprite = 'movedown'
+      heading = 'down'
+   end
+   if r then
+      linkrightRun:update(dt)
+      sprite = 'moveright'
+      heading = 'right'
+   end
+   if l then
+      linkleftRun:update(dt)
+      sprite = 'moveleft'
+      heading = 'left'
+   end
+   if (u and r) or (u and l) then
+      linkupRun:update(dt)
+      sprite = 'moveup'
+      heading = 'up'
+   end
+   if (d and r) or (d and l) then
+      linkdownRun:update(dt)
+      sprite = 'movedown'
+      heading = 'down'
+   end
+   if u and d then
+      if heading == 'up' then
+         linkupRun:update(dt)
+         sprite = 'moveup'
+      elseif heading == 'down' then
+         linkdownRun:update(dt)
+         sprite = 'movedown'
+      else
+         linkdownRun:update(dt)
+         heading = 'down'
+         sprite = 'movedown'
+      end
+   end
+   if r and l then
+      if heading == 'left' then
+         linkleftRun:update(dt)
+         sprite = 'moveleft'
+      elseif heading == 'right' then
+         linkrightRun:update(dt)
+         sprite = 'moveright'
+      else
+         linkrightRun:update(dt)
+         heading = 'right'
+         sprite = 'moveright'
+      end
+   end
+   if s then
+      if heading == 'down' then
+         --linkdownSword:update(dt)
+         sprite = 'sworddown'
+      elseif heading == 'up' then
+         --linkupSword:update(dt)
+         sprite = 'swordup'
+      elseif heading == 'right' then
+         --linkrightSword:update(dt)
+         sprite = 'swordright'
+      elseif heading == 'left' then
+         --linkleftSword:update(dt)
+         sprite = 'swordleft'
+      end
+   end
+
+   if b then
+    
+   end
+
+   if not d and not u and not r and not l and not s and not b then
+      if heading == 'down' then
+         sprite = 'standdown'
+      elseif heading == 'up' then
+         sprite = 'standup'
+      elseif heading == 'right' then
+         sprite = 'standright'
+      elseif heading == 'left' then
+         sprite = 'standleft'
+      end
+   end
+
+
 end
