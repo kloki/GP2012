@@ -158,41 +158,38 @@ end
 
 
 --creates of blob for random patches. typeblob 0 is a veritcal  patch typeblob 1 horizantal 
-function createblob(typeblob,height,width)
-   blob={}
+function createblob(world,typeblob,length,width,x,y,typebush)
    if typeblob ==0 then
-      for i=1,height do
-	 blob[i]=math.random(1,width)
+      for n=0,length-1 do
+	 for i=0,math.random(0,width-1) do
+	    world[n+y][x+i]=typebush
+	 end
+	 for i=0,math.random(0,width-1) do
+	    world[n+y][x-i]=typebush
+	 end	 
+      end
+   else
+      for n=0,length-1 do
+	 for i=0,math.random(0,width-1) do
+	    world[y+i][n+x]=typebush
+	 end
+	 for i=0,math.random(0,width-1) do
+	    world[y-i][n+x]=typebush
+	 end	 
       end
    end
-   if typeblob ==1 then
-      for i=1,width do
-	 blob[i]=math.random(1,height)
-      end
-   end
-return blob
+
+return world
 end
    
 function addbushes(world)
    typebush=math.random(12,15)
    width=math.random(2,5)
-   height=math.random(2,5)
+   length=3
    typeblob=math.random(0,1)
-   patch=createblob(typeblob,height,width)
-   locationbush={math.random(height+1,horizontaltiles-width-1),math.random(width+1,verticaltiles-height)-1}
-   if typeblob ==0 then
-      for n=1,height do
-	 for i=1,patch[n]do
-	    world[n+locationbush[2]][i + locationbush[1]-math.floor(i/2)]=typebush
-	 end
-      end
-   else
-      for n=1,width do
-	 for i=1,patch[n]do
-	    world[i + locationbush[2]-math.floor(i/2)][n+locationbush[1]]=typebush
-	 end
-      end
-   end
+   x=math.random(width+1,horizontaltiles-width-length-1)
+   y=math.random(width+1,verticaltiles-length-width-1)
+   world=createblob(world,math.random(0,1),length,width,x,y,typebush)
 return world
 end   
 
