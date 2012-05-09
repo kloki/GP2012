@@ -1,6 +1,6 @@
 Todo list for procZELDA.
 
-If item has been completed but in the done list.
+If item has been completed put in the done list.
 
 * Artwork
   -create lots of art work, Bigger object(beyond 32*32) like housed are fine.
@@ -8,8 +8,12 @@ If item has been completed but in the done list.
   -also create outside edges
 
 * Zelda
-  -complete animations
-  -implements attacking. Make a system that shoots projectiles, and have the sword have an extreme small range this way the attacking is one system.
+  -implements attacking. Make a system that shoots projectiles, and have the sword have an extreme small range this way the attacking is one system:
+      -implement space for sword
+      -implement enter for supersword
+      -implement ctrl for shooting
+  -destroy objects
+  -destroy enemies
   -create inventory
   -create object to interact with
 
@@ -36,5 +40,6 @@ If item has been completed but in the done list.
 
 
 * Done
+  -complete animations of Zelda walking
   -improve overworld to be more branching
   -implement bigger structures
