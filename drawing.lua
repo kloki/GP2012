@@ -8,7 +8,7 @@ function drawworld(world1)
 
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 if world1[i][n]~=-1 then
+	 if world1[i][n]>-1 then
 	    love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)
 	 end
       end
