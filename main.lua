@@ -21,7 +21,9 @@ function love.load()
    w_height= love.graphics.getHeight()
    w_width = love.graphics.getWidth()
    
-
+   --zelda
+   heart=love.graphics.newImage("sprites/heart.png")
+   health=4
 
    --setup sprites
    loadSprite()
@@ -51,10 +53,12 @@ end
 function love.draw()
    drawworld(worlds[currentworld])
    drawmap(overworld)
+   drawHUD(health)
    drawSprite()
    for k,v in pairs(gorons) do
       v:draw()
    end
+
    
 end
 

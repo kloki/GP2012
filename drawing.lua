@@ -32,3 +32,11 @@ function drawmap(overworld)
       end
    end
 end
+
+function drawHUD(health)
+   x=64
+   for i=1,health do
+     love.graphics.draw(heart,x,610)
+     x=x+17
+   end
+end
