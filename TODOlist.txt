@@ -22,7 +22,6 @@ If item has been completed put in the done list.
   -write simple AIs for them
   
 * Map
-  -make a forbidden list of tiles to overwrite to prevent overlapping scripts
   -implement going inside houses
   -implement dunguons
 
@@ -44,3 +43,4 @@ If item has been completed put in the done list.
   -create outside edges
   -write a better blob function for nicer looking worlds
   -find a solution for the ugly walls clifss are pretty good
+  -make a forbidden list of tiles to overwrite to prevent overlapping sprites
