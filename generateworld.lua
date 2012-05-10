@@ -230,7 +230,8 @@ end
 
 
 function addcliff(world)
-   if math.random(0,1)==1 then
+   numberofcliffs=math.random(0,2)
+   if numberofcliffs==0 or numberofcliffs==2 then
       for i=2,horizontaltiles-1 do
 	 world[8][i]=17
 	 world[9][i]=16
@@ -240,7 +241,8 @@ function addcliff(world)
       world[9][walkway]=1
       world[8][walkway+1]=1
       world[9][walkway+1]=1
-   else
+   end
+   if numberofcliffs==1 or numberofcliffs==2 then
       for i=2,horizontaltiles-1 do
 	 world[13][i]=17
 	 world[14][i]=16
