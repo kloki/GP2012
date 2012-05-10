@@ -35,7 +35,7 @@ function loadtiles()
    images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
 
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,29}
+   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29}
 end
 
 
@@ -66,11 +66,13 @@ function createworld()
 	 if i==1 or i==verticaltiles or n==1 or n==horizontaltiles then world[i][n]=-1 end
       end
    end
-   worldtype=math.random(1,2)
+   worldtype=math.random(1,3)
    if worldtype==1 then
       world=grassworld(world)
    elseif worldtype==2 then
       world=cliffworld(world)
+   elseif worldtype==3 then
+      world=waterworld(world)
    end
 return world
 end
@@ -210,9 +212,9 @@ end
 
 function addwater(world)
    lx=math.random(3,19)
-   ly=math.random(3,14)
+   ly=math.random(3,13)
    rx=math.random(lx+4,23) 
-   ry=math.random(ly+4,18)
+   ry=math.random(ly+4,17)
    for n=lx,rx do
       for i=ly,ry do
 	 if i==ly then
@@ -225,7 +227,7 @@ function addwater(world)
 	    else world[i][n]=21 end --bottom edge
 	 elseif n==lx then world[i][n]=23 --left edge
 	 elseif n==rx then world[i][n]=24 --rightedge
-	 else world[i][n]=math.random(18,20) end
+	 else world[i][n]=math.random(18,19) end
       end
    end
 return world
@@ -268,7 +270,7 @@ function grassworld(world)
       world=addbushes(world,3,math.random(1,4),math.random(12,15))
    end
    --trees
-   for i=1,math.random(1,5) do
+   for i=1,math.random(1,9) do
       world=add64x64(world,29)
    end
 
@@ -283,5 +285,22 @@ function cliffworld(world)
    end
    --for cliff
    world=addcliff(world)
+return world
+end
+
+function waterworld(world)
+   --for small bushes
+   for i=1,math.random(5,15) do
+      world=add32x32(world,38)
+   end
+   
+   --water
+   world=addwater(world)
+
+   --trees
+   for i=1,math.random(1,5) do
+      world=add64x64(world,29)
+   end
+
 return world
 end
