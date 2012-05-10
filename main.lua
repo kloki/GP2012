@@ -4,6 +4,7 @@ require('SpriteAnima')
 require('goron')
 require('collision_detection')
 require('drawing')
+require('util')
 function love.load()
 
    --setup world
@@ -19,6 +20,8 @@ function love.load()
    coor={3,6}
    w_height= love.graphics.getHeight()
    w_width = love.graphics.getWidth()
+   
+
 
    --setup sprites
    loadSprite()

@@ -1,3 +1,5 @@
+require('util')
+
 function loadtiles()
    images = {}
    for i=0,9 do
@@ -31,8 +33,9 @@ function loadtiles()
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
    images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
    images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
-  
 
+   --here the list of tiles which cannot be drawnover
+   forbiddentiles={-1,29}
 end
 
 
@@ -194,8 +197,8 @@ end
 function add64x64(world,tiletype)
    x=math.random(2,horizontaltiles-2)
    y=math.random(2,verticaltiles-2)
-   if world[y][x]==tiletype then
-      world=add64x64(world,tiletype)
+   if inlist(world[y][x],forbiddentiles) or inlist(world[y+1][x],forbiddentiles) or inlist(world[y+1][x+1],forbiddentiles) or inlist(world[y][x+1],forbiddentiles) then
+      world=add64x64(world,tiletype)--if not possible to place tile try again
    else
       world[y][x]=tiletype
       world[y][x+1]=-1
