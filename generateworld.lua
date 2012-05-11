@@ -1,3 +1,5 @@
+require('util')
+
 function loadtiles()
    images = {}
    for i=0,9 do
@@ -30,9 +32,11 @@ function loadtiles()
    images[35]=love.graphics.newImage("tiles/edges/trees-top-gate.png")
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
    images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
+   images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
 
+   --here the list of tiles which cannot be drawnover
+   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29}
 end
-
 
 
 --creates an array of worlds
@@ -62,20 +66,14 @@ function createworld()
 	 if i==1 or i==verticaltiles or n==1 or n==horizontaltiles then world[i][n]=-1 end
       end
    end
-   --add bushes
-   for i=1,math.random(0,4) do
-      world=addbushes(world)
+   worldtype=math.random(1,3)
+   if worldtype==1 then
+      world=grassworld(world)
+   elseif worldtype==2 then
+      world=cliffworld(world)
+   elseif worldtype==3 then
+      world=waterworld(world)
    end
-   -- add tree
-   for i=1,math.random(0,4) do
-      world=addtrees(world)
-   end
-
-   --add water
-   if math.random()<0.2 then
-      world=addwater(world)
-   end
-   
 return world
 end
 
@@ -157,60 +155,66 @@ end
 
 
 
---creates of blob for random patches. typeblob 0 is a veritcal  patch typeblob 1 horizantal 
-function createblob(typeblob,height,width)
-   blob={}
+--creates of blob for random patches. typeblob 0 is a veritcal  patch typeblob 1 horizantal for nice looking round blobs call createblob twice once vertical once horizontal 
+function createblob(world,typeblob,length,width,x,y,typebush)
    if typeblob ==0 then
-      for i=1,height do
-	 blob[i]=math.random(1,width)
-      end
-   end
-   if typeblob ==1 then
-      for i=1,width do
-	 blob[i]=math.random(1,height)
-      end
-   end
-return blob
-end
-   
-function addbushes(world)
-   typebush=math.random(12,15)
-   width=math.random(2,5)
-   height=math.random(2,5)
-   typeblob=math.random(0,1)
-   patch=createblob(typeblob,height,width)
-   locationbush={math.random(height+1,horizontaltiles-width-1),math.random(width+1,verticaltiles-height)-1}
-   if typeblob ==0 then
-      for n=1,height do
-	 for i=1,patch[n]do
-	    world[n+locationbush[2]][i + locationbush[1]-math.floor(i/2)]=typebush
+      for n=0,length-1 do
+	 for i=0,math.random(0,width-1) do
+	    world[n+y][x+i]=typebush
 	 end
+	 for i=0,math.random(0,width-1) do
+	    world[n+y][x-i]=typebush
+	 end	 
       end
    else
-      for n=1,width do
-	 for i=1,patch[n]do
-	    world[i + locationbush[2]-math.floor(i/2)][n+locationbush[1]]=typebush
+      for n=0,length-1 do
+	 for i=0,math.random(0,width-1) do
+	    world[y+i][n+x]=typebush
 	 end
+	 for i=0,math.random(0,width-1) do
+	    world[y-i][n+x]=typebush
+	 end	 
       end
    end
+
+return world
+end
+   
+function addbushes(world,width,length,typebush)
+   x=math.random(width+1,horizontaltiles-width-length-1)
+   y=math.random(width+1,verticaltiles-length-width-1)
+   world=createblob(world,0,length,width,x,y,typebush)
+   world=createblob(world,1,length,width,x,y,typebush)
 return world
 end   
 
-function addtrees(world)
+function add32x32(world,tiletype)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+   world[y][x]=tiletype
+return world
+end
+
+
+function add64x64(world,tiletype)
    x=math.random(2,horizontaltiles-2)
    y=math.random(2,verticaltiles-2)
-   world[y][x]=29
-   world[y][x+1]=-1
-   world[y+1][x+1]=-1
-   world[y+1][x]=-1
+   if inlist(world[y][x],forbiddentiles) or inlist(world[y+1][x],forbiddentiles) or inlist(world[y+1][x+1],forbiddentiles) or inlist(world[y][x+1],forbiddentiles) then
+      world=add64x64(world,tiletype)--if not possible to place tile try again
+   else
+      world[y][x]=tiletype
+      world[y][x+1]=-1
+      world[y+1][x+1]=-1
+      world[y+1][x]=-1
+   end
 return world
 end
 
 function addwater(world)
    lx=math.random(3,19)
-   ly=math.random(3,14)
+   ly=math.random(3,13)
    rx=math.random(lx+4,23) 
-   ry=math.random(ly+4,18)
+   ry=math.random(ly+4,17)
    for n=lx,rx do
       for i=ly,ry do
 	 if i==ly then
@@ -223,8 +227,80 @@ function addwater(world)
 	    else world[i][n]=21 end --bottom edge
 	 elseif n==lx then world[i][n]=23 --left edge
 	 elseif n==rx then world[i][n]=24 --rightedge
-	 else world[i][n]=math.random(18,20) end
+	 else world[i][n]=math.random(18,19) end
       end
    end
+return world
+end
+
+
+function addcliff(world)
+   numberofcliffs=math.random(0,2)
+   if numberofcliffs==0 or numberofcliffs==2 then
+      for i=2,horizontaltiles-1 do
+	 world[8][i]=17
+	 world[9][i]=16
+      end
+      walkway=math.random(5,horizontaltiles-5)
+      world[8][walkway]=1
+      world[9][walkway]=1
+      world[8][walkway+1]=1
+      world[9][walkway+1]=1
+   end
+   if numberofcliffs==1 or numberofcliffs==2 then
+      for i=2,horizontaltiles-1 do
+	 world[13][i]=17
+	 world[14][i]=16
+      end
+      walkway=math.random(5,horizontaltiles-5)
+      world[13][walkway]=1
+      world[14][walkway]=1
+      world[13][walkway+1]=1
+      world[14][walkway+1]=1
+   end
+
+return world
+end
+
+
+
+function grassworld(world)
+   --add bushes
+   for i=1,math.random(1,3) do
+      world=addbushes(world,3,math.random(1,4),math.random(12,15))
+   end
+   --trees
+   for i=1,math.random(1,9) do
+      world=add64x64(world,29)
+   end
+
+return world
+end
+
+function cliffworld(world)
+   
+   --for small bushes
+   for i=1,math.random(5,15) do
+      world=add32x32(world,38)
+   end
+   --for cliff
+   world=addcliff(world)
+return world
+end
+
+function waterworld(world)
+   --for small bushes
+   for i=1,math.random(5,15) do
+      world=add32x32(world,38)
+   end
+   
+   --water
+   world=addwater(world)
+
+   --trees
+   for i=1,math.random(1,5) do
+      world=add64x64(world,29)
+   end
+
 return world
 end

@@ -8,7 +8,7 @@ function drawworld(world1)
 
    for i=1,verticaltiles do
       for n=1,horizontaltiles do
-	 if world1[i][n]~=-1 then
+	 if world1[i][n]>-1 then
 	    love.graphics.draw(images[world1[i][n]],(n-1)*tilesize,(i-1)*tilesize)
 	 end
       end
@@ -30,5 +30,13 @@ function drawmap(overworld)
 	 end
 	 love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
       end
+   end
+end
+
+function drawHUD(health)
+   x=64
+   for i=1,health do
+     love.graphics.draw(heart,x,610)
+     x=x+17
    end
 end

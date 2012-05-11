@@ -9,10 +9,13 @@ function movementHandler(dt,coor)
          ysprite = ysprite - d_speed*dt
          xsprite = xsprite + d_speed*dt
       elseif l then
-         ysprite = ysprite - d_speed*dt
          xsprite = xsprite - d_speed*dt
+         ysprite = ysprite - d_speed*dt
+      elseif d then
+         xsprite = xsprite
+         ysprite = ysprite
       else
-         ysprite = ysprite - speed*dt
+         ysprite = ysprite - d_speed*dt
       end
    elseif d then
       if r then
@@ -21,13 +24,26 @@ function movementHandler(dt,coor)
       elseif l then
          ysprite = ysprite + d_speed*dt
          xsprite = xsprite - d_speed*dt
+      elseif u then
+         xsprite = xsprite
+         ysprite = ysprite
       else
-         ysprite = ysprite + speed*dt
+         ysprite = ysprite + d_speed*dt
       end
    elseif r then
-      xsprite = xsprite + speed*dt
+      if l then
+         xsprite = xsprite
+         ysprite = ysprite
+      else
+         xsprite = xsprite + speed*dt
+      end
    elseif l then
-      xsprite = xsprite - speed*dt
+      if r then
+         xsprite = xsprite
+         ysprite = ysprite
+      else
+         xsprite = xsprite - speed*dt     
+      end
    end
    --prevent walking outside of screen
    ysprite = math.max(math.min(ysprite,w_height - 2*tilesize - height_sprite/2),height_sprite/2)

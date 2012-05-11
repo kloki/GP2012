@@ -5,6 +5,7 @@ require('goron')
 require('drawing')
 HC = require 'hardoncollider'
 require 'collision'
+require('util')
 
 function love.load()
    --initialize library
@@ -29,6 +30,10 @@ function love.load()
    border[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
    border[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
    border[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
+   
+   --zelda
+   heart=love.graphics.newImage("sprites/heart.png")
+   health=4
 
    --setup sprites
    loadSprite()
@@ -61,13 +66,14 @@ end
 function love.draw()
    drawworld(worlds[currentworld])
    drawmap(overworld)
+   drawHUD(health)
    drawSprite()
    for k,v in pairs(gorons) do
       v:draw()
       local x,y,_,_ = v:getPosition()
       love.graphics.print(tostring(v:getID()),x,y)
    end
-   --love.graphics.print(output,100,100)
+
 end
 
 function love.update(dt)
