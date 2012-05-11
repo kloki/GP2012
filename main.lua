@@ -2,10 +2,14 @@ require('generateworld')
 require('movementHandler')
 require('SpriteAnima')
 require('goron')
-require('collision_detection')
 require('drawing')
+HC = require 'HardonCollider'
+require 'collision'
 require('util')
+
 function love.load()
+   --initialize library
+   Collider = HC(100, on_collision, collision_stop)
 
    --setup world
    tilesize=32
@@ -20,21 +24,33 @@ function love.load()
    coor={3,6}
    w_height= love.graphics.getHeight()
    w_width = love.graphics.getWidth()
+   border = {}
+   --TODO these rectangles always collide, solve!
+   border[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
+   border[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
+   border[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
+   border[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
    
    --zelda
    heart=love.graphics.newImage("sprites/heart.png")
    health=4
 
    --setup sprites
-   loadSprite()
    gorons = {}
-   table.insert(gorons, Goron.create(100,100))
-   table.insert(gorons, Goron.create(200,100))
-   table.insert(gorons, Goron.create(300,100))
-   table.insert(gorons, Goron.create(400,100))
+   goron_bb = {}
+   for i=1,5 do
+      table.insert(gorons, Goron.create(i))
+   end
    for k,v in pairs(gorons) do
       v:loadSprites()
+      local x,y,w,h = v:getPosition()
+      goron_bb[v:getID()] = Collider:addRectangle(x,y,w,h)
    end
+
+   -- setup link
+   loadSprite()
+   spressed = false
+   heading = 'down'
 
    --temporary stuff
    speed = 200
@@ -48,6 +64,7 @@ function love.load()
    headingplane=0
    move = 'none'
    stop = 'down'
+   output = 'none'
 end
 
 function love.draw()
@@ -57,22 +74,28 @@ function love.draw()
    drawSprite()
    for k,v in pairs(gorons) do
       v:draw()
+      local x,y,_,_ = v:getPosition()
+      love.graphics.print(tostring(v:getID()),x,y)
    end
 
-   
 end
 
 function love.update(dt)
    updateSprite(dt)
    for k,v in pairs(gorons) do
       v:update(dt)
+      local x,y,_,_ = v:getPosition()
+      goron_bb[v:getID()]:moveTo(x,y)
    end
-   collisionDetection(gorons)
    movementHandler(dt,coor)
+   
+   Collider:update(dt)
 end
 
 function love.keypressed(k)
-   move = k
+   if k==' ' then
+      spressed = true
+   end
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")
@@ -88,4 +111,6 @@ function love.quit()
   print("Thanks for playing. Please play again soon!")
 end
 
-
+function spawnGorons()
+   
+end
