@@ -62,7 +62,7 @@ end
 
 function love.draw()
    drawworld(worlds[currentworld])
-   --drawmap(overworld)
+   drawmap(overworld)
    drawHUD(health)
    drawSprite()
    for k,v in pairs(gorons) do
@@ -89,7 +89,6 @@ function love.update(dt)
    if currentworld ~= oldworld then
       spawnGorons()
    end
-      
    Collider:update(dt)
 end
 
