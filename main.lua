@@ -36,7 +36,6 @@ function love.load()
    health=4
 
    --setup sprites
-   loadSprite()
    gorons = {}
    goron_bb = {}
    for i=1,5 do
@@ -47,6 +46,11 @@ function love.load()
       local x,y,w,h = v:getPosition()
       goron_bb[v:getID()] = Collider:addRectangle(x,y,w,h)
    end
+
+   -- setup link
+   loadSprite()
+   spressed = false
+   heading = 'down'
 
    --temporary stuff
    speed = 200
@@ -89,7 +93,9 @@ function love.update(dt)
 end
 
 function love.keypressed(k)
-   move = k
+   if k==' ' then
+      spressed = true
+   end
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")

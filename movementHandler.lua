@@ -1,49 +1,38 @@
 function movementHandler(dt,coor)
-   u = love.keyboard.isDown("up")
-   d = love.keyboard.isDown("down")
-   r = love.keyboard.isDown("right")
-   l = love.keyboard.isDown("left")
+   if spressed ==  false then
    
-   if u then
-      if r then
-         ysprite = ysprite - d_speed*dt
-         xsprite = xsprite + d_speed*dt
-      elseif l then
-         xsprite = xsprite - d_speed*dt
-         ysprite = ysprite - d_speed*dt
+      u = love.keyboard.isDown("up")
+      d = love.keyboard.isDown("down")
+      r = love.keyboard.isDown("right")
+      l = love.keyboard.isDown("left")
+      if u then
+         if r then
+            ysprite = ysprite - d_speed*dt
+            xsprite = xsprite + d_speed*dt
+         elseif l then
+            ysprite = ysprite - d_speed*dt
+            xsprite = xsprite - d_speed*dt
+         else
+            ysprite = ysprite - speed*dt
+         end
       elseif d then
-         xsprite = xsprite
-         ysprite = ysprite
-      else
-         ysprite = ysprite - d_speed*dt
-      end
-   elseif d then
-      if r then
-         ysprite = ysprite + d_speed*dt
-         xsprite = xsprite + d_speed*dt
-      elseif l then
-         ysprite = ysprite + d_speed*dt
-         xsprite = xsprite - d_speed*dt
-      elseif u then
-         xsprite = xsprite
-         ysprite = ysprite
-      else
-         ysprite = ysprite + d_speed*dt
-      end
-   elseif r then
-      if l then
-         xsprite = xsprite
-         ysprite = ysprite
-      else
+         if r then
+            ysprite = ysprite + d_speed*dt
+            xsprite = xsprite + d_speed*dt
+         elseif l then
+            ysprite = ysprite + d_speed*dt
+            xsprite = xsprite - d_speed*dt
+         else
+            ysprite = ysprite + speed*dt
+         end
+      elseif r then
          xsprite = xsprite + speed*dt
+      elseif l then
+         xsprite = xsprite - speed*dt
       end
-   elseif l then
-      if r then
-         xsprite = xsprite
-         ysprite = ysprite
-      else
-         xsprite = xsprite - speed*dt     
-      end
+      
+      ysprite = math.max(math.min(ysprite,640 - height),0)
+      xsprite = math.max(math.min(xsprite,800 - width),0)
    end
    --prevent walking outside of screen
    ysprite = math.max(math.min(ysprite,w_height - 2*tilesize - height_sprite/2),height_sprite/2)
