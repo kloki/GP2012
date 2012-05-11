@@ -89,7 +89,6 @@ function love.update(dt)
    if currentworld ~= oldworld then
       spawnGorons()
    end
-      
    Collider:update(dt)
 end
 
