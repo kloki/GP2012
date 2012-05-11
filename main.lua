@@ -3,7 +3,7 @@ require('movementHandler')
 require('SpriteAnima')
 require('goron')
 require('drawing')
-HC = require 'hardoncollider'
+HC = require 'HardonCollider'
 require 'collision'
 require('util')
 
@@ -111,4 +111,6 @@ function love.quit()
   print("Thanks for playing. Please play again soon!")
 end
 
-
+function spawnGorons()
+   
+end

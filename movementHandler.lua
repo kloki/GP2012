@@ -31,8 +31,6 @@ function movementHandler(dt,coor)
          xsprite = xsprite - speed*dt
       end
       
-      ysprite = math.max(math.min(ysprite,640 - height),0)
-      xsprite = math.max(math.min(xsprite,800 - width),0)
    end
    --prevent walking outside of screen
    ysprite = math.max(math.min(ysprite,w_height - 2*tilesize - height_sprite/2),height_sprite/2)
