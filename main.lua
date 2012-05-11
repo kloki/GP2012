@@ -89,8 +89,6 @@ function love.update(dt)
    if currentworld ~= oldworld then
       spawnGorons()
    end
-   print(math.random(1,4))
-   print(math.random())
    Collider:update(dt)
 end
 
