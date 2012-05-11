@@ -62,7 +62,7 @@ end
 
 function love.draw()
    drawworld(worlds[currentworld])
-   --drawmap(overworld)
+   drawmap(overworld)
    drawHUD(health)
    drawSprite()
    for k,v in pairs(gorons) do
