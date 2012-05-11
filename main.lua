@@ -39,6 +39,9 @@ function love.load()
    --setup sprites
    goron_bb = {}
    spawnGorons()
+   
+   --add tree bounding boxes,not fully working yet
+   --addTreeBB()
 
    -- setup link
    loadSprite()
@@ -57,7 +60,7 @@ function love.load()
    headingplane=0
    move = 'none'
    stop = 'down'
-   output = 'none'
+   test_output = 'none'
 end
 
 function love.draw()
@@ -71,6 +74,11 @@ function love.draw()
       love.graphics.print(tostring(v:getID()),x,y)
    end
 
+   --for debug draw bounding boxes
+   local i,v
+   for i,v in ipairs(Object) do Object[i]:draw('line') end
+   
+   love.graphics.print(test_output,100,100)
 end
 
 function love.update(dt)
@@ -122,5 +130,18 @@ function spawnGorons()
    end
    for i=1,5 do
       table.insert(gorons, Goron.create(i))
+   end
+end
+
+--add the bounding boxes for the trees
+function addTreeBB()
+   for i=1,verticaltiles do
+      for j=1,horizontaltiles do
+         if worlds[currentworld][i][j] == 29 then
+            test_output = 'found trees'
+            Object[#Object+1] = Collider:addRectangle(j*(tilesize-0.5),i*(tilesize-0.5),64,64)
+            Collider:addToGroup('Object',Object[#Object])
+         end
+      end
    end
 end

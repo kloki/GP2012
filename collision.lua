@@ -9,7 +9,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       local w = getDirection(mtv_x,mtv_y)
       gorons[ind_a]:move(mtv_x*2,mtv_y*2) --why times two?
       gorons[ind_a]:turn(w)
-      output = 'goron + Object'
+      if ind_b > 4 then test_output = 'tree' end
    elseif (Type_a == 'goron' and Type_b == 'goron') then
       local xa,ya,_,_ = gorons[ind_a]:getPosition()
       local xb,yb,_,_ = gorons[ind_b]:getPosition()
@@ -20,7 +20,6 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          gorons[ind_a]:bounce('left')
          gorons[ind_b]:bounce('right')
       end
-      output = 'gorons'
    else
       error('unable to determine type')
    end
@@ -58,19 +57,18 @@ end
 function getType(shape_a,shape_b)
    local Type_a, Type_b
    local ind_a, ind_b
-   for i=1,4 do
-      if shape_a == Object[i] then Type_a = 'Object' end
-      if shape_b == Object[i] then Type_b = 'Object' end
+   local i,v
+   for i,v in ipairs(Object) do
+      if shape_a == Object[i] then Type_a, ind_a = 'Object', i end
+      if shape_b == Object[i] then Type_b, ind_b = 'Object', i end
    end
    for i=1,5 do
       if shape_a == goron_bb[i] then Type_a = 'goron' end
       if shape_b == goron_bb[i] then Type_b = 'goron' end
    end
    
-   if Type_a == 'Object' then ind_a = whichObject(shape_a)
-   elseif Type_a == 'goron' then ind_a = whichGoron(shape_a) end
-   if Type_b == 'Object' then ind_b = whichObject(shape_b)
-   elseif Type_b == 'goron' then ind_b = whichGoron(shape_b) end
+   if Type_a == 'goron' then ind_a = whichGoron(shape_a) end
+   if Type_b == 'goron' then ind_b = whichGoron(shape_b) end
    
    --TODO solve this as it gives problems with collision detection
    --assert(type(ind_a) == "number", "ind_a of type: '" .. Type_a .. "' in function 'getType' must be number or nil")
