@@ -4,14 +4,12 @@ require 'goron'
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	local Type_a, Type_b, ind_a, ind_b = getType(shape_a,shape_b)
    
-   if (Type_a == 'wall' and Type_b == 'wall') then
-      output = 'walls'
-   elseif (Type_a == 'wall' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'wall') then
-      if Type_a == 'wall' then mtv_x,mtv_y, ind_a, ind_b = -mtv_x, -mtv_y, ind_b, ind_a end
+   if (Type_a == 'Object' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'Object') then
+      if Type_a == 'Object' then mtv_x,mtv_y, ind_a, ind_b = -mtv_x, -mtv_y, ind_b, ind_a end
       local w = getDirection(mtv_x,mtv_y)
       gorons[ind_a]:move(mtv_x*2,mtv_y*2) --why times two?
       gorons[ind_a]:turn(w)
-      output = 'goron + wall'
+      output = 'goron + Object'
    elseif (Type_a == 'goron' and Type_b == 'goron') then
       local xa,ya,_,_ = gorons[ind_a]:getPosition()
       local xb,yb,_,_ = gorons[ind_b]:getPosition()
@@ -31,18 +29,14 @@ end
 
 -- this is called when two shapes stop colliding
 function collision_stop(dt, shape_a, shape_b)
-   --local Type_a, Type_b, ind_a, ind_b = getType(shape_a, shape_b)
-   --if (Type_a == 'wall' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'wall') then
-   --   if Type_a == 'wall' then ind_a, ind_b = ind_b, ind_a end
-   --   gorons[ind_a]:turn()
-   --end
+
 end
 
--- this function determines the location of the wall
+-- this function determines the location of the Object
 -- and thus the direction in which can't be moved
-function whichWall(border_shape)
+function whichObject(Object_shape)
    for i = 1,4 do
-      if border_shape == border[i] then
+      if Object_shape == Object[i] then
          return i
       end
    end
@@ -60,30 +54,22 @@ function whichGoron(goron_shape)
    error('could not match shape')
 end
 
-function dirWall(mi)
-   if mi == 1 then return('up')
-   elseif mi == 2 then return('down')
-   elseif mi == 3 then return('left')
-   elseif mi == 4 then return('right')
-   end
-end
-
 -- determine type and index number
 function getType(shape_a,shape_b)
    local Type_a, Type_b
    local ind_a, ind_b
    for i=1,4 do
-      if shape_a == border[i] then Type_a = 'wall' end
-      if shape_b == border[i] then Type_b = 'wall' end
+      if shape_a == Object[i] then Type_a = 'Object' end
+      if shape_b == Object[i] then Type_b = 'Object' end
    end
    for i=1,5 do
       if shape_a == goron_bb[i] then Type_a = 'goron' end
       if shape_b == goron_bb[i] then Type_b = 'goron' end
    end
    
-   if Type_a == 'wall' then ind_a = whichWall(shape_a)
+   if Type_a == 'Object' then ind_a = whichObject(shape_a)
    elseif Type_a == 'goron' then ind_a = whichGoron(shape_a) end
-   if Type_b == 'wall' then ind_b = whichWall(shape_b)
+   if Type_b == 'Object' then ind_b = whichObject(shape_b)
    elseif Type_b == 'goron' then ind_b = whichGoron(shape_b) end
    
    --TODO solve this as it gives problems with collision detection
