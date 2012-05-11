@@ -1,4 +1,4 @@
-require 'hardoncollider'
+require 'HardonCollider'
 require 'goron'
 
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
