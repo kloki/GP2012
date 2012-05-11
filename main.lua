@@ -16,7 +16,7 @@ function love.load()
    horizontaltiles=25
    verticaltiles=19
    sizeoverworld={6,12}
-   numberofworlds=25 --no more than 6*12
+   numberofworlds=40 --no more than 6*12
    loadtiles()
    overworld=createoverworld()
    worlds=createworlds()
@@ -62,7 +62,7 @@ end
 
 function love.draw()
    drawworld(worlds[currentworld])
-   drawmap(overworld)
+   --drawmap(overworld)
    drawHUD(health)
    drawSprite()
    for k,v in pairs(gorons) do

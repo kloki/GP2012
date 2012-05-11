@@ -28,7 +28,7 @@ function drawmap(overworld)
 	 else
 	    love.graphics.setColor(0,0,0)
 	 end
-	 love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
+	 --love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
       end
    end
 end
