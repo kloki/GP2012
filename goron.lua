@@ -10,37 +10,40 @@ function Goron.create(id)
    gor.ID = id
    gor.x = tilesize + math.random() * (love.graphics.getWidth()  - 2*tilesize)
    gor.y = tilesize + math.random() * (love.graphics.getHeight() - 4*tilesize)
+   gor.w = 24
+   gor.h = 30
    if math.random() > 0.5 then
       gor.facing = 'right'
    else
       gor.facing = 'left'
    end      -- initialize object
-   --gor.facing = 'up'
+   goron_bb[id] = Collider:addRectangle(gor.x,gor.y,gor.w,gor.h)
+   
    
    --TODO move this to out so not every goron has to load this stuff
    function gor:loadSprites()
-      w_goron = 24
-      h_goron = 30
       goron_sheet = love.graphics.newImage("sprites/goron.png")
       gor.goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
        
-      gor.goronrightRun = newAnimation(goron_sheet,w_goron,30,0.1,8,92,158,false)
-      gor.goronleftRun = newAnimation(goron_sheet,w_goron,30,0.1,8,92,158,true)
+      gor.goronrightRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,false)
+      gor.goronleftRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,true)
 	   gor.goronupRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
    end
    
+   gor.loadSprites()
+   
    function gor:draw()
       if gor.facing == 'right' then
-         gor.goronrightRun:draw(gor.x,gor.y)
+         gor.goronrightRun:draw(gor.x-0.5*gor.w,gor.y-0.5*gor.h)
       elseif gor.facing == 'left' then
-         gor.goronleftRun:draw(gor.x,gor.y)
+         gor.goronleftRun:draw(gor.x-0.5*gor.w,gor.y-0.5*gor.h)
 	  elseif gor.facing == 'up' then
-	     gor.goronupRun:draw(gor.x,gor.y)
+	     gor.goronupRun:draw(gor.x-0.5*gor.w,gor.y-0.5*gor.h)
       elseif gor.facing == 'down' then
 		 --replace this later with the correct animation
-         love.graphics.drawq(goron_sheet,gor.goronfrontS,gor.x,gor.y)
+         love.graphics.drawq(goron_sheet,gor.goronfrontS,gor.x-0.5*gor.w,gor.y-0.5*gor.h)
 	  else
-		 love.graphics.drawq(goron_sheet,gor.goronfrontS,gor.x,gor.y)
+		 love.graphics.drawq(goron_sheet,gor.goronfrontS,gor.x-0.5*gor.w,gor.y-0.5*gor.h)
       end
    end
    
@@ -62,6 +65,11 @@ function Goron.create(id)
 	   end
    end
    
+   function gor:move(dx,dy)
+      gor.x = gor.x + dx
+      gor.y = gor.y + dy
+   end
+   
    function gor:bounce(other_dir)
       local dir = other_dir
       if     dir == 'right' then gor.facing = 'left'
@@ -80,7 +88,7 @@ function Goron.create(id)
    end
    
    function gor:getPosition()
-      return gor.x, gor.y, w_goron, h_goron
+      return gor.x, gor.y, gor.w, gor.h
    end
    
    function gor:collision()

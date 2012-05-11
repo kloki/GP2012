@@ -7,9 +7,10 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
    if (Type_a == 'wall' and Type_b == 'wall') then
       output = 'walls'
    elseif (Type_a == 'wall' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'wall') then
-      if Type_b == 'wall' then shape_a, shape_b, ind_a, ind_b = shape_b, shape_a, ind_b, ind_a end
-      local w = dirWall(ind_a)
-      gorons[ind_b]:bounce(w)
+      if Type_a == 'wall' then mtv_x,mtv_y, ind_a, ind_b = -mtv_x, -mtv_y, ind_b, ind_a end
+      local w = getDirection(mtv_x,mtv_y)
+      gorons[ind_a]:move(mtv_x*2,mtv_y*2) --why times two?
+      gorons[ind_a]:turn(w)
       output = 'goron + wall'
    elseif (Type_a == 'goron' and Type_b == 'goron') then
       local xa,ya,_,_ = gorons[ind_a]:getPosition()
@@ -30,11 +31,11 @@ end
 
 -- this is called when two shapes stop colliding
 function collision_stop(dt, shape_a, shape_b)
-   local Type_a, Type_b, ind_a, ind_b = getType(shape_a, shape_b)
-   if (Type_a == 'wall' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'wall') then
-      if Type_b == 'wall' then shape_a, shape_b, ind_a, ind_b = shape_b, shape_a, ind_b, ind_a end
-      gorons[ind_b]:turn()
-   end
+   --local Type_a, Type_b, ind_a, ind_b = getType(shape_a, shape_b)
+   --if (Type_a == 'wall' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'wall') then
+   --   if Type_a == 'wall' then ind_a, ind_b = ind_b, ind_a end
+   --   gorons[ind_a]:turn()
+   --end
 end
 
 -- this function determines the location of the wall
@@ -85,8 +86,17 @@ function getType(shape_a,shape_b)
    if Type_b == 'wall' then ind_b = whichWall(shape_b)
    elseif Type_b == 'goron' then ind_b = whichGoron(shape_b) end
    
-   assert(type(ind_a) == "number", "ind_a of type: '" .. Type_a .. "' in function 'getType' must be number or nil")
-   assert(type(ind_b) == "number", "ind_b of type: '" .. Type_b .. "' in function 'getType' must be number or nil")
+   --TODO solve this as it gives problems with collision detection
+   --assert(type(ind_a) == "number", "ind_a of type: '" .. Type_a .. "' in function 'getType' must be number or nil")
+   --assert(type(ind_b) == "number", "ind_b of type: '" .. Type_b .. "' in function 'getType' must be number or nil")
    
    return Type_a,Type_b, ind_a, ind_b
+end
+
+function getDirection(x,y)
+   if x>y then
+      if x>0 then return 'left' else return 'right' end
+   else
+      if y>0 then return 'up' else return 'down' end
+   end
 end

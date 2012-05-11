@@ -30,22 +30,15 @@ function love.load()
    border[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
    border[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
    border[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
+   for i=1,4 do Collider:addToGroup("Objects",border[i]) end   
    
    --zelda
    heart=love.graphics.newImage("sprites/heart.png")
    health=4
 
    --setup sprites
-   gorons = {}
    goron_bb = {}
-   for i=1,5 do
-      table.insert(gorons, Goron.create(i))
-   end
-   for k,v in pairs(gorons) do
-      v:loadSprites()
-      local x,y,w,h = v:getPosition()
-      goron_bb[v:getID()] = Collider:addRectangle(x,y,w,h)
-   end
+   spawnGorons()
 
    -- setup link
    loadSprite()
@@ -54,7 +47,7 @@ function love.load()
 
    --temporary stuff
    speed = 200
-   goron_speed = 30
+   goron_speed = 150
    d_speed = 140
    xsprite=300
    ysprite=300
@@ -82,23 +75,35 @@ end
 
 function love.update(dt)
    updateSprite(dt)
+   --update enemy position
    for k,v in pairs(gorons) do
       v:update(dt)
       local x,y,_,_ = v:getPosition()
       goron_bb[v:getID()]:moveTo(x,y)
    end
-   movementHandler(dt,coor)
+   local oldworld = currentworld
    
+   --update links position
+   movementHandler(dt,coor)
+   --spawn new enemies when changing worlds
+   if currentworld ~= oldworld then
+      spawnGorons()
+   end
+      
    Collider:update(dt)
 end
 
 function love.keypressed(k)
-   if k==' ' then
+   if k == ' ' then
       spressed = true
    end
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")
+   end
+   if k == 'r' then
+      --respawn enemies--
+      spawnGorons()
    end
 end
 
@@ -112,5 +117,11 @@ function love.quit()
 end
 
 function spawnGorons()
-   
+   gorons = {}
+   for i,v in ipairs(goron_bb) do
+      Collider:remove(v)
+   end
+   for i=1,5 do
+      table.insert(gorons, Goron.create(i))
+   end
 end
