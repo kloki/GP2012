@@ -4,13 +4,17 @@ require('SpriteAnima')
 require('goron')
 require('drawing')
 HC = require 'HardonCollider'
+require 'TEsound'
 require 'collision'
 require('util')
 
 function love.load()
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
-
+   
+   --load music
+   TEsound.playLooping("music/windfall-island.mp3")
+   
    --setup world
    tilesize=32
    horizontaltiles=25
@@ -98,6 +102,8 @@ function love.update(dt)
       spawnGorons()
    end
    Collider:update(dt)
+   
+   TEsound.cleanup()
 end
 
 function love.keypressed(k)
