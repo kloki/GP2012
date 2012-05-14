@@ -124,28 +124,28 @@ function buildgates(worlds)
 	    --add north gate
 	    if overworld[i-1][n]~=0 then
 	       worlds[overworld[i][n]][1][1]=35
-          --table.insert(Objects[overworld[i][n]],{336,0,64,32,'North'})
+          table.insert(Objects[overworld[i][n]],{336,0,128,32,'North'})
 	    else
 	       worlds[overworld[i][n]][1][1]=31
 	    end
 	    --add south gate
 	    if overworld[i+1][n]~=0 then
 	       worlds[overworld[i][n]][verticaltiles][1]=34
-          --table.insert(Objects[overworld[i][n]],{336,572,64,32,'South'})
+          table.insert(Objects[overworld[i][n]],{336,572,128,32,'South'})
 	    else
 	       worlds[overworld[i][n]][verticaltiles][1]=30
 	    end
 	    --add west gate
 	    if overworld[i][n-1]~=0 then
 	       worlds[overworld[i][n]][2][1]=36
-          --table.insert(Objects[overworld[i][n]],{0,268,32,64,'West'})
+          table.insert(Objects[overworld[i][n]],{0,268,32,128,'West'})
 	    else
 	       worlds[overworld[i][n]][2][1]=32
 	    end	    
 	    --add east gate
 	    if overworld[i][n+1]~=0 then
 	       worlds[overworld[i][n]][1][horizontaltiles]=37
-          --table.insert(Objects[overworld[i][n]],{768,268,32,64,'East'})
+          table.insert(Objects[overworld[i][n]],{768,268,32,128,'East'})
 	    else
 	       worlds[overworld[i][n]][1][horizontaltiles]=33
 

@@ -20,7 +20,8 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          gorons[ind_a]:bounce('left')
          gorons[ind_b]:bounce('right')
       end
-   elseif Type_a == 'Link' or Type_b == 'Link' then
+   elseif (Type_a == 'Link' and (Type_b == 'Object' or 'goron'))
+       or (Type_b == 'Link' and (Type_a == 'Object' or 'goron')) then
       if Type_a == 'Object' or 'goron' then mtv_x,mtv_y = -mtv_x, -mtv_y end
       if Type_a == 'Object' or Type_b == 'Object' then
          xsprite = xsprite + mtv_x
@@ -33,9 +34,19 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          ysprite = ysprite + mtv_y
          LinkBB:move(mtv_x,mtv_y)
       end
-   else
-      --TODO cannot always determine type, why?
-      --error('unable to determine type')
+   elseif (Type_a == 'Portal' and Type_b == 'Link') or (Type_b == 'Portal' and Type_a == 'Link') then
+      if Type_a == 'Portal' then ind_a, ind_b = ind_b, ind_a end
+      local ix, iy
+      if ind_b == 1 then     ix,iy = 0,-1
+      elseif ind_b == 2 then ix,iy = 1,0
+      elseif ind_b == 3 then ix,iy = 0,1
+      elseif ind_b == 4 then ix,iy = -1,0 end
+      current_world = overworld[coor[2] + iy][coor[1] + ix]
+      local dx,dy = xsprite-ysprite
+      xsprite = 300
+      ysprite = 300
+      LinkBB:move(300-dx,300-dy)
+      test_output = 'link+portal'
    end
 	--if shape_a = border[1] or shape_a = border[2] or shape_a = border[3] or shape_a = border[4] then	
 end
@@ -79,12 +90,13 @@ function getType(shape_a,shape_b)
       if shape_b == Object[i] then Type_b, ind_b = 'Object', i end
    end
    for i=1,#gorons do
-      if shape_a == goron_bb[i] then Type_a = 'goron' end
-      if shape_b == goron_bb[i] then Type_b = 'goron' end
+      if shape_a == goron_bb[i] then Type_a, ind_a = 'goron', i end
+      if shape_b == goron_bb[i] then Type_b, ind_b = 'goron', i end
    end
-   if Type_a == 'goron' then ind_a = whichGoron(shape_a) end
-   if Type_b == 'goron' then ind_b = whichGoron(shape_b) end
-   
+   for i=1,#Portal do
+      if shape_a == Portal[i] then Type_a, ind_a = 'Portal', i end
+      if shape_b == Portal[i] then Type_b, ind_b = 'Portal', i end
+   end
    --TODO solve this as it gives problems with collision detection
    --assert(type(ind_a) == "number", "ind_a of type: '" .. Type_a .. "' in function 'getType' must be number or nil")
    --assert(type(ind_b) == "number", "ind_b of type: '" .. Type_b .. "' in function 'getType' must be number or nil")
