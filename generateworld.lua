@@ -160,23 +160,27 @@ end
 
 
 --creates of blob for random patches. typeblob 0 is a veritcal  patch typeblob 1 horizantal for nice looking round blobs call createblob twice once vertical once horizontal 
-function createblob(world,typeblob,length,width,x,y,typebush)
+function createblob(world,m,typeblob,length,width,x,y,typebush)
    if typeblob ==0 then
       for n=0,length-1 do
 	 for i=0,math.random(0,width-1) do
 	    world[n+y][x+i]=typebush
+	    table.insert(Objects[m],{(x+i-1)*tilesize,(n+y-1)*tilesize,32,32,'Object'})
 	 end
 	 for i=0,math.random(0,width-1) do
 	    world[n+y][x-i]=typebush
+	    table.insert(Objects[m],{(x-i-1)*tilesize,(n+y-1)*tilesize,32,32,'Object'})
 	 end	 
       end
    else
       for n=0,length-1 do
 	 for i=0,math.random(0,width-1) do
 	    world[y+i][n+x]=typebush
+	    table.insert(Objects[m],{(x+n-1)*tilesize,(y+i-1)*tilesize,32,32,'Object'})
 	 end
 	 for i=0,math.random(0,width-1) do
 	    world[y-i][n+x]=typebush
+	    table.insert(Objects[m],{(x+n-1)*tilesize,(y-i-1)*tilesize,32,32,'Object'})
 	 end	 
       end
    end
@@ -184,18 +188,21 @@ function createblob(world,typeblob,length,width,x,y,typebush)
 return world
 end
    
-function addbushes(world,width,length,typebush)
+function addbushes(world,m,width,length,typebush)
    x=math.random(width+1,horizontaltiles-width-length-1)
    y=math.random(width+1,verticaltiles-length-width-1)
-   world=createblob(world,0,length,width,x,y,typebush)
-   world=createblob(world,1,length,width,x,y,typebush)
+   world=createblob(world,m,0,length,width,x,y,typebush)
+   world=createblob(world,m,1,length,width,x,y,typebush)
 return world
 end   
 
-function add32x32(world,tiletype)
+function add32x32(world,m,tiletype)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
    world[y][x]=tiletype
+   if m~=0 then
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
+   end
 return world
 end
 
@@ -216,11 +223,12 @@ function add64x64(world,m,tiletype)
 return world
 end
 
-function addwater(world)
+function addwater(world,m)
    lx=math.random(3,19)
    ly=math.random(3,13)
    rx=math.random(lx+4,23) 
    ry=math.random(ly+4,17)
+   table.insert(Objects[m],{(lx-1)*tilesize,(ly-1)*tilesize,(rx-lx+1)*tilesize,(ry-ly+1)*tilesize,'Object'})
    for n=lx,rx do
       for i=ly,ry do
 	 if i==ly then
@@ -240,7 +248,7 @@ return world
 end
 
 
-function addcliff(world)
+function addcliff(world,m)
    numberofcliffs=math.random(0,2)
    if numberofcliffs==0 or numberofcliffs==2 then
       for i=2,horizontaltiles-1 do
@@ -252,6 +260,8 @@ function addcliff(world)
       world[9][walkway]=1
       world[8][walkway+1]=1
       world[9][walkway+1]=1
+      table.insert(Objects[m],{32,7*tilesize+8,walkway*tilesize-64,15,'Object'})
+      table.insert(Objects[m],{walkway*tilesize+32,7*tilesize+8,800-walkway*tilesize-64,15,'Object'})
    end
    if numberofcliffs==1 or numberofcliffs==2 then
       for i=2,horizontaltiles-1 do
@@ -263,6 +273,8 @@ function addcliff(world)
       world[14][walkway]=1
       world[13][walkway+1]=1
       world[14][walkway+1]=1
+      table.insert(Objects[m],{32,12*tilesize+8,walkway*tilesize-64,15,'Object'})
+      table.insert(Objects[m],{walkway*tilesize+32,12*tilesize+8,800-walkway*tilesize-64,15,'Object'})      
    end
 
 return world
@@ -273,7 +285,7 @@ end
 function grassworld(world,m)
    --add bushes
    for i=1,math.random(1,3) do
-      world=addbushes(world,3,math.random(1,4),math.random(12,15))
+      world=addbushes(world,m,3,math.random(1,4),math.random(12,15))
    end
    --trees
    for i=1,math.random(1,9) do
@@ -287,21 +299,21 @@ function cliffworld(world,m)
    
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,38)
+      world=add32x32(world,0,38)
    end
    --for cliff
-   world=addcliff(world)
+   world=addcliff(world,m)
 return world
 end
 
 function waterworld(world,m)
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,38)
+      world=add32x32(world,0,38)
    end
    
    --water
-   world=addwater(world)
+   world=addwater(world,m)
 
    --trees
    for i=1,math.random(1,5) do
