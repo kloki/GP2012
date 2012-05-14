@@ -9,6 +9,9 @@ require 'collision'
 require('util')
 
 function love.load()
+   --some debug stuff
+   test_output = 'none'
+
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
    
@@ -22,49 +25,50 @@ function love.load()
    sizeoverworld={6,12}
    numberofworlds=40 --no more than 6*12
    loadtiles()
+   Objects={}
+   for i=1,numberofworlds do
+      Objects[i]={}
+   end
    overworld=createoverworld()
    worlds=createworlds()
    currentworld=1
-   coor={3,6}
+   coor={3,6} --y,x
    w_height= love.graphics.getHeight()
    w_width = love.graphics.getWidth()
-   Object = {}
-   --TODO these rectangles always collide, solve!
-   Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
-   Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
-   Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
-   Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
-   for i=1,4 do Collider:addToGroup("Objects",Object[i]) end   
+   addObjectBB()
+   
+      
+
    
    --zelda
    heart=love.graphics.newImage("sprites/heart.png")
    health=4
 
-   --setup sprites
+   --setup enemies
+   number_of_gorons = 5
    goron_bb = {}
+   goron_speed = 50
    spawnGorons()
    
    --add tree bounding boxes,not fully working yet
    --addTreeBB()
 
    -- setup link
-   loadSprite()
-   spressed = false
-   heading = 'down'
-
-   --temporary stuff
    speed = 200
-   goron_speed = 150
    d_speed = 140
    xsprite=300
    ysprite=300
+   loadSprite()
+   spressed = false
+   heading = 'down'
+   addLinkBB()
+   
    --change this to good variables
    width_sprite = 60
    height_sprite = 60
    headingplane=0
    move = 'none'
    stop = 'down'
-   test_output = 'none'
 end
 
 function love.draw()
@@ -81,6 +85,8 @@ function love.draw()
    --for debug draw bounding boxes
    local i,v
    for i,v in ipairs(Object) do Object[i]:draw('line') end
+   for i,v in ipairs(goron_bb) do goron_bb[i]:draw('line') end
+   LinkBB:draw('line')
    
    love.graphics.print(test_output,100,100)
 end
@@ -129,25 +135,21 @@ function love.quit()
   print("Thanks for playing. Please play again soon!")
 end
 
-function spawnGorons()
-   gorons = {}
-   for i,v in ipairs(goron_bb) do
-      Collider:remove(v)
-   end
-   for i=1,5 do
-      table.insert(gorons, Goron.create(i))
-   end
+function addLinkBB()
+   LinkBB = Collider:addRectangle(xsprite,ysprite,24,30)
+   Collider:addToGroup('Link',LinkBB)
 end
 
---add the bounding boxes for the trees
-function addTreeBB()
-   for i=1,verticaltiles do
-      for j=1,horizontaltiles do
-         if worlds[currentworld][i][j] == 29 then
-            test_output = 'found trees'
-            Object[#Object+1] = Collider:addRectangle(j*(tilesize-0.5),i*(tilesize-0.5),64,64)
-            Collider:addToGroup('Object',Object[#Object])
-         end
-      end
+--add the bounding boxes for walls and other objects
+function addObjectBB()
+   Object = {}
+   Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
+   Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
+   Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
+   Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
+   for i=1,4 do Collider:addToGroup("Objects",Object[i]) end
+   for i,v in ipairs(Objects[currentworld]) do
+      Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+      Collider:addToGroup(v[5],Object[#Object])
    end
 end

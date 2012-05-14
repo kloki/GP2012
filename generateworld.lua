@@ -43,7 +43,7 @@ end
 function createworlds() 
    worlds = {}
    for m=1,numberofworlds do
-      worlds[m]=createworld()
+      worlds[m]=createworld(m)
    end
    gatedworlds= buildgates(worlds)
 return gatedworlds
@@ -52,7 +52,7 @@ end
 
 --creates a world and adds environment
 --world[verticaltiles][horizantaltiles]
-function createworld()
+function createworld(m)
    world = {}
    for i=1,verticaltiles do
       world[i]={}
@@ -68,11 +68,11 @@ function createworld()
    end
    worldtype=math.random(1,3)
    if worldtype==1 then
-      world=grassworld(world)
+      world=grassworld(world,m)
    elseif worldtype==2 then
-      world=cliffworld(world)
+      world=cliffworld(world,m)
    elseif worldtype==3 then
-      world=waterworld(world)
+      world=waterworld(world,m)
    end
 return world
 end
@@ -124,24 +124,28 @@ function buildgates(worlds)
 	    --add north gate
 	    if overworld[i-1][n]~=0 then
 	       worlds[overworld[i][n]][1][1]=35
+          --table.insert(Objects[overworld[i][n]],{336,0,64,32,'North'})
 	    else
 	       worlds[overworld[i][n]][1][1]=31
 	    end
 	    --add south gate
 	    if overworld[i+1][n]~=0 then
 	       worlds[overworld[i][n]][verticaltiles][1]=34
+          --table.insert(Objects[overworld[i][n]],{336,572,64,32,'South'})
 	    else
 	       worlds[overworld[i][n]][verticaltiles][1]=30
 	    end
 	    --add west gate
 	    if overworld[i][n-1]~=0 then
 	       worlds[overworld[i][n]][2][1]=36
+          --table.insert(Objects[overworld[i][n]],{0,268,32,64,'West'})
 	    else
 	       worlds[overworld[i][n]][2][1]=32
 	    end	    
 	    --add east gate
 	    if overworld[i][n+1]~=0 then
 	       worlds[overworld[i][n]][1][horizontaltiles]=37
+          --table.insert(Objects[overworld[i][n]],{768,268,32,64,'East'})
 	    else
 	       worlds[overworld[i][n]][1][horizontaltiles]=33
 
@@ -196,16 +200,17 @@ return world
 end
 
 
-function add64x64(world,tiletype)
+function add64x64(world,m,tiletype)
    x=math.random(2,horizontaltiles-2)
    y=math.random(2,verticaltiles-2)
    if inlist(world[y][x],forbiddentiles) or inlist(world[y+1][x],forbiddentiles) or inlist(world[y+1][x+1],forbiddentiles) or inlist(world[y][x+1],forbiddentiles) then
-      world=add64x64(world,tiletype)--if not possible to place tile try again
+      world=add64x64(world,m,tiletype)--if not possible to place tile try again
    else
       world[y][x]=tiletype
       world[y][x+1]=-1
       world[y+1][x+1]=-1
       world[y+1][x]=-1
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,64,'Object'})
    end
     
 return world
@@ -265,20 +270,20 @@ end
 
 
 
-function grassworld(world)
+function grassworld(world,m)
    --add bushes
    for i=1,math.random(1,3) do
       world=addbushes(world,3,math.random(1,4),math.random(12,15))
    end
    --trees
    for i=1,math.random(1,9) do
-      world=add64x64(world,29)
+      world=add64x64(world,m,29)
    end
 
 return world
 end
 
-function cliffworld(world)
+function cliffworld(world,m)
    
    --for small bushes
    for i=1,math.random(5,15) do
@@ -289,7 +294,7 @@ function cliffworld(world)
 return world
 end
 
-function waterworld(world)
+function waterworld(world,m)
    --for small bushes
    for i=1,math.random(5,15) do
       world=add32x32(world,38)
@@ -300,7 +305,7 @@ function waterworld(world)
 
    --trees
    for i=1,math.random(1,5) do
-      world=add64x64(world,29)
+      world=add64x64(world,m,29)
    end
 
 return world

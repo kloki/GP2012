@@ -156,5 +156,4 @@ function updateSprite(dt)
       end
    end
 
-
 end

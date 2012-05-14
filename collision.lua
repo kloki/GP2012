@@ -20,8 +20,22 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          gorons[ind_a]:bounce('left')
          gorons[ind_b]:bounce('right')
       end
+   elseif Type_a == 'Link' or Type_b == 'Link' then
+      if Type_a == 'Object' or 'goron' then mtv_x,mtv_y = -mtv_x, -mtv_y end
+      if Type_a == 'Object' or Type_b == 'Object' then
+         xsprite = xsprite + mtv_x
+         ysprite = ysprite + mtv_y
+         LinkBB:move(mtv_x,mtv_y)
+         test_output = 'link+wall'
+      else
+         test_output = 'link+goron'
+         xsprite = xsprite + mtv_x
+         ysprite = ysprite + mtv_y
+         LinkBB:move(mtv_x,mtv_y)
+      end
    else
-      error('unable to determine type')
+      --TODO cannot always determine type, why?
+      --error('unable to determine type')
    end
 	--if shape_a = border[1] or shape_a = border[2] or shape_a = border[3] or shape_a = border[4] then	
 end
@@ -58,15 +72,16 @@ function getType(shape_a,shape_b)
    local Type_a, Type_b
    local ind_a, ind_b
    local i,v
-   for i,v in ipairs(Object) do
+   if shape_a == LinkBB then Type_a = 'Link' end
+   if shape_b == LinkBB then Type_b = 'Link' end
+   for i=1,#Object do
       if shape_a == Object[i] then Type_a, ind_a = 'Object', i end
       if shape_b == Object[i] then Type_b, ind_b = 'Object', i end
    end
-   for i=1,5 do
+   for i=1,#gorons do
       if shape_a == goron_bb[i] then Type_a = 'goron' end
       if shape_b == goron_bb[i] then Type_b = 'goron' end
    end
-   
    if Type_a == 'goron' then ind_a = whichGoron(shape_a) end
    if Type_b == 'goron' then ind_b = whichGoron(shape_b) end
    
