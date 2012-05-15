@@ -105,11 +105,12 @@ function love.update(dt)
    
    --update links position
    movementHandler(dt,coor)
+   Collider:update(dt)
    --spawn new enemies when changing worlds
    if currentworld ~= oldworld then
       spawnGorons()
+      addObjectBB()
    end
-   Collider:update(dt)
    
    TEsound.cleanup()
 end
@@ -145,6 +146,13 @@ end
 --add the bounding boxes for walls and other objects
 function addObjectBB()
    Object = {}
+   Portal = {}
+   for i,v in ipairs(Object) do
+      Collider:remove(v)
+   end
+   for i,v in ipairs(Portal) do
+      if not type(v) == 'number' then Collider:remove(v) end
+   end
    Portal = {0,0,0,0}
    Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
    Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
