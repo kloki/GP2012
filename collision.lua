@@ -21,14 +21,14 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          gorons[ind_a]:bounce('left')
          gorons[ind_b]:bounce('right')
       end
-   elseif (Type_a == 'Link' and (Type_b == 'Object' or 'goron'))
-       or (Type_b == 'Link' and (Type_a == 'Object' or 'goron')) then
+   elseif (Type_a == 'Link' and (Type_b == 'Object' or Type_b == 'goron'))
+       or (Type_b == 'Link' and (Type_a == 'Object' or Type_a == 'goron')) then
       if Type_a == 'Object' or 'goron' then mtv_x,mtv_y = -mtv_x, -mtv_y end
       if Type_a == 'Object' or Type_b == 'Object' then
          xsprite = xsprite + mtv_x
          ysprite = ysprite + mtv_y
          LinkBB:move(mtv_x,mtv_y)
-         test_output = 'link+wall'
+         --test_output = 'link+wall'
       else
          test_output = 'link+goron'
          xsprite = xsprite + mtv_x
@@ -42,12 +42,14 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       elseif ind_b == 2 then ix,iy = 1,0
       elseif ind_b == 3 then ix,iy = 0,1
       elseif ind_b == 4 then ix,iy = -1,0 end
-      current_world = overworld[coor[2] + iy][coor[1] + ix]
-      local dx,dy = xsprite-ysprite
+      coor[1] = coor[1] + ix
+      coor[2] = coor[2] + iy
+      currentworld = overworld[coor[1] ][coor[2] ]
+      local dx,dy = xsprite,ysprite
       xsprite = 300
       ysprite = 300
       LinkBB:move(300-dx,300-dy)
-      test_output = 'link+portal'
+      --error(tostring(currentworld))
    end
 	--if shape_a = border[1] or shape_a = border[2] or shape_a = border[3] or shape_a = border[4] then	
 end
