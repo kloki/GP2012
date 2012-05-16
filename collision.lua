@@ -10,7 +10,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       local w = getDirection(mtv_x,mtv_y)
       gorons[ind_a]:move(mtv_x*1.2,mtv_y*1.2) --why times two?
       gorons[ind_a]:turn(w)
-      if ind_b > 4 then test_output = 'tree' end
+      --if ind_b > 4 then test_output = 'tree' end
    elseif (Type_a == 'goron' and Type_b == 'goron') then
       local xa,ya,_,_ = gorons[ind_a]:getPosition()
       local xb,yb,_,_ = gorons[ind_b]:getPosition()
@@ -27,9 +27,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       if Type_a == 'Object' or Type_b == 'Object' then
          xsprite,ysprite = xsprite + mtv_x,ysprite + mtv_y
          LinkBB:move(mtv_x,mtv_y)
-         test_output = 'link+wall'
+         --test_output = 'link+wall'
       else
-         test_output = 'link+goron'
+         --test_output = 'link+goron'
          xsprite,ysprite = xsprite + mtv_x,ysprite + mtv_y
          LinkBB:move(mtv_x,mtv_y)
       end
@@ -40,12 +40,13 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       elseif ind_b == 2 then ix,iy = 1,0
       elseif ind_b == 3 then ix,iy = 0,1
       elseif ind_b == 4 then ix,iy = -1,0 end
-      coor = {coor[2] + iy,coor[1] + ix}
-      currentworld = overworld[coor[2] ][coor[1] ]
+      coor = {coor[1] + iy, coor[2] + ix}
+      currentworld = overworld[coor[1] ][coor[2] ]
       local dx,dy = xsprite,ysprite
       xsprite = 300
       ysprite = 300
       LinkBB:move(xsprite-dx,ysprite-dy)
+	  test_output = 'x,y: ' .. tostring(ix) .. ' ' .. tostring(iy) .. ' coor1: ' .. tostring(coor[1]) .. ' coor2: ' .. tostring(coor[2])
       --LinkBB:move(300-dx,300-dy)
       --error(tostring(currentworld))
    end
