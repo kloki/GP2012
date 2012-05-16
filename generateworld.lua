@@ -44,6 +44,11 @@ function loadtiles()
    images[47]=love.graphics.newImage("tiles/objects/pot.png")
    images[48]=love.graphics.newImage("tiles/objects/treasure-chest.png")
    images[49]=love.graphics.newImage("tiles/objects/treasure-chest-opened.png")
+   images[50]=love.graphics.newImage("tiles/path/path1.png")
+   images[51]=love.graphics.newImage("tiles/path/path2.png")
+   images[52]=love.graphics.newImage("tiles/path/path3.png")
+   images[53]=love.graphics.newImage("tiles/path/path4.png")
+   images[54]=love.graphics.newImage("tiles/path/path5.png")
    
 
    --here the list of tiles which cannot be drawnover
@@ -79,7 +84,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(1,5)
+   worldtype=math.random(4,4)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -354,9 +359,11 @@ return world
 end
 
 function villageworld(world,m)
-   
+   aaa=10
    for i=2,18 do
-      world[6][i]= math.random(43,46)
+      world[aaa][i]= math.random(50,54)
+      aaa=aaa+math.random(-1,1)
+      world[aaa][i]= math.random(50,54)
    end
    world=buildhouse(world,1,m,3,3)
    world=buildhouse(world,2,m,8,3)
