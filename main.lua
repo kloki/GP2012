@@ -34,7 +34,9 @@ function love.load()
    currentworld=1
    coor={3,6} --y,x
    w_height= love.graphics.getHeight()
-   w_width = love.graphics.getWidth()
+   w_width = love.graphics.getWidth
+   Object = {}
+   Portal = {0,0,0,0}
    addObjectBB()
    
    --zelda
@@ -84,7 +86,7 @@ function love.draw()
    for i,v in ipairs(Object) do Object[i]:draw('line') end
    for i,v in ipairs(goron_bb) do goron_bb[i]:draw('line') end
    love.graphics.setColor(255,0,0,255)
-   for i,v in ipairs(Portal) do 
+   for i=1,#Portal do 
       if type(Portal[i]) ~= 'number' then Portal[i]:draw('line')  end
    end
    love.graphics.setColor(255,255,255,255)
@@ -105,10 +107,12 @@ function love.update(dt)
    
    --update links position
    movementHandler(dt,coor)
+   --handle collisions
    Collider:update(dt)
    --spawn new enemies when changing worlds
    if currentworld ~= oldworld then
       spawnGorons()
+      removeObjectBB()
       addObjectBB()
    end
    
@@ -145,32 +149,38 @@ end
 
 --add the bounding boxes for walls and other objects
 function addObjectBB()
-   Object = {}
-   Portal = {}
-   for i,v in ipairs(Object) do
-      Collider:remove(v)
-   end
-   for i,v in ipairs(Portal) do
-      if not type(v) == 'number' then Collider:remove(v) end
-   end
-   Portal = {0,0,0,0}
    Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
    Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
    Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
    Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
    for i=1,4 do Collider:addToGroup("Objects",Object[i]) end
-   for i,v in ipairs(Objects[currentworld]) do
-      if v[5] == 'Object' then
-         Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-         Collider:addToGroup("Object",Object[#Object])
-      else 
-         local side = 0
-         if v[5] == 'North' then side = 1
-         elseif v[5] == 'East' then side = 2
-         elseif v[5] == 'South' then side = 3
-         elseif v[5] == 'West' then side = 4 end
-         Portal[side] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-         Collider:addToGroup("Object",Portal[side])
+   if Objects[currentworld] ~= nil then
+      for i,v in ipairs(Objects[currentworld]) do
+         if v[5] == 'Object' then
+            Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+            Collider:addToGroup("Object",Object[#Object])
+         else 
+            local side = 0
+            if v[5] == 'North' then side = 1
+            elseif v[5] == 'East' then side = 2
+            elseif v[5] == 'South' then side = 3
+            elseif v[5] == 'West' then side = 4 end
+            Portal[side] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+            Collider:addToGroup("Object",Portal[side])
+         end
+      end
+   end
+end
+
+function removeObjectBB()
+   for i=1,#Object do
+      Collider:remove(Object[i])
+      Object[i] = nil
+   end
+   for i=1,#Portal do
+      if type(Portal[i]) ~= 'number' then 
+         Collider:remove(Portal[i])
+         Portal[i] = 0
       end
    end
 end

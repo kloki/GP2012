@@ -24,7 +24,7 @@ function Goron.create(id)
    function gor:loadSprites()
       goron_sheet = love.graphics.newImage("sprites/goron.png")
       gor.goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
-       
+      
       gor.goronrightRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,false)
       gor.goronleftRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,true)
 	   gor.goronupRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
