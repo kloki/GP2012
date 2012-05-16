@@ -1,12 +1,11 @@
-require('generateworld')
-require('movementHandler')
-require('SpriteAnima')
-require('goron')
-require('drawing')
+require 'generateworld'
 HC = require 'HardonCollider'
 require 'TEsound'
-require 'collision'
-require('util')
+require 'Collide'
+require 'util'
+require 'drawing'
+require 'objectHandling'
+require 'SpriteAnima'
 
 function love.load()
    --some debug stuff
@@ -34,102 +33,67 @@ function love.load()
    overworld=createoverworld()
    worlds=createworlds()
    w_height= love.graphics.getHeight()
-   w_width = love.graphics.getWidth
-   Object = {}
-   Portal = {0,0,0,0}
-   addObjectBB()
+   w_width = love.graphics.getWidth()
+	addObjects()
    
    --zelda
    heart=love.graphics.newImage("sprites/heart.png")
    health=4
 
    --setup enemies
-   number_of_gorons = 5
-   goron_bb = {}
-   goron_speed = 50
-   spawnGorons()
-   
-   --add tree bounding boxes,not fully working yet
-   --addTreeBB()
+   number_of_enemies = 5
+   enemy_speed = 50
 
    -- setup link
-   speed = 200
+   speed   = 200
    d_speed = 140
-   xsprite=300
-   ysprite=300
-   loadSprite()
-   spressed = false
-   heading = 'down'
-   addLinkBB()
-   
-   --change this to good variables
-   width_sprite = 60
-   height_sprite = 60
-   headingplane=0
-   move = 'none'
-   stop = 'down'
+	addLink(300,300,24,30)
+	loadSprites()
+	
+	--setup enemies
+	Foes = {}
+	addFoe(100,100,'goron')
 end
 
+--The screen is drawn in three steps
+--:World map
+--:Link
+--:Enemies
 function love.draw()
+	--WORLD
    drawworld(worlds[currentworld])
    drawmap(overworld)
    drawHUD(health)
-   drawSprite()
-   for k,v in pairs(gorons) do
-      v:draw()
-      local x,y,_,_ = v:getPosition()
-      love.graphics.print(tostring(v:getID()),x,y)
-   end
-
-   --for debug draw bounding boxes
-   local i,v
-   for i,v in ipairs(Object) do Object[i]:draw('line') end
-   for i,v in ipairs(goron_bb) do goron_bb[i]:draw('line') end
-   love.graphics.setColor(255,0,0,255)
-   for i=1,#Portal do 
-      if type(Portal[i]) ~= 'number' then Portal[i]:draw('line')  end
-   end
-   love.graphics.setColor(255,255,255,255)
-   LinkBB:draw('line')
-   
+	
+	--LINK
+	drawSprite()
+	
+	--ENEMIES
+	drawFoes()
+	
+   --DEBUG
+	--for debug draw bounding boxes
+	for i=1,#Object do Object[i]:draw('line') end
+	Link:draw('line')
+	for i=1,#Foes do Foes[i]:draw('line') end
    love.graphics.print(test_output,100,100)
 end
 
 function love.update(dt)
-   updateSprite(dt)
-   --update enemy position
-   for k,v in pairs(gorons) do
-      v:update(dt)
-      local x,y,_,_ = v:getPosition()
-      goron_bb[v:getID()]:moveTo(x,y)
-   end
-   local oldworld = currentworld
-   
-   --update links position
-   movementHandler(dt,coor)
+	--update sprite animation and position
+	updateLink(dt)
+	updateSprite(dt)
+	updateFoes(dt)
    --handle collisions
    Collider:update(dt)
-   --spawn new enemies when changing worlds
-   if currentworld ~= oldworld then
-      spawnGorons()
-      removeObjectBB()
-      addObjectBB()
-   end
-   
+	--handle music streams
    TEsound.cleanup()
 end
 
 function love.keypressed(k)
-   if k == ' ' then
-      spressed = true
-   end
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")
-   end
-   if k == 'r' then
-      --respawn enemies--
-      spawnGorons()
    end
 end
 
@@ -140,47 +104,4 @@ end
 
 function love.quit()
   print("Thanks for playing. Please play again soon!")
-end
-
-function addLinkBB()
-   LinkBB = Collider:addRectangle(xsprite,ysprite,24,30)
-   Collider:addToGroup('Link',LinkBB)
-end
-
---add the bounding boxes for walls and other objects
-function addObjectBB()
-   Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
-   Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
-   Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
-   Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
-   for i=1,4 do Collider:addToGroup("Objects",Object[i]) end
-   if Objects[currentworld] ~= nil then
-      for i,v in ipairs(Objects[currentworld]) do
-         if v[5] == 'Object' then
-            Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-            Collider:addToGroup("Object",Object[#Object])
-         else 
-            local side = 0
-            if v[5] == 'North' then side = 1
-            elseif v[5] == 'East' then side = 2
-            elseif v[5] == 'South' then side = 3
-            elseif v[5] == 'West' then side = 4 end
-            Portal[side] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-            Collider:addToGroup("Object",Portal[side])
-         end
-      end
-   end
-end
-
-function removeObjectBB()
-   for i=1,#Object do
-      Collider:remove(Object[i])
-      Object[i] = nil
-   end
-   for i=1,#Portal do
-      if type(Portal[i]) ~= 'number' then 
-         Collider:remove(Portal[i])
-         Portal[i] = 0
-      end
-   end
 end

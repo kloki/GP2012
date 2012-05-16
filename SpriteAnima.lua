@@ -1,5 +1,5 @@
 require ('lAnA')
-function loadSprite()
+function loadSprites()
    sheet = love.graphics.newImage("sprites/LinkMC1test.gif")
 
    linkdownS = love.graphics.newQuad(24,12,20,32,720,1024)
@@ -24,39 +24,38 @@ function loadSprite()
    --
    local sprite = 'standdown'
    local move = false
-
-    
 end
 
 function drawSprite()
-   --love.graphics.drawq(sheet,linkfrontS,xsprite,ysprite)
+	local x,y = Link:bbox()
+   --love.graphics.drawq(sheet,linkfrontS,x,y)
    if sprite == 'moveup' then
-      linkupRun:draw(xsprite,ysprite)
+      linkupRun:draw(x,y)
    elseif sprite == 'movedown' then
-      linkdownRun:draw(xsprite,ysprite)
+      linkdownRun:draw(x,y)
    elseif sprite == 'moveright' then
-      linkrightRun:draw(xsprite,ysprite)
+      linkrightRun:draw(x,y)
    elseif sprite == 'moveleft' then
-      linkleftRun:draw(xsprite,ysprite)
+      linkleftRun:draw(x,y)
 
    elseif sprite == 'swordup' then
-      linkupSword:draw(xsprite,ysprite)
+      linkupSword:draw(x,y)
       --linkupSword:play()
    elseif sprite == 'sworddown' then
-      linkdownSword:draw(xsprite,ysprite)
+      linkdownSword:draw(x,y)
    elseif sprite == 'swordright' then
-      linkrightSword:draw(xsprite,ysprite)
+      linkrightSword:draw(x,y)
    elseif sprite == 'swordleft' then
-      linkleftSword:draw(xsprite,ysprite)
+      linkleftSword:draw(x,y)
 
    elseif sprite == 'standup' then
-      love.graphics.drawq(sheet,linkupS,xsprite,ysprite)
+      love.graphics.drawq(sheet,linkupS,x,y)
    elseif sprite == 'standright' then
-      love.graphics.drawq(sheet,linkrightS,xsprite,ysprite)
+      love.graphics.drawq(sheet,linkrightS,x,y)
    elseif sprite == 'standleft' then
-      love.graphics.drawq(sheet,linkleftS,xsprite,ysprite)
+      love.graphics.drawq(sheet,linkleftS,x,y)
    elseif sprite == 'standdown' then
-      love.graphics.drawq(sheet,linkdownS,xsprite,ysprite)
+      love.graphics.drawq(sheet,linkdownS,x,y)
    end      
 end
 
@@ -156,4 +155,7 @@ function updateSprite(dt)
       end
    end
 
+end
+
+function drawFoes()
 end

@@ -86,7 +86,12 @@ function Goron.create(id)
       table.removekey(moves,dir)
       gor.facing = table.random(moves,table.size(moves))
    end
-   
+	
+	function gor:remove()
+		Collider:setPassive(goron_bb[gor.ID])
+		--table.removekey(gorons,gor.ID)
+	end
+	
    function gor:getPosition()
       return gor.x, gor.y, gor.w, gor.h
    end
@@ -146,4 +151,68 @@ function spawnGorons()
    for i=1,number_of_gorons do
       table.insert(gorons, Goron.create(i))
    end
+end
+
+
+function addLinkBB()
+   LinkBB = Collider:addRectangle(xsprite,ysprite,24,30)
+   Sword = Collider:addRectangle(0,0,24,24)
+   Collider:addToGroup('Link',Sword)
+   Collider:setPassive(Sword)
+   Collider:addToGroup('Link',LinkBB)
+end
+function removeLinkBB()
+	Collider:remove(LinkBB)
+end
+
+--add the bounding boxes for walls and other objects
+function addObjectBB()
+   Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
+   Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
+   Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
+   Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
+   for i=1,4 do Collider:addToGroup("Objects",Object[i]) end
+   if Objects[currentworld] ~= nil then
+      for i,v in ipairs(Objects[currentworld]) do
+         if v[5] == 'Object' then
+            Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+            Collider:addToGroup("Object",Object[#Object])
+         else 
+            local side = 0
+            if v[5] == 'North' then side = 1
+            elseif v[5] == 'East' then side = 2
+            elseif v[5] == 'South' then side = 3
+            elseif v[5] == 'West' then side = 4 end
+            Portal[side] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+            Collider:addToGroup("Object",Portal[side])
+         end
+      end
+   end
+end
+
+function removeObjectBB()
+   for i=1,#Object do
+      Collider:remove(Object[i])
+      Object[i] = nil
+   end
+   for i=1,#Portal do
+      if type(Portal[i]) ~= 'number' then 
+         Collider:remove(Portal[i])
+         Portal[i] = 0
+      end
+   end
+end
+
+
+function sword()
+	if spressed then
+		if     heading == 'down' then Sword:moveTo(xsprite+12,ysprite+45)
+		elseif heading == 'up' then Sword:moveTo(xsprite+12,ysprite-9)
+		elseif heading == 'right' then Sword:moveTo(xsprite+36,ysprite+15)
+		elseif heading == 'left' then Sword:moveTo(xsprite-12,ysprite+15)
+		end
+		Collider:setActive(Sword)
+	else
+		Collider:setPassive(Sword)
+	end
 end

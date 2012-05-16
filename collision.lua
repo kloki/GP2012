@@ -2,7 +2,7 @@ require 'HardonCollider'
 require 'goron'
 
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
-	local Type_a, ind_a = getType(shape_a)
+   local Type_a, ind_a = getType(shape_a)
    local Type_b, ind_b = getType(shape_b)
    
    if (Type_a == 'Object' and Type_b == 'goron') or (Type_a == 'goron' and Type_b == 'Object') then
@@ -30,6 +30,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          --test_output = 'link+wall'
       else
          --test_output = 'link+goron'
+			LinkHit = true
          xsprite,ysprite = xsprite + mtv_x,ysprite + mtv_y
          LinkBB:move(mtv_x,mtv_y)
       end
@@ -49,6 +50,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	  test_output = 'x,y: ' .. tostring(ix) .. ' ' .. tostring(iy) .. ' coor1: ' .. tostring(coor[1]) .. ' coor2: ' .. tostring(coor[2])
       --LinkBB:move(300-dx,300-dy)
       --error(tostring(currentworld))
+	elseif (Type_a == 'Sword' and Type_b == 'goron') or (Type_b == 'Sword' and Type_a == 'goron') then
+		if Type_b == 'goron' then ind_a = ind_b end
+		gorons[ind_a]:remove()
    end
 	--if shape_a = border[1] or shape_a = border[2] or shape_a = border[3] or shape_a = border[4] then	
 end
@@ -63,6 +67,7 @@ end
 -- determine type and index number
 function getType(shape)
    if shape == LinkBB then return 'Link', 0 end
+	if shape == Sword then return 'Sword', 0 end
    for i=1,#Object do
       if shape == Object[i] then return 'Object', i end
    end
