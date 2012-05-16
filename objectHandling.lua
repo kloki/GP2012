@@ -59,18 +59,47 @@ function updateLink(dt)
 	Link:move(dx,dy)
 end
 
+function addFoes()
+   Foes = {}
+   addFoe(100,100,'goron')
+   addFoe(200,100,'goron')
+end
+
 function addFoe(x,y,foetype)
 	if foetype == 'goron' then
 		Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
 		Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
-		Foes[#Foes].speed = 30
+		Foes[#Foes].speed = 100
 	end
 end
 
+function removeFoes()
+   for k,v in ipairs(Foes) do Collider:remove(v) end
+end
 
 function updateFoes(dt)
 	local x,y
 	for i=1,#Foes do
 		Foes[i]:move(Foes[i].dir[1]*Foes[i].speed*dt,Foes[i].dir[2]*Foes[i].speed*dt)
+	end
+end
+
+function addSword()
+	Sword = Collider:addRectangle(0,0,24,24)
+	Collider:addToGroup('Link',Sword)
+	Collider:setPassive(Sword)
+end
+
+function sword()
+	if spressed then
+		local x,y = Link:bbox()
+		if     Link.heading == 'down' then Sword:moveTo(x+12,y+45)
+		elseif Link.heading == 'up'   then Sword:moveTo(x+12,y-9)
+		elseif Link.heading == 'right'then Sword:moveTo(x+36,y+15)
+		elseif Link.heading == 'left' then Sword:moveTo(x-12,y+15)
+		end
+		Collider:setActive(Sword)
+	else
+		Collider:setPassive(Sword)
 	end
 end

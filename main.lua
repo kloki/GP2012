@@ -47,6 +47,7 @@ function love.load()
    d_speed = 140
 	addLink(300,300,24,30)
 	loadSprites()
+	addSword()
 	
 	--setup enemies
 	Foes = {}
@@ -76,6 +77,7 @@ function love.draw()
 	for i=1,#Foes do Foes[i]:draw('line') end
 	love.graphics.setColor(255,0,0)
 	for k,v in pairs(Portal) do v:draw('line') end
+	Sword:draw('line')
 	love.graphics.setColor(255,255,255)
    love.graphics.print(test_output,100,100)
 end
@@ -90,13 +92,19 @@ function love.update(dt)
    Collider:update(dt)
 	if oldworld ~= currentworld then
 		removeObjects() 
+      removeFoes()
 		addObjects()
+      addFoes()
 	end
 	--handle music streams
    TEsound.cleanup()
 end
 
 function love.keypressed(k)
+	if k == ' ' then 
+		spressed = true 
+		sword()
+	end
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")

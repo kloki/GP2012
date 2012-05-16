@@ -207,8 +207,8 @@ end
 function sword()
 	if spressed then
 		if     heading == 'down' then Sword:moveTo(xsprite+12,ysprite+45)
-		elseif heading == 'up' then Sword:moveTo(xsprite+12,ysprite-9)
-		elseif heading == 'right' then Sword:moveTo(xsprite+36,ysprite+15)
+		elseif heading == 'up'   then Sword:moveTo(xsprite+12,ysprite-9)
+		elseif heading == 'right'then Sword:moveTo(xsprite+36,ysprite+15)
 		elseif heading == 'left' then Sword:moveTo(xsprite-12,ysprite+15)
 		end
 		Collider:setActive(Sword)

@@ -21,6 +21,13 @@ function loadSprites()
    linkupSword:setMode("once")
    linkrightSword:setMode("once")
    linkleftSword:setMode("once")
+	
+	goron_sheet = love.graphics.newImage("sprites/goron.png")
+   goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
+	goronrightRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,false)
+	goronleftRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,true)
+	goronupRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
+	gorondownRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
    --
    local sprite = 'standdown'
    local move = false
@@ -76,21 +83,21 @@ function updateSprite(dt)
 
    if spressed then
       move = false
-      if heading == 'down' then
+      if Link.heading == 'down' then
          linkdownSword:update(dt)
          sprite = 'sworddown'
          if linkdownSword:getCurrentFrame() == 7 then
             spressed = false
             linkdownSword:reset()
          end
-      elseif heading == 'up' then
+      elseif Link.heading == 'up' then
          linkupSword:update(dt)
          sprite = 'swordup'
          if linkupSword:getCurrentFrame() == 7 then
             spressed = false
             linkupSword:reset()
          end
-      elseif heading == 'right' then
+      elseif Link.heading == 'right' then
          linkrightSword:update(dt)
          sprite = 'swordright'
          if linkrightSword:getCurrentFrame() == 7 then
@@ -98,7 +105,7 @@ function updateSprite(dt)
             linkrightSword:reset()
             sprite = 'standright'
          end
-      elseif heading == 'left' then
+      elseif Link.heading == 'left' then
          linkleftSword:update(dt)
          sprite = 'swordleft'
          if linkleftSword:getCurrentFrame() == 7 then
@@ -110,32 +117,32 @@ function updateSprite(dt)
       if u then
          linkupRun:update(dt)
          sprite = 'moveup'
-         heading = 'up'
+         Link.heading = 'up'
       end
       if d then
          linkdownRun:update(dt)
          sprite = 'movedown'
-         heading = 'down'
+         Link.heading = 'down'
       end
       if r then
          linkrightRun:update(dt)
          sprite = 'moveright'
-         heading = 'right'
+         Link.heading = 'right'
       end
       if l then
          linkleftRun:update(dt)
          sprite = 'moveleft'
-         heading = 'left'
+         Link.heading = 'left'
       end
       if (u and r) or (u and l) then
          linkupRun:update(dt)
          sprite = 'moveup'
-         heading = 'up'
+         Link.heading = 'up'
       end
       if (d and r) or (d and l) then
          linkdownRun:update(dt)
          sprite = 'movedown'
-         heading = 'down'
+         Link.heading = 'down'
       end
       if u and d then
          sprite = 'standdown'
@@ -144,18 +151,38 @@ function updateSprite(dt)
          sprite = 'standdown'
       end
    else
-      if heading == 'down' then
+      if Link.heading == 'down' then
          sprite = 'standdown'
-      elseif heading == 'up' then
+      elseif Link.heading == 'up' then
          sprite = 'standup'
-      elseif heading == 'right' then
+      elseif Link.heading == 'right' then
          sprite = 'standright'
-      elseif heading == 'left' then
+      elseif Link.heading == 'left' then
          sprite = 'standleft'
       end
    end
 
 end
 
-function drawFoes()
+function drawFoes(dt)
+   local x,y
+   for i, v in ipairs(Foes) do
+      x,y = v:bbox()
+      --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
+		if 	 Foes[i].dir[2] == 1  then goronupRun:draw(x,y)
+		elseif Foes[i].dir[2] == -1 then gorondownRun:draw(x,y)
+		elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
+		elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
+   end
+end
+
+function updateFoes(dt)
+	local x,y
+	for i,v in ipairs(Foes) do
+		v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+	end
+	goronrightRun:update(dt)
+	goronleftRun:update(dt)
+	goronupRun:update(dt)
+	gorondownRun:update(dt)
 end
