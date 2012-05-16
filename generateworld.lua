@@ -33,9 +33,12 @@ function loadtiles()
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
    images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
    images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
+   images[39]=love.graphics.newImage("tiles/house/house1.png")
+   images[40]=love.graphics.newImage("tiles/house/house2.png")
+   images[41]=love.graphics.newImage("tiles/house/house3.png")
 
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29}
+   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
 end
 
 
@@ -66,13 +69,15 @@ function createworld(m)
 	 if i==1 or i==verticaltiles or n==1 or n==horizontaltiles then world[i][n]=-1 end
       end
    end
-   worldtype=math.random(1,3)
+   worldtype=math.random(1,4)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
       world=cliffworld(world,m)
    elseif worldtype==3 then
       world=waterworld(world,m)
+   elseif worldtype==4 then
+      world=villageworld(world,m)
    end
 return world
 end
@@ -318,6 +323,50 @@ function waterworld(world,m)
    --trees
    for i=1,math.random(1,5) do
       world=add64x64(world,m,29)
+   end
+
+return world
+end
+
+function villageworld(world,m)
+
+   world=buildhouse(world,1,m,3,3)
+   world=buildhouse(world,2,m,8,3)
+   world=buildhouse(world,3,m,15,3)
+return world
+end
+
+function buildhouse(world,typehouse,m,x,y)
+   if typehouse==1 then
+      for i=0,1 do
+	 for n=0,2 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=39
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,55,'Object'})   
+   end
+
+   if typehouse==2 then
+   for i=0,3 do
+      for n=0,2 do
+	 world[y+n][x+i]=-1
+      end
+   end
+   world[y][x]=40
+   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,116,64,'Object'})
+
+   end
+   
+   if typehouse==3 then
+   for i=0,2 do
+      for n=0,2 do
+	 world[y+n][x+i]=-1
+      end
+   end
+   world[y][x]=41
+   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,80,56,'Object'})
+
    end
 
 return world
