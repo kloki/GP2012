@@ -16,7 +16,7 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
-   TEsound.playLooping("music/windfall-island.mp3")
+  -- TEsound.playLooping("music/windfall-island.mp3")
    
    --setup world
    tilesize=32
@@ -116,7 +116,7 @@ function love.update(dt)
       addObjectBB()
    end
    
-   TEsound.cleanup()
+--   TEsound.cleanup()
 end
 
 function love.keypressed(k)
@@ -149,10 +149,10 @@ end
 
 --add the bounding boxes for walls and other objects
 function addObjectBB()
-   Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
-   Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
-   Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
-   Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
+   --Object[1] = Collider:addRectangle(0,-100+tilesize,  800,100) 	--Up egdge (Top)
+   --Object[2] = Collider:addRectangle(0,640-2*tilesize, 800,100)		--Down edge
+   --Object[3] = Collider:addRectangle(-100+tilesize,tilesize,  100,640-3*tilesize)	--Left edge	
+  -- Object[4] = Collider:addRectangle(800-tilesize, tilesize,  100,640-3*tilesize)	--Right edge
    for i=1,4 do Collider:addToGroup("Objects",Object[i]) end
    if Objects[currentworld] ~= nil then
       for i,v in ipairs(Objects[currentworld]) do
