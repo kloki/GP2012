@@ -32,8 +32,6 @@ function love.load()
    coor={3,6} --y,x
    overworld=createoverworld()
    worlds=createworlds()
-   w_height= love.graphics.getHeight()
-   w_width = love.graphics.getWidth()
 	addObjects()
    
    --zelda
@@ -76,16 +74,24 @@ function love.draw()
 	for i=1,#Object do Object[i]:draw('line') end
 	Link:draw('line')
 	for i=1,#Foes do Foes[i]:draw('line') end
+	love.graphics.setColor(255,0,0)
+	for k,v in pairs(Portal) do v:draw('line') end
+	love.graphics.setColor(255,255,255)
    love.graphics.print(test_output,100,100)
 end
 
 function love.update(dt)
+	local oldworld = currentworld
 	--update sprite animation and position
 	updateLink(dt)
 	updateSprite(dt)
 	updateFoes(dt)
    --handle collisions
    Collider:update(dt)
+	if oldworld ~= currentworld then
+		removeObjects() 
+		addObjects()
+	end
 	--handle music streams
    TEsound.cleanup()
 end
