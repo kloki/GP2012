@@ -86,7 +86,7 @@ function createoverworld()
       end
    end
    --starting point
-   overworld[3][6]=1
+   overworld[coor[1]][coor[2]]=1
    --automated generation
    count = 2
    while true do

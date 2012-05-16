@@ -29,10 +29,10 @@ function love.load()
    for i=1,numberofworlds do
       Objects[i]={}
    end
-   overworld=createoverworld()
-   worlds=createworlds()
    currentworld=1
    coor={3,6} --y,x
+   overworld=createoverworld()
+   worlds=createworlds()
    w_height= love.graphics.getHeight()
    w_width = love.graphics.getWidth
    Object = {}

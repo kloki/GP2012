@@ -40,9 +40,8 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       elseif ind_b == 2 then ix,iy = 1,0
       elseif ind_b == 3 then ix,iy = 0,1
       elseif ind_b == 4 then ix,iy = -1,0 end
-      coor[1] = coor[1] + ix
-      coor[2] = coor[2] + iy
-      currentworld = overworld[coor[1] ][coor[2] ]
+      coor = {coor[2] + iy,coor[1] + ix}
+      currentworld = overworld[coor[2] ][coor[1] ]
       local dx,dy = xsprite,ysprite
       xsprite = 300
       ysprite = 300
