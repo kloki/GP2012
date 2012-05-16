@@ -36,6 +36,15 @@ function loadtiles()
    images[39]=love.graphics.newImage("tiles/house/house1.png")
    images[40]=love.graphics.newImage("tiles/house/house2.png")
    images[41]=love.graphics.newImage("tiles/house/house3.png")
+   images[42]=love.graphics.newImage("tiles/house/tree-house.png")
+   images[43]=love.graphics.newImage("tiles/sand/sand1.png")
+   images[44]=love.graphics.newImage("tiles/sand/sand2.png")
+   images[45]=love.graphics.newImage("tiles/sand/sand3.png")
+   images[46]=love.graphics.newImage("tiles/sand/sand4.png")
+   images[47]=love.graphics.newImage("tiles/objects/pot.png")
+   images[48]=love.graphics.newImage("tiles/objects/treasure-chest.png")
+   images[49]=love.graphics.newImage("tiles/objects/treasure-chest-opened.png")
+   
 
    --here the list of tiles which cannot be drawnover
    forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
@@ -69,7 +78,8 @@ function createworld(m)
 	 if i==1 or i==verticaltiles or n==1 or n==horizontaltiles then world[i][n]=-1 end
       end
    end
-   worldtype=math.random(1,4)
+   --add worldtypes
+   worldtype=math.random(1,5)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -78,6 +88,8 @@ function createworld(m)
       world=waterworld(world,m)
    elseif worldtype==4 then
       world=villageworld(world,m)
+   elseif worldtype==5 then
+      world=hermitworld(world,m)
    end
 return world
 end
@@ -129,31 +141,44 @@ function buildgates(worlds)
 	    --add north gate
 	    if overworld[i-1][n]~=0 then
 	       worlds[overworld[i][n]][1][1]=35
-          table.insert(Objects[overworld[i][n]],{336,0,128,34,'North'})
+	       table.insert(Objects[overworld[i][n]],{336,0,143,10,'North'})
+	       table.insert(Objects[overworld[i][n]],{1,1,336,32,'Object'})
+	       table.insert(Objects[overworld[i][n]],{336+143,1,800-336-143,32,'Object'})
 	    else
-	       worlds[overworld[i][n]][1][1]=31
+	      worlds[overworld[i][n]][1][1]=31
+	      table.insert(Objects[overworld[i][n]],{1,1,800,32,'Object'})
 	    end
 	    --add south gate
 	    if overworld[i+1][n]~=0 then
 	       worlds[overworld[i][n]][verticaltiles][1]=34
-          table.insert(Objects[overworld[i][n]],{336,572,128,34,'South'})
+	       table.insert(Objects[overworld[i][n]],{336,598,143,10,'South'})
+	       table.insert(Objects[overworld[i][n]],{1,576,336,32,'Object'})
+	       table.insert(Objects[overworld[i][n]],{336+143,576,800-336-143,32,'Object'})
+	    
 	    else
 	       worlds[overworld[i][n]][verticaltiles][1]=30
+	       table.insert(Objects[overworld[i][n]],{1,576,800,32,'Object'})
 	    end
 	    --add west gate
 	    if overworld[i][n-1]~=0 then
 	       worlds[overworld[i][n]][2][1]=36
-          table.insert(Objects[overworld[i][n]],{0,268,34,128,'West'})
-	    else
+	       table.insert(Objects[overworld[i][n]],{0,272,10,100,'West'})
+	       table.insert(Objects[overworld[i][n]],{0,32,32,272-32,'Object'})
+	       table.insert(Objects[overworld[i][n]],{0,272+100,32,640-64-272-100,'Object'})
+	       else
 	       worlds[overworld[i][n]][2][1]=32
+	       table.insert(Objects[overworld[i][n]],{0,32,32,640-64,'Object'})
 	    end	    
 	    --add east gate
 	    if overworld[i][n+1]~=0 then
 	       worlds[overworld[i][n]][1][horizontaltiles]=37
-          table.insert(Objects[overworld[i][n]],{768,268,34,128,'East'})
+	       table.insert(Objects[overworld[i][n]],{790,272,10,100,'East'})
+	       table.insert(Objects[overworld[i][n]],{768,32,32,272-32,'Object'})
+	       table.insert(Objects[overworld[i][n]],{768,272+100,32,640-64-272-100,'Object'})
+	       
 	    else
 	       worlds[overworld[i][n]][1][horizontaltiles]=33
-
+	       table.insert(Objects[overworld[i][n]],{768,32,32,640-64,'Object'})
 	    end	
 	 end
       end
@@ -194,8 +219,8 @@ return world
 end
    
 function addbushes(world,m,width,length,typebush)
-   x=math.random(width+1,horizontaltiles-width-length-1)
-   y=math.random(width+1,verticaltiles-length-width-1)
+   x=math.random(width+2,horizontaltiles-width-length-1)
+   y=math.random(width+2,verticaltiles-length-width-1)
    world=createblob(world,m,0,length,width,x,y,typebush)
    world=createblob(world,m,1,length,width,x,y,typebush)
 return world
@@ -329,10 +354,21 @@ return world
 end
 
 function villageworld(world,m)
-
+   
+   for i=2,18 do
+      world[6][i]= math.random(43,46)
+   end
    world=buildhouse(world,1,m,3,3)
    world=buildhouse(world,2,m,8,3)
    world=buildhouse(world,3,m,15,3)
+   world=buildhouse(world,4,m,22,3)
+return world
+end
+
+function hermitworld(world,m)   
+   world=buildhouse(world,math.random(1,4),m,math.random(3,20),math.random(3,16))
+   world=grassworld(world,m)
+
 return world
 end
 
@@ -344,7 +380,9 @@ function buildhouse(world,typehouse,m,x,y)
 	 end
       end
       world[y][x]=39
-      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,55,'Object'})   
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,55,'Object'})
+      --door
+      table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+50,20,20,'Object'})
    end
 
    if typehouse==2 then
@@ -355,6 +393,8 @@ function buildhouse(world,typehouse,m,x,y)
    end
    world[y][x]=40
    table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,116,64,'Object'})
+      --door
+   table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+60,20,20,'Object'})
 
    end
    
@@ -366,8 +406,21 @@ function buildhouse(world,typehouse,m,x,y)
    end
    world[y][x]=41
    table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,80,56,'Object'})
+   --door
+   table.insert(Objects[m],{(x-1)*tilesize+30,(y-1)*tilesize+55,20,20,'Object'})
+   end
+   
+   if typehouse==4 then
+   for i=0,2 do
+      for n=0,3 do
+	 world[y+n][x+i]=-1
+      end
+   end
+   world[y][x]=42
+   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,42,'Object'})
+   --door
+   table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+40,20,20,'Object'})
 
    end
-
 return world
 end
