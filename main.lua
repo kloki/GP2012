@@ -15,7 +15,7 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
-   TEsound.playLooping("music/windfall-island.mp3")
+  -- TEsound.playLooping("music/windfall-island.mp3")
    
    --setup world
    tilesize=32
