@@ -61,15 +61,24 @@ end
 
 function addFoes()
    Foes = {}
-   addFoe(100,100,'goron')
-   addFoe(200,100,'goron')
+   addFoe(100,100,'snake')
+   addFoe(200,100,'snake')
+   addFoe(300,100,'snake')
+   addFoe(400,100,'snake')
+   addFoe(200,500,'goron')
 end
 
 function addFoe(x,y,foetype)
 	if foetype == 'goron' then
 		Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
 		Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
-		Foes[#Foes].speed = 100
+		Foes[#Foes].speed = 30
+      Foes[#Foes].Type = 'goron'
+   elseif foetype == 'snake' then
+      Foes[#Foes + 1] = Collider:addRectangle(x,y,20,24)
+      Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
+		Foes[#Foes].speed = 40
+      Foes[#Foes].Type = 'snake'
 	end
 end
 

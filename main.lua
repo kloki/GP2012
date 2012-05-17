@@ -56,7 +56,7 @@ function love.load()
 	
 	--setup enemies
 	Foes = {}
-	addFoe(100,100,'goron')
+	addFoes()
 end
 
 --The screen is drawn in three steps

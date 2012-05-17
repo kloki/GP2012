@@ -23,11 +23,18 @@ function loadSprites()
    linkleftSword:setMode("once")
 	
 	goron_sheet = love.graphics.newImage("sprites/goron.png")
+   goron_sheet2 = love.graphics.newImage("sprites/goronfront.png")
    goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
 	goronrightRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,false)
-	goronleftRun = newAnimation(goron_sheet,24,30,0.1,8,92,158,true)
-	goronupRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
-	gorondownRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
+	goronleftRun  = newAnimation(goron_sheet,24,30,0.1,8,92,158,true)
+	goronupRun    = newAnimation(goron_sheet,30.5,30,0.15,7,82,89,false)
+	gorondownRun  = newAnimation(goron_sheet2,29,30,0.1,8,0,0,false)
+   
+   snake_sheet = love.graphics.newImage("sprites/snake.png")
+   snakeleft  = newAnimation(snake_sheet,24,16,0.15,4,2, 3,false)
+   snakeright = newAnimation(snake_sheet,24,16,0.15,4,2,25,false)
+   snakedown  = newAnimation(snake_sheet,22,16,0.15,4,4,46,false)
+   snakeup    = newAnimation(snake_sheet,22,16,0.15,4,4,68,false)
    --
    local sprite = 'standdown'
    Link.heading = 'down'
@@ -170,10 +177,17 @@ function drawFoes(dt)
    for i, v in ipairs(Foes) do
       x,y = v:bbox()
       --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
-		if 	 Foes[i].dir[2] == 1  then goronupRun:draw(x,y)
-		elseif Foes[i].dir[2] == -1 then gorondownRun:draw(x,y)
-		elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
-		elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
+      if Foes[i].Type == 'goron' then
+         if 	 Foes[i].dir[2] == 1  then gorondownRun:draw(x,y)
+         elseif Foes[i].dir[2] == -1 then goronupRun:draw(x,y)
+         elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
+         elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
+      elseif Foes[i].Type == 'snake' then
+         if 	 Foes[i].dir[2] == 1  then snakedown:draw(x,y)
+         elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
+         elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
+         elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
+      end
    end
 end
 
@@ -186,4 +200,8 @@ function updateFoes(dt)
 	goronleftRun:update(dt)
 	goronupRun:update(dt)
 	gorondownRun:update(dt)
+   snakeup:update(dt)
+   snakedown:update(dt)
+   snakeright:update(dt)
+   snakeleft:update(dt)
 end

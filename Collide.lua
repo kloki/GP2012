@@ -19,16 +19,19 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			currentworld = overworld[coor[1] ][coor[2] ]
 			Link:moveTo(spx,spy)
 		elseif Type_b == 'Foe' then
-         LinkHit = true
-         Link:move(mtv_x,mtv_y)
-         --get the normal vector in direction of the enemy
-         nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
-         Link:move(40*nv[1],40*nv[2])
+		   LinkHit = true
+		   --damage
+		   health=health-1
+		   if health <1 then health = 1 end--for nothing if Link dies
+		   Link:move(mtv_x,mtv_y)
+		   --get the normal vector in direction of the enemy
+		   nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
+		   Link:move(40*nv[1],40*nv[2])
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 
 			ind_a,ind_b,Type_a,Type_b,mtv_x,mtv_y = ind_b,ind_a,Type_b,Type_a,-mtv_x,-mtv_y end
-      if Type_b == 'Object' then
+      if Type_b == 'Object' or 'Portal' then
          Foes[ind_a]:move(1.2*mtv_x,1.2*mtv_y)
 			local r = math.random()
 			if r > 0.667 then Foes[ind_a].dir = {-Foes[ind_a].dir[1],-Foes[ind_a].dir[2]}
