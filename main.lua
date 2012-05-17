@@ -6,10 +6,15 @@ require 'util'
 require 'drawing'
 require 'objectHandling'
 require 'SpriteAnima'
+require 'StartUp'
 
 function love.load()
    --some debug stuff
    test_output = 'none'
+
+   -- startupscreens and menu stuff
+   startup = true
+   loadStart()
 
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
@@ -59,31 +64,35 @@ end
 --:Link
 --:Enemies
 function love.draw()
-	--WORLD
-   drawworld(worlds[currentworld])
-   drawmap(overworld)
-   drawHUD(health)
-	
-	--LINK
-	drawSprite()
-	
-	--ENEMIES
-	drawFoes()
-	
-   --DEBUG
-	--for debug draw bounding boxes
-	for i=1,#Object do Object[i]:draw('line') end
-	Link:draw('line')
-	for i=1,#Foes do Foes[i]:draw('line') end
-	love.graphics.setColor(255,0,0)
-	for k,v in pairs(Portal) do v:draw('line') end
-   love.graphics.setColor(0,0,255)
-	Sword:draw('line')
-	love.graphics.setColor(255,255,255)
-   love.graphics.print(test_output,100,100)
+   if startup or health==0 then
+      drawStart()
+   else
+	   --WORLD
+      drawworld(worlds[currentworld])
+      drawmap(overworld)
+      drawHUD(health)
+	   
+	   --LINK
+	   drawSprite()
+	   
+	   --ENEMIES
+	   drawFoes()
+	   
+      --DEBUG
+	   --for debug draw bounding boxes
+	   for i=1,#Object do Object[i]:draw('line') end
+	   Link:draw('line')
+	   for i=1,#Foes do Foes[i]:draw('line') end
+	   love.graphics.setColor(255,0,0)
+	   for k,v in pairs(Portal) do v:draw('line') end
+	   Sword:draw('line')
+	   love.graphics.setColor(255,255,255)
+      love.graphics.print(test_output,100,100)
+   end
 end
 
 function love.update(dt)
+   updateStart(dt)
 	local oldworld = currentworld
 	--update sprite animation and position
 	updateLink(dt)
