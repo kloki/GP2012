@@ -51,7 +51,7 @@ function love.load()
 	
 	--setup enemies
 	Foes = {}
-	addFoe(100,100,'goron')
+	addFoes()
 end
 
 --The screen is drawn in three steps
@@ -77,6 +77,7 @@ function love.draw()
 	for i=1,#Foes do Foes[i]:draw('line') end
 	love.graphics.setColor(255,0,0)
 	for k,v in pairs(Portal) do v:draw('line') end
+   love.graphics.setColor(0,0,255)
 	Sword:draw('line')
 	love.graphics.setColor(255,255,255)
    love.graphics.print(test_output,100,100)

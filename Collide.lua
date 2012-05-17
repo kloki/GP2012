@@ -28,7 +28,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 
 			ind_a,ind_b,Type_a,Type_b,mtv_x,mtv_y = ind_b,ind_a,Type_b,Type_a,-mtv_x,-mtv_y end
-      if Type_b == 'Object' then
+      if Type_b == 'Object' or 'Portal' then
          Foes[ind_a]:move(1.2*mtv_x,1.2*mtv_y)
 			local r = math.random()
 			if r > 0.667 then Foes[ind_a].dir = {-Foes[ind_a].dir[1],-Foes[ind_a].dir[2]}
