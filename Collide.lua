@@ -19,11 +19,14 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			currentworld = overworld[coor[1] ][coor[2] ]
 			Link:moveTo(spx,spy)
 		elseif Type_b == 'Foe' then
-         LinkHit = true
-         Link:move(mtv_x,mtv_y)
-         --get the normal vector in direction of the enemy
-         nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
-         Link:move(40*nv[1],40*nv[2])
+		   LinkHit = true
+		   --damage
+		   health=health-1
+		   if health <1 then health = 1 end--for nothing if Link dies
+		   Link:move(mtv_x,mtv_y)
+		   --get the normal vector in direction of the enemy
+		   nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
+		   Link:move(40*nv[1],40*nv[2])
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 
