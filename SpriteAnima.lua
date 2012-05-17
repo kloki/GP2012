@@ -30,12 +30,13 @@ function loadSprites()
 	gorondownRun = newAnimation(goron_sheet,30.5,30,0.15,7,83,89,false)
    --
    local sprite = 'standdown'
+   Link.heading = 'down'
    local move = false
 end
 
 function drawSprite()
 	local x,y = Link:bbox()
-   --love.graphics.drawq(sheet,linkfrontS,x,y)
+   --love.graphics.drawq(sheet,linkdownS,x,y)
    if sprite == 'moveup' then
       linkupRun:draw(x,y)
    elseif sprite == 'movedown' then
