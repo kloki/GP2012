@@ -55,6 +55,8 @@ function deleteObject(object)
 	 if worlds[currentworld][i][n]==object then worlds[currentworld][i][n]=1 end                           	 
       end
    end
+   removeObjects()
+   addObjects()
 end
 function addLink(x,y,w,h)
 	Link = Collider:addRectangle(x,y,w,h)
