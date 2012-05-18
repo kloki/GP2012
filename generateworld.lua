@@ -49,8 +49,12 @@ function loadtiles()
    images[52]=love.graphics.newImage("tiles/path/path3.png")
    images[53]=love.graphics.newImage("tiles/path/path4.png")
    images[54]=love.graphics.newImage("tiles/path/path5.png")
-   
-
+   images[55]=love.graphics.newImage("sprites/heart.png")
+   images[56]=love.graphics.newImage("tiles/objects/key1.png")
+   images[57]=love.graphics.newImage("tiles/objects/key2.png")
+   images[58]=love.graphics.newImage("tiles/objects/key3.png")
+   images[59]=love.graphics.newImage("tiles/objects/key4.png")
+   images[60]=love.graphics.newImage("tiles/objects/sword.png")
    --here the list of tiles which cannot be drawnover
    forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
 end

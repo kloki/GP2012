@@ -20,7 +20,7 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
-   TEsound.playLooping("music/windfall-island.mp3")
+   --TEsound.playLooping("music/windfall-island.mp3")
    
    --setup world
    tilesize=32
@@ -37,11 +37,12 @@ function love.load()
    coor={3,6} --y,x
    overworld=createoverworld()
    worlds=createworlds()
-	addObjects()
+   addObjects()
    
    --zelda
-   heart=love.graphics.newImage("sprites/heart.png")
-   health=4
+   
+   health=7
+   inventory={56,57,58,59}
 
    --setup enemies
    number_of_enemies = 5
@@ -70,7 +71,7 @@ function love.draw()
 	   --WORLD
       drawworld(worlds[currentworld])
       drawmap(overworld)
-      drawHUD(health)
+      drawHUD(health,inventory)
 	   
 	   --LINK
 	   drawSprite()

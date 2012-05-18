@@ -34,10 +34,15 @@ function drawmap(overworld)
    love.graphics.setColor(255,255,255)
 end
 
-function drawHUD(health)
+function drawHUD(health,inventory)
    x=64
+   y=610
    for i=1,health do
-     love.graphics.draw(heart,x,610)
-     x=x+17
+      if i==5 then x=64 y=625 end --this puts the hearth in nice rows
+      love.graphics.draw(images[55],x,y)
+      x=x+17	 
    end
+   love.graphics.draw(images[60],153,610)
+   x=600
+   for k,v in pairs(inventory) do love.graphics.draw(images[v],x,610) x=x+32 end
 end
