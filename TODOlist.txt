@@ -13,11 +13,7 @@ If item has been completed put in the done list.
       -implement enter for supersword
       -implement ctrl for shooting
   -destroy objects
-  -destroy enemies
-  -create inventory
-  -create object to interact with
-
-* Enemies
+  -destroy enemies* Enemies
   -create some sort of spawning system
   -write simple AIs for them
   
@@ -27,7 +23,6 @@ If item has been completed put in the done list.
 
 * GUI
   -these things shoulde be done at the end
-  -show inventory and such
   -make unvisited parts of the map not show on the minimap
   -make start screen
   -make pause screen
@@ -43,4 +38,8 @@ If item has been completed put in the done list.
   -create outside edges
   -write a better blob function for nicer looking worlds
   -find a solution for the ugly walls clifss are pretty good
-  -make a forbidden list of tiles to overwrite to prevent overlapping spritesgiy
+  -make a forbidden list of tiles to overwrite to prevent overlapping sprites
+  -create inventory
+  -create object to interact with
+  -show inventory and such
+
