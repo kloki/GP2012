@@ -28,7 +28,7 @@ function love.load()
    horizontaltiles=25
    verticaltiles=19
    sizeoverworld={6,12}
-   numberofworlds=2 --no more than 6*12
+   numberofworlds=5 --no more than 6*12
    loadtiles()
    Objects={}
    for i=1,numberofworlds do
@@ -42,7 +42,7 @@ function love.load()
    
    --zelda
    
-   health=7
+   health=3
    inventory={}
 
    --setup enemies

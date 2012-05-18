@@ -68,6 +68,7 @@ function createworlds()
    end
    worlds= buildgates(worlds)
    worlds=addkeys(worlds)
+   worlds=addchests(worlds)
 return worlds
 end
 
@@ -453,11 +454,31 @@ function placekey(worlds,v,key)
    y=math.random(2,verticaltiles-1)
    if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
    else 
-      if key==56 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key56'})
-      elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key57'})
-      elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key58'})
-      elseif key==59 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key59'})
+      if key==56 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key56'})
+      elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key57'})
+      elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key58'})
+      elseif key==59 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key59'})
       end
-      print(v)end
+   end
+return worlds
+end
+
+function addchests()
+   for n=1,4 do
+      v=math.random(1,numberofworlds)
+      worlds=addchest(worlds,v)
+   end
+return worlds
+end
+
+function addchest(worlds,world,iteminchest)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+      
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
+   else 
+      table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Chest'})
+   end
+
 return worlds
 end

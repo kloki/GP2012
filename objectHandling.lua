@@ -14,6 +14,21 @@ function addObjects()
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].key=v[5]
 			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='Heart' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'Heart'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='Chest' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'Chest'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}	
+			elseif v[5]=='OpenChest' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'OpenChest'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}	
 			else 
 			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Portal[v[5]].Type = 'Portal'
@@ -45,8 +60,21 @@ function deleteObject(object,location)
    --reset everything
    removeObjects()
    addObjects()
+end
+
+function modifyObject(object,location,newobject)
+   changing=0
+   for i,v in ipairs(Objects[currentworld]) do 
+      if v[5]==object and v[1]==location[1] and v[2]==location[2] then changing=i break end      
+   end
+   Objects[currentworld][changing][5]=newobject
+
+   --reset everything
+   removeObjects()
+   addObjects()
 
 end
+
 function addLink(x,y,w,h)
 	Link = Collider:addRectangle(x,y,w,h)
 
@@ -55,38 +83,38 @@ function addLink(x,y,w,h)
 end
 
 function updateLink(dt)
-	u = love.keyboard.isDown("up")
-	d = love.keyboard.isDown("down")
-	r = love.keyboard.isDown("right")
-	l = love.keyboard.isDown("left")
-	local dx,dy = 0,0
-	if u then
-		if r then
-			dy = -d_speed*dt
-			dx =  d_speed*dt
-		elseif l then
-			dy = -d_speed*dt
-			dx = -d_speed*dt
-		else
-			dy = -speed*dt
-		end
-	elseif d then
-		if r then
-			dy = d_speed*dt
-			dx = d_speed*dt
-		elseif l then
-			dy =  d_speed*dt
-			dx = -d_speed*dt
-		else
-			dy = speed*dt
-		end
-	elseif r then
-		dx = speed*dt
-	elseif l then
-		dx = -speed*dt
-	end
-	
-	Link:move(dx,dy)
+   u = love.keyboard.isDown("up")
+   d = love.keyboard.isDown("down")
+   r = love.keyboard.isDown("right")
+   l = love.keyboard.isDown("left")
+   local dx,dy = 0,0
+   if u then
+      if r then
+	 dy = -d_speed*dt
+	 dx =  d_speed*dt
+      elseif l then
+	 dy = -d_speed*dt
+	 dx = -d_speed*dt
+      else
+	 dy = -speed*dt
+      end
+   elseif d then
+      if r then
+	 dy = d_speed*dt
+	 dx = d_speed*dt
+      elseif l then
+	 dy =  d_speed*dt
+	 dx = -d_speed*dt
+      else
+	 dy = speed*dt
+      end
+   elseif r then
+      dx = speed*dt
+   elseif l then
+      dx = -speed*dt
+   end
+   
+   Link:move(dx,dy)
 end
 
 function addFoes()

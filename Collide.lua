@@ -26,6 +26,12 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == "Key" then
 		   table.insert(inventory,shape_b.key) 
 		   deleteObject(shape_b.key,shape_b.location)
+		elseif Type_b == "Heart" then
+		   deleteObject("Heart",shape_b.location)
+		   if health<8 then health=health+1 end 
+	  	elseif Type_b == "Chest" then
+		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
+		   modifyObject("Chest",shape_b.location,"OpenChest")
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 

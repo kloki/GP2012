@@ -37,7 +37,7 @@ function drawObjects(currentobjects)
    for i,v in ipairs(currentobjects) do
       tile=determinetilenumber(v[5])
       if tile~=1 then
-	 love.graphics.draw(images[tile],v[1]-6,v[2]-6)
+	 love.graphics.draw(images[tile],v[1],v[2])
       end
    end
 end
@@ -65,6 +65,9 @@ function determinetilenumber(name)
    elseif name=='Key57'then number=57
    elseif name=='Key58'then number=58
    elseif name=='Key59'then number=59
+   elseif name=='Heart'then number=55
+   elseif name=='Chest'then number=48
+   elseif name=='OpenChest'then number=49
    end
 return number
 end
