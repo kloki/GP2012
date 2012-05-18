@@ -40,9 +40,9 @@ function loadSprites()
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
    --
-   local sprite = 'standdown'
+   sprite = 'standdown'
    Link.heading = 'down'
-   local move = false
+   move = false
 end
 
 function drawSprite()
@@ -53,13 +53,13 @@ function drawSprite()
    elseif sprite == 'movedown' then
       linkdownRun:draw(x,y)
    elseif sprite == 'moveright' then
+
       linkrightRun:draw(x,y)
    elseif sprite == 'moveleft' then
       linkleftRun:draw(x,y)
 
    elseif sprite == 'swordup' then
       linkupSword:draw(x,y)
-      --linkupSword:play()
    elseif sprite == 'sworddown' then
       linkdownSword:draw(x,y)
    elseif sprite == 'swordright' then

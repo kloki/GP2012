@@ -2,8 +2,12 @@ function loadStart()
    --first startupscreen
    Slove = love.graphics.newImage("tiles/start/Love.png")
    Smenu = love.graphics.newImage("tiles/start/mainmenu.png")
-   h=love.graphics.getHeight()
-   print(h)   
+   Ssprite = love.graphics.newImage("tiles/start/MC-Items.png")
+   Ssword = love.graphics.newQuad(0,0,25,27,180,274)
+   Ssword:flip(true,false) 
+   m = 's'
+   bp= false
+
 
    --mooie font en achtergrondkleur
    local f = love.graphics.newFont("tiles/start/adam.ttf",20)
@@ -23,12 +27,20 @@ function drawStart()
       love.graphics.draw(Slove,0,100)
    elseif case == 'main' then
       love.graphics.draw(Smenu,0,0)
-      --love.graphics.setColor(0,100,0,255)
-      love.graphics.print("MainMenu", 100, 100)
+      if m == 's' then
+         love.graphics.drawq(Ssprite,Ssword,330,157)
+      elseif m == 'o' then
+         love.graphics.drawq(Ssprite,Ssword,330,212)
+      elseif m == 'e' then
+         love.graphics.drawq(Ssprite,Ssword,330,267)
+      end
    elseif case == 'gameover' then
 
-      --love.graphics.setColor(0,100,0,255)
-      --love.graphics.print("GAME OVER", 100, 100)
+      love.graphics.setColor(0,100,0,255)
+      love.graphics.print("GAME OVER", 100, 100)
+   elseif case == 'options' then
+      love.graphics.setColor(0,100,0,255)
+      love.graphics.print('Options', 200,200 )
    end
 end
 
@@ -45,10 +57,19 @@ function updateStart(dt)
          timer = 0
       end
    elseif case == 'main' then
-      if spressed then
+      --print(m)
+      if love.keyboard.isDown('up') then
+         --m=button()
+      end
+      if m == 's' and spressed then
          startup = false
          spressed = false
+      elseif m == 'o' and spressed then
+         case = 'options'
+      elseif m == 'e' and spressed then
+         love.event.push("quit")
       end
+   elseif case == 'options' then
    elseif case == 'gameover' then
       startup = true
       if spressed then
@@ -59,4 +80,35 @@ function updateStart(dt)
 end
 
 
+function button()
+   print(bttn)
+   if mp == 's' then
+      if k == 'down' then
+         --print('down',mp )
+         --mp = 'o'
+      elseif k == 'up' then
+         --print('up')
+         --mp = 'e'
+      end
+   elseif mp == 'o' then
+      if k == 'down' then
+         --print('down',mp)
+         --mp = 'e'
+      elseif k == 'up' then
+         --print('up')
+         --mp = 's'
+      end
+   elseif mp == 'e' then
+      if k == 'down' then
+         --print('down')
+         --mp = 's'
+      elseif k == 'up' then
+         --print('up')
+         --mp = 'o'
+      end
+   else
+      mp = mp
+   end
+   return mp
+end
 
