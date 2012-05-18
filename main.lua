@@ -116,6 +116,7 @@ function love.update(dt)
 end
 
 function love.keypressed(k)
+   bttn = k
 	if k == ' ' then 
 		spressed = true 
 	end

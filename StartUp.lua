@@ -57,9 +57,9 @@ function updateStart(dt)
          timer = 0
       end
    elseif case == 'main' then
-      --print(m)
-      if love.keyboard.isDown('up') then
-         --m=button()
+      if bttn == 'down' or bttn == 'up' then
+         m=button(m)
+         bttn=none
       end
       if m == 's' and spressed then
          startup = false
@@ -80,31 +80,31 @@ function updateStart(dt)
 end
 
 
-function button()
+function button(mp)
    print(bttn)
    if mp == 's' then
-      if k == 'down' then
+      if bttn == 'down' then
          --print('down',mp )
-         --mp = 'o'
-      elseif k == 'up' then
+         mp = 'o'
+      elseif bttn == 'up' then
          --print('up')
-         --mp = 'e'
+         mp = 'e'
       end
    elseif mp == 'o' then
-      if k == 'down' then
+      if bttn == 'down' then
          --print('down',mp)
-         --mp = 'e'
-      elseif k == 'up' then
+         mp = 'e'
+      elseif bttn == 'up' then
          --print('up')
-         --mp = 's'
+         mp = 's'
       end
    elseif mp == 'e' then
-      if k == 'down' then
+      if bttn == 'down' then
          --print('down')
-         --mp = 's'
-      elseif k == 'up' then
+         mp = 's'
+      elseif bttn == 'up' then
          --print('up')
-         --mp = 'o'
+         mp = 'o'
       end
    else
       mp = mp
