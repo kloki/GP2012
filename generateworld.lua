@@ -66,8 +66,9 @@ function createworlds()
    for m=1,numberofworlds do
       worlds[m]=createworld(m)
    end
-   gatedworlds= buildgates(worlds)
-return gatedworlds
+   worlds= buildgates(worlds)
+   worlds=addkeys(worlds)
+return worlds
 end
 
 
@@ -434,4 +435,22 @@ function buildhouse(world,typehouse,m,x,y)
 
    end
 return world
+end
+
+function addkeys(worlds)
+
+for key=56,59 do
+   v=math.random(1,numberofworlds)
+   worlds=placekey(worlds,v,key)
+end
+
+return worlds
+end
+
+function placekey(worlds,v,key)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
+   else worlds[v][y][x]=key print(v)end
+return worlds
 end
