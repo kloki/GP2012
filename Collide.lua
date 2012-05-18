@@ -1,5 +1,6 @@
 require 'HardonCollider'
 require 'util'
+require 'objectHandling'
 
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	local Type_a = shape_a.Type
@@ -23,7 +24,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		   nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
 		   shape_a:move(40*nv[1],40*nv[2])
 		elseif Type_b == "Key" then
-		   if not inlist(shape_b.key,inventory) then table.insert(inventory,shape_b.key) end
+		   if not inlist(shape_b.key,inventory) then table.insert(inventory,shape_b.key) deleteObject(shape_b.key) end
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 

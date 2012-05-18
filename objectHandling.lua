@@ -36,6 +36,26 @@ function removeObjects()
 	for k,v in pairs(Portal) do Collider:remove(v) end
 end
 
+function deleteObject(object)
+   --determine object name
+   if object==56 then nameobject='Key56'
+   elseif object==57 then nameobject='Key57'
+   elseif object==58 then nameobject='Key58'
+   elseif object==59 then nameobject='Key59'
+   end
+   --remove from object
+   removing=0
+   for i,v in ipairs(Objects[currentworld]) do 
+      if v[5]==nameobject then removing=i break end      
+   end
+   table.remove( Objects[currentworld],removing)
+   --remove sprite
+   for i=1,verticaltiles do
+      for n=1,horizontaltiles do
+	 if worlds[currentworld][i][n]==object then worlds[currentworld][i][n]=1 end                           	 
+      end
+   end
+end
 function addLink(x,y,w,h)
 	Link = Collider:addRectangle(x,y,w,h)
    Link.Type = 'Link'
@@ -133,3 +153,4 @@ function sword()
 		Collider:setPassive(Sword)
 	end
 end
+
