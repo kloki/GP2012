@@ -59,7 +59,6 @@ function drawSprite()
       linkleftRun:draw(x,y)
 
    elseif sprite == 'swordup' then
-      print('ik hier')
       linkupSword:draw(x,y)
    elseif sprite == 'sworddown' then
       linkdownSword:draw(x,y)
@@ -95,7 +94,6 @@ function updateSprite(dt)
 
 
    if spressed then
-      print('hallo')
       move = false
       if Link.heading == 'down' then
          linkdownSword:update(dt)
