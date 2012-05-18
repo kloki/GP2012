@@ -69,26 +69,26 @@ function love.draw()
    if startup or health==0 then
       drawStart()
    else
-	   --WORLD
+      --WORLD
       drawworld(worlds[currentworld])
       drawmap(overworld)
       drawHUD(health,inventory)
-	   
-	   --LINK
-	   drawSprite()
-	   
-	   --ENEMIES
-	   drawFoes()
-	   
+      drawObjects(Objects[currentworld])
+      --LINK
+      drawSprite()
+      
+      --ENEMIES
+      drawFoes()
+      
       --DEBUG
-	   --for debug draw bounding boxes
-	   for i=1,#Object do Object[i]:draw('line') end
-	   Link:draw('line')
-	   for i=1,#Foes do Foes[i]:draw('line') end
-	   love.graphics.setColor(255,0,0)
-	   for k,v in pairs(Portal) do v:draw('line') end
-	   Sword:draw('line')
-	   love.graphics.setColor(255,255,255)
+      --for debug draw bounding boxes
+      for i=1,#Object do Object[i]:draw('line') end
+      Link:draw('line')
+      for i=1,#Foes do Foes[i]:draw('line') end
+      love.graphics.setColor(255,0,0)
+      for k,v in pairs(Portal) do v:draw('line') end
+      Sword:draw('line')
+      love.graphics.setColor(255,255,255)
       love.graphics.print(test_output,100,100)
    end
 end
@@ -97,20 +97,20 @@ function love.update(dt)
    if startup then
       updateStart(dt)
    else
-   	local oldworld = currentworld
-	   --update sprite animation and position
-	   updateLink(dt)
-	   updateSprite(dt)
-	   updateFoes(dt)
+      local oldworld = currentworld
+      --update sprite animation and position
+      updateLink(dt)
+      updateSprite(dt)
+      updateFoes(dt)
       --handle collisions
       Collider:update(dt)
-	   if oldworld ~= currentworld then
-	   	removeObjects() 
+      if oldworld ~= currentworld then
+	 removeObjects() 
          removeFoes()
-	   	addObjects()
+	 addObjects()
          addFoes()
-	   end
-	   --handle music streams
+      end
+      --handle music streams
       TEsound.cleanup()
    end
 end

@@ -12,10 +12,8 @@ function addObjects()
 			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Object[#Object].Type = 'Key'
 			   Collider:addToGroup("Object",Object[#Object])
-			   if     v[5] == 'Key56' then Object[#Object].key=56
-			   elseif v[5] == 'Key57' then Object[#Object].key=57
-			   elseif v[5] == 'Key58' then Object[#Object].key=58
-			   elseif v[5] == 'Key59' then Object[#Object].key=59 end
+			   Object[#Object].key=v[5]
+			 
 			else 
 			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Portal[v[5]].Type = 'Portal'
@@ -37,29 +35,21 @@ function removeObjects()
 end
 
 function deleteObject(object)
-   --determine object name
-   if object==56 then nameobject='Key56'
-   elseif object==57 then nameobject='Key57'
-   elseif object==58 then nameobject='Key58'
-   elseif object==59 then nameobject='Key59'
-   end
-   --remove from object
+   
    removing=0
    for i,v in ipairs(Objects[currentworld]) do 
-      if v[5]==nameobject then removing=i break end      
+      if v[5]==object then removing=i break end      
    end
    table.remove( Objects[currentworld],removing)
-   --remove sprite
-   for i=1,verticaltiles do
-      for n=1,horizontaltiles do
-	 if worlds[currentworld][i][n]==object then worlds[currentworld][i][n]=1 end                           	 
-      end
-   end
+
+   --reset everything
    removeObjects()
    addObjects()
+
 end
 function addLink(x,y,w,h)
 	Link = Collider:addRectangle(x,y,w,h)
+
    Link.Type = 'Link'
 	Collider:addToGroup("Link",Link)
 end
@@ -109,19 +99,19 @@ function addFoes()
 end
 
 function addFoe(x,y,foetype)
-	if foetype == 'goron' then
-		Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
-		Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
-		Foes[#Foes].speed = 30
+   if foetype == 'goron' then
+      Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
+      Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
+      Foes[#Foes].speed = 30
       Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'goron'
    elseif foetype == 'snake' then
       Foes[#Foes + 1] = Collider:addRectangle(x,y,20,24)
       Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
-		Foes[#Foes].speed = 40
+      Foes[#Foes].speed = 40
       Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'snake'
-	end
+   end
 end
 
 function removeFoes()

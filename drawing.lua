@@ -33,6 +33,15 @@ function drawmap(overworld)
    love.graphics.setColor(255,255,255)
 end
 
+function drawObjects(currentobjects)
+   for i,v in ipairs(currentobjects) do
+      tile=determinetilenumber(v[5])
+      if tile~=1 then
+	 love.graphics.draw(images[tile],v[1]-6,v[2]-6)
+      end
+   end
+end
+
 function drawHUD(health,inventory)
    x=64
    y=610
@@ -43,5 +52,19 @@ function drawHUD(health,inventory)
    end
    love.graphics.draw(images[60],153,610)
    x=600
-   for k,v in pairs(inventory) do love.graphics.draw(images[v],x,610) x=x+32 end
+   for k,v in pairs(inventory) do 
+      number=determinetilenumber(v)
+      love.graphics.draw(images[number],x,610) 
+      x=x+32 
+   end
+end
+
+function determinetilenumber(name)
+   number=1
+   if name=='Key56' then number=56 
+   elseif name=='Key57'then number=57
+   elseif name=='Key58'then number=58
+   elseif name=='Key59'then number=59
+   end
+return number
 end

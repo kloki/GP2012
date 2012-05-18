@@ -249,8 +249,8 @@ end
 
 
 function add64x64(world,m,tiletype)
-   x=math.random(2,horizontaltiles-2)
-   y=math.random(2,verticaltiles-2)
+   x=math.random(3,horizontaltiles-3)
+   y=math.random(3,verticaltiles-3)
    if inlist(world[y][x],forbiddentiles) or inlist(world[y+1][x],forbiddentiles) or inlist(world[y+1][x+1],forbiddentiles) or inlist(world[y][x+1],forbiddentiles) then
       world=add64x64(world,m,tiletype)--if not possible to place tile try again
    else
@@ -453,7 +453,6 @@ function placekey(worlds,v,key)
    y=math.random(2,verticaltiles-1)
    if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
    else 
-      worlds[v][y][x]=key
       if key==56 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key56'})
       elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key57'})
       elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key58'})
