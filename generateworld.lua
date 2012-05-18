@@ -90,7 +90,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(1,5)
+   worldtype=math.random(1,1)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -214,7 +214,7 @@ function createblob(world,m,typeblob,length,width,x,y,typebush)
 	    table.insert(Objects[m],{(x-i-1)*tilesize,(n+y-1)*tilesize,32,32,'Object'})
 	 end	 
       end
-   else
+   elseif typeblob==1 then
       for n=0,length-1 do
 	 for i=0,math.random(0,width-1) do
 	    world[y+i][n+x]=typebush
@@ -231,8 +231,10 @@ return world
 end
    
 function addbushes(world,m,width,length,typebush)
-   x=math.random(width+2,horizontaltiles-width-length-1)
-   y=math.random(width+2,verticaltiles-length-width-1)
+   if math.random(1,2)==1 then x=math.random(width+2,10)
+   else x=math.random(16,horizontaltiles-width-length-1) end
+   if math.random(1,2)==1 then y=math.random(width+2,10)
+   else y=math.random(13,verticaltiles-length-width-1) end
    world=createblob(world,m,0,length,width,x,y,typebush)
    world=createblob(world,m,1,length,width,x,y,typebush)
 return world
@@ -326,11 +328,11 @@ end
 
 function grassworld(world,m)
    --add bushes
-   for i=1,math.random(1,3) do
-      world=addbushes(world,m,3,math.random(1,4),math.random(12,15))
+   for i=1,math.random(4,8) do
+      world=addbushes(world,m,2,math.random(1,3),math.random(12,15))
    end
    --trees
-   for i=1,math.random(1,9) do
+   for i=1,math.random(6,9) do
       world=add64x64(world,m,29)
    end
 
@@ -345,6 +347,11 @@ function cliffworld(world,m)
    end
    --for cliff
    world=addcliff(world,m)
+   
+   --for tree
+   for i=1,math.random(1,2) do
+      world=add64x64(world,m,29)
+   end
 return world
 end
 
@@ -443,7 +450,7 @@ function addkeys(worlds)
 
 for key=56,59 do
    v=math.random(1,numberofworlds)
-   worlds=placekey(worlds,v,56)
+   worlds=placekey(worlds,v,key)
 end
 
 return worlds
