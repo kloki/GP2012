@@ -118,9 +118,9 @@ function createoverworld()
    count = 2
    while true do
       for i=1,sizeoverworld[1] do
-	 if count==numberofworlds then break end
+	 if count==numberofworlds+1 then break end
 	 for n=1, sizeoverworld[2]do
-	    if count==numberofworlds then break end
+	    if count==numberofworlds+1 then break end
 	    if overworld[i][n]==0 then
 	       x=0
 	       if overworld[i-1][n]~=0 then x=x+1 end
@@ -129,6 +129,7 @@ function createoverworld()
 	       if overworld[i][n+1]~=0 then x=x+1 end
 	       if x~=0 then
 		  if math.random()<(0.42/x) then
+		     print(count)
 		     overworld[i][n]=count
 		     count=count+1
 		  end
@@ -136,8 +137,9 @@ function createoverworld()
 	    end
 	 end
       end
-      if count==numberofworlds then break end
+      if count==numberofworlds+1 then break end
    end
+   print("ged")
 return overworld
 end
 
