@@ -442,7 +442,7 @@ function addkeys(worlds)
 
 for key=56,59 do
    v=math.random(1,numberofworlds)
-   worlds=placekey(worlds,v,key)
+   worlds=placekey(worlds,v,56)
 end
 
 return worlds

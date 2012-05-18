@@ -13,7 +13,7 @@ function addObjects()
 			   Object[#Object].Type = 'Key'
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].key=v[5]
-			 
+			   Object[#Object].location={v[1],v[2]}
 			else 
 			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Portal[v[5]].Type = 'Portal'
@@ -34,11 +34,11 @@ function removeObjects()
 	for k,v in pairs(Portal) do Collider:remove(v) end
 end
 
-function deleteObject(object)
+function deleteObject(object,location)
    
    removing=0
    for i,v in ipairs(Objects[currentworld]) do 
-      if v[5]==object then removing=i break end      
+      if v[5]==object and v[1]==location[1] and v[2]==location[2] then removing=i break end      
    end
    table.remove( Objects[currentworld],removing)
 
