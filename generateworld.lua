@@ -49,8 +49,12 @@ function loadtiles()
    images[52]=love.graphics.newImage("tiles/path/path3.png")
    images[53]=love.graphics.newImage("tiles/path/path4.png")
    images[54]=love.graphics.newImage("tiles/path/path5.png")
-   
-
+   images[55]=love.graphics.newImage("sprites/heart.png")
+   images[56]=love.graphics.newImage("tiles/objects/key1.png")
+   images[57]=love.graphics.newImage("tiles/objects/key2.png")
+   images[58]=love.graphics.newImage("tiles/objects/key3.png")
+   images[59]=love.graphics.newImage("tiles/objects/key4.png")
+   images[60]=love.graphics.newImage("tiles/objects/sword.png")
    --here the list of tiles which cannot be drawnover
    forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
 end
@@ -62,8 +66,9 @@ function createworlds()
    for m=1,numberofworlds do
       worlds[m]=createworld(m)
    end
-   gatedworlds= buildgates(worlds)
-return gatedworlds
+   worlds= buildgates(worlds)
+   worlds=addkeys(worlds)
+return worlds
 end
 
 
@@ -113,9 +118,9 @@ function createoverworld()
    count = 2
    while true do
       for i=1,sizeoverworld[1] do
-	 if count==numberofworlds then break end
+	 if count==numberofworlds+1 then break end
 	 for n=1, sizeoverworld[2]do
-	    if count==numberofworlds then break end
+	    if count==numberofworlds+1 then break end
 	    if overworld[i][n]==0 then
 	       x=0
 	       if overworld[i-1][n]~=0 then x=x+1 end
@@ -131,8 +136,9 @@ function createoverworld()
 	    end
 	 end
       end
-      if count==numberofworlds then break end
+      if count==numberofworlds+1 then break end
    end
+
 return overworld
 end
 
@@ -430,4 +436,29 @@ function buildhouse(world,typehouse,m,x,y)
 
    end
 return world
+end
+
+function addkeys(worlds)
+
+for key=56,59 do
+   v=math.random(1,numberofworlds)
+   worlds=placekey(worlds,v,key)
+end
+
+return worlds
+end
+
+function placekey(worlds,v,key)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
+   else 
+      worlds[v][y][x]=key
+      if key==56 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key56'})
+      elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key57'})
+      elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key58'})
+      elseif key==59 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key59'})
+      end
+      print(v)end
+return worlds
 end
