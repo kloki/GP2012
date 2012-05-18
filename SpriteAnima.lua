@@ -31,10 +31,14 @@ function loadSprites()
 	gorondownRun  = newAnimation(goron_sheet2,29,30,0.1,8,0,0,false)
    
    snake_sheet = love.graphics.newImage("sprites/snake.png")
-   snakeleft  = newAnimation(snake_sheet,24,16,0.15,4,2, 3,false)
-   snakeright = newAnimation(snake_sheet,24,16,0.15,4,2,25,false)
-   snakedown  = newAnimation(snake_sheet,22,16,0.15,4,4,46,false)
-   snakeup    = newAnimation(snake_sheet,22,16,0.15,4,4,68,false)
+   snakeleft  = newAnimation(snake_sheet,24,16,0.1,4,2, 3,false)
+   snakeright = newAnimation(snake_sheet,24,16,0.1,4,2,25,false)
+   snakedown  = newAnimation(snake_sheet,22,16,0.1,4,4,46,false)
+   snakeup    = newAnimation(snake_sheet,22,16,0.1,4,4,68,false)
+   snakeleft:setMode("bounce")
+   snakeright:setMode("bounce")
+   snakedown:setMode("bounce")
+   snakeup :setMode("bounce")
    --
    local sprite = 'standdown'
    Link.heading = 'down'
@@ -177,12 +181,12 @@ function drawFoes(dt)
    for i, v in ipairs(Foes) do
       x,y = v:bbox()
       --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
-      if Foes[i].Type == 'goron' then
+      if Foes[i].sprite == 'goron' then
          if 	 Foes[i].dir[2] == 1  then gorondownRun:draw(x,y)
          elseif Foes[i].dir[2] == -1 then goronupRun:draw(x,y)
          elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
          elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
-      elseif Foes[i].Type == 'snake' then
+      elseif Foes[i].sprite == 'snake' then
          if 	 Foes[i].dir[2] == 1  then snakedown:draw(x,y)
          elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
          elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)

@@ -98,6 +98,7 @@ function love.update(dt)
 	updateLink(dt)
 	updateSprite(dt)
 	updateFoes(dt)
+   sword()
    --handle collisions
    Collider:update(dt)
 	if oldworld ~= currentworld then
@@ -113,7 +114,6 @@ end
 function love.keypressed(k)
 	if k == ' ' then 
 		spressed = true 
-		sword()
 	end
    if k == 'q' then
       love.event.push("quit")
