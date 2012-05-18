@@ -15,6 +15,7 @@ function love.load()
    -- startupscreens and menu stuff
    startup = true
    loadStart()
+   bttn = 'none'
 
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
@@ -92,22 +93,25 @@ function love.draw()
 end
 
 function love.update(dt)
-   updateStart(dt)
-	local oldworld = currentworld
-	--update sprite animation and position
-	updateLink(dt)
-	updateSprite(dt)
-	updateFoes(dt)
-   --handle collisions
-   Collider:update(dt)
-	if oldworld ~= currentworld then
-		removeObjects() 
-      removeFoes()
-		addObjects()
-      addFoes()
-	end
-	--handle music streams
-   TEsound.cleanup()
+   if startup then
+      updateStart(dt)
+   else
+   	local oldworld = currentworld
+	   --update sprite animation and position
+	   updateLink(dt)
+	   updateSprite(dt)
+	   updateFoes(dt)
+      --handle collisions
+      Collider:update(dt)
+	   if oldworld ~= currentworld then
+	   	removeObjects() 
+         removeFoes()
+	   	addObjects()
+         addFoes()
+	   end
+	   --handle music streams
+      TEsound.cleanup()
+   end
 end
 
 function love.keypressed(k)

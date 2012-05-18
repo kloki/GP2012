@@ -36,9 +36,9 @@ function loadSprites()
    snakedown  = newAnimation(snake_sheet,22,16,0.15,4,4,46,false)
    snakeup    = newAnimation(snake_sheet,22,16,0.15,4,4,68,false)
    --
-   local sprite = 'standdown'
+   sprite = 'standdown'
    Link.heading = 'down'
-   local move = false
+   move = false
 end
 
 function drawSprite()
@@ -49,13 +49,14 @@ function drawSprite()
    elseif sprite == 'movedown' then
       linkdownRun:draw(x,y)
    elseif sprite == 'moveright' then
+
       linkrightRun:draw(x,y)
    elseif sprite == 'moveleft' then
       linkleftRun:draw(x,y)
 
    elseif sprite == 'swordup' then
+      print('ik hier')
       linkupSword:draw(x,y)
-      --linkupSword:play()
    elseif sprite == 'sworddown' then
       linkdownSword:draw(x,y)
    elseif sprite == 'swordright' then
@@ -90,6 +91,7 @@ function updateSprite(dt)
 
 
    if spressed then
+      print('hallo')
       move = false
       if Link.heading == 'down' then
          linkdownSword:update(dt)
