@@ -32,15 +32,15 @@ function loadtiles()
    images[35]=love.graphics.newImage("tiles/edges/trees-top-gate.png")
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
    images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
-   images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
+   --images[38]=love.graphics.newImage("tiles/")
    images[39]=love.graphics.newImage("tiles/house/house1.png")
    images[40]=love.graphics.newImage("tiles/house/house2.png")
    images[41]=love.graphics.newImage("tiles/house/house3.png")
    images[42]=love.graphics.newImage("tiles/house/tree-house.png")
-   images[43]=love.graphics.newImage("tiles/sand/sand1.png")
-   images[44]=love.graphics.newImage("tiles/sand/sand2.png")
-   images[45]=love.graphics.newImage("tiles/sand/sand3.png")
-   images[46]=love.graphics.newImage("tiles/sand/sand4.png")
+   images[43]=love.graphics.newImage("tiles/bushes/small_bush.png")
+   images[44]=love.graphics.newImage("tiles/bushes/mushroom.png")
+   --images[45]=love.graphics.newImage("tiles/sand/sand3.png")
+   --images[46]=love.graphics.newImage("tiles/sand/sand4.png")
    images[47]=love.graphics.newImage("tiles/objects/pot.png")
    images[48]=love.graphics.newImage("tiles/objects/treasure-chest.png")
    images[49]=love.graphics.newImage("tiles/objects/treasure-chest-opened.png")
@@ -55,8 +55,14 @@ function loadtiles()
    images[58]=love.graphics.newImage("tiles/objects/key3.png")
    images[59]=love.graphics.newImage("tiles/objects/key4.png")
    images[60]=love.graphics.newImage("tiles/objects/sword.png")
+   images[61]=love.graphics.newImage("tiles/scenery/lumber.png")
+   images[62]=love.graphics.newImage("tiles/scenery/oneye.png")
+   images[63]=love.graphics.newImage("tiles/scenery/schommel.png")
+   images[64]=love.graphics.newImage("tiles/scenery/stool.png")
+   images[65]=love.graphics.newImage("tiles/scenery/well.png")
+   
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
+   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,61,62,63,64,65}
 end
 
 
@@ -101,6 +107,8 @@ function createworld(m)
       world=villageworld(world,m)
    elseif worldtype==5 then
       world=hermitworld(world,m)
+   elseif worldtype==6 then
+      world=testworld(world,m)
    end
 return world
 end
@@ -331,6 +339,8 @@ function grassworld(world,m)
    for i=1,math.random(4,8) do
       world=addbushes(world,m,2,math.random(1,3),math.random(12,15))
    end
+   --scenery
+   world=addscenery(world,m)
    --trees
    for i=1,math.random(6,9) do
       world=add64x64(world,m,29)
@@ -343,7 +353,7 @@ function cliffworld(world,m)
    
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,0,38)
+      world=add32x32(world,0,math.random(43,44))
    end
    --for cliff
    world=addcliff(world,m)
@@ -358,7 +368,7 @@ end
 function waterworld(world,m)
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,0,38)
+      world=add32x32(world,0,math.random(43,44))
    end
    
    --water
@@ -488,4 +498,64 @@ function addchest(worlds,world,iteminchest)
    end
 
 return worlds
+end
+
+function testworld(world,m)
+   y=10
+   x=10
+   for i=0,2 do
+      for n=0,2 do
+	 world[y+n][x+i]=-1
+      end
+   end
+   world[y][x]=65
+   table.insert(Objects[m],{(x-1)*tilesize+10,(y-1)*tilesize,40,36,'Object'})
+return world
+end
+
+function addscenery(world,m)
+   object=math.random(61,65)
+   x=math.random(3,horizontaltiles-6)
+   y=math.random(3,verticaltiles-4)
+   if object==61 then
+      for i=0,1 do
+	 for n=0,1 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,38,38,'Object'})
+      table.insert(Objects[m],{(x-1)*tilesize+38,(y-1)*tilesize,26,10,'Object'})
+   elseif object==62 then
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})  
+   elseif object==63 then
+      for i=0,1 do
+	 for n=0,0 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,44,32,'Object'})
+   elseif object==64 then
+      for i=0,1 do
+	 for n=0,1 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,56,36,'Object'})
+   elseif object==65 then
+      for i=0,2 do
+	 for n=0,2 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,40,36,'Object'})
+
+   end
+
+
+return world
 end
