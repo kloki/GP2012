@@ -129,7 +129,6 @@ function createoverworld()
 	       if overworld[i][n+1]~=0 then x=x+1 end
 	       if x~=0 then
 		  if math.random()<(0.42/x) then
-		     print(count)
 		     overworld[i][n]=count
 		     count=count+1
 		  end
@@ -139,7 +138,7 @@ function createoverworld()
       end
       if count==numberofworlds+1 then break end
    end
-   print("ged")
+
 return overworld
 end
 
@@ -453,6 +452,13 @@ function placekey(worlds,v,key)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
    if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
-   else worlds[v][y][x]=key print(v)end
+   else 
+      worlds[v][y][x]=key
+      if key==56 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key56'})
+      elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key57'})
+      elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key58'})
+      elseif key==59 then table.insert(Objects[v],{(x-1)*tilesize+6,(y-1)*tilesize+6,20,20,'Key59'})
+      end
+      print(v)end
 return worlds
 end

@@ -1,23 +1,31 @@
 function addObjects()
 	Object = {}
 	Portal = {}
-   Directions = {'North','East','South','West'}
+	Directions = {'North','East','South','West'}
 	if Objects[currentworld] ~= nil then
 		for i,v in ipairs(Objects[currentworld]) do
 			if v[5] == 'Object' then
 				Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-            Object[#Object].Type = 'Object'
+				Object[#Object].Type = 'Object'
 				Collider:addToGroup("Object",Object[#Object])
+			elseif v[5]=='Key56' or v[5]=='Key57' or v[5]=='Key58' or v[5]=='Key59' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'Key'
+			   Collider:addToGroup("Object",Object[#Object])
+			   if     v[5] == 'Key56' then Object[#Object].key=56
+			   elseif v[5] == 'Key57' then Object[#Object].key=57
+			   elseif v[5] == 'Key58' then Object[#Object].key=58
+			   elseif v[5] == 'Key59' then Object[#Object].key=59 end
 			else 
-            Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
-            Portal[v[5]].Type = 'Portal'
-            Collider:addToGroup("Object",Portal[side])
-            for i=1,#Directions do
-               if     v[5] == 'North' then Portal[v[5]].ix,Portal[v[5]].iy = 0,-1
-               elseif v[5] == 'East'  then Portal[v[5]].ix,Portal[v[5]].iy = 1,0
-               elseif v[5] == 'South' then Portal[v[5]].ix,Portal[v[5]].iy = 0,1
-               elseif v[5] == 'West'  then Portal[v[5]].ix,Portal[v[5]].iy = -1,0 end
-            end
+			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Portal[v[5]].Type = 'Portal'
+			   Collider:addToGroup("Object",Portal[side])
+			   for i=1,#Directions do
+			      if     v[5] == 'North' then Portal[v[5]].ix,Portal[v[5]].iy = 0,-1
+			      elseif v[5] == 'East'  then Portal[v[5]].ix,Portal[v[5]].iy = 1,0
+			      elseif v[5] == 'South' then Portal[v[5]].ix,Portal[v[5]].iy = 0,1
+			      elseif v[5] == 'West'  then Portal[v[5]].ix,Portal[v[5]].iy = -1,0 end
+			   end
 			end
 		end
 	end
@@ -107,7 +115,7 @@ end
 
 function addSword()
 	Sword = Collider:addRectangle(0,0,24,24)
-   Sword.Type = 'Sword'
+	Sword.Type = 'Sword'
 	Collider:addToGroup('Link',Sword)
 	Collider:setPassive(Sword)
 end

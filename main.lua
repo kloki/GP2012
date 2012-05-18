@@ -42,7 +42,7 @@ function love.load()
    --zelda
    
    health=7
-   inventory={56,57,58,59}
+   inventory={}
 
    --setup enemies
    number_of_enemies = 5
