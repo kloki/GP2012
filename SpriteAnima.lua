@@ -181,16 +181,18 @@ function drawFoes(dt)
    for i, v in ipairs(Foes) do
       x,y = v:bbox()
       --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
-      if Foes[i].sprite == 'goron' then
-         if 	 Foes[i].dir[2] == 1  then gorondownRun:draw(x,y)
-         elseif Foes[i].dir[2] == -1 then goronupRun:draw(x,y)
-         elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
-         elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
-      elseif Foes[i].sprite == 'snake' then
-         if 	 Foes[i].dir[2] == 1  then snakedown:draw(x,y)
-         elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
-         elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
-         elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
+      if Foes[i].life > 0 then
+         if Foes[i].sprite == 'goron' then
+            if 	 Foes[i].dir[2] == 1  then gorondownRun:draw(x,y)
+            elseif Foes[i].dir[2] == -1 then goronupRun:draw(x,y)
+            elseif Foes[i].dir[1] == 1  then goronrightRun:draw(x,y)
+            elseif Foes[i].dir[1] == -1 then goronleftRun:draw(x,y) end
+         elseif Foes[i].sprite == 'snake' then
+            if 	 Foes[i].dir[2] == 1  then snakedown:draw(x,y)
+            elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
+            elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
+            elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
+         end
       end
    end
 end
@@ -198,7 +200,9 @@ end
 function updateFoes(dt)
 	local x,y
 	for i,v in ipairs(Foes) do
-		v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+      if v.life > 0 then
+         v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+      end
 	end
 	goronrightRun:update(dt)
 	goronleftRun:update(dt)

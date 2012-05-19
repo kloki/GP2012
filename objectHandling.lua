@@ -119,26 +119,37 @@ end
 
 function addFoes()
    Foes = {}
-   addFoe(100,100,'snake')
-   addFoe(200,100,'snake')
-   addFoe(300,100,'snake')
-   addFoe(400,100,'snake')
-   addFoe(200,500,'goron')
+   local temp = math.random(1,4)
+   if temp == 1 then
+      addFoe(100,100,'snake')
+      addFoe(200,100,'snake')
+      addFoe(300,100,'snake')
+      addFoe(400,100,'snake')
+   elseif temp == 2 then
+      addFoe(200,300,'goron')
+      addFoe(300,500,'goron')
+      addFoe(200,250,'goron')
+   elseif temp == 3 then
+      addFoe(400,400,'snake')
+   end
+      
 end
 
 function addFoe(x,y,foetype)
    if foetype == 'goron' then
       Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
-      Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
+      Foes[#Foes].dir = {0,-1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 30
       Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'goron'
+      Foes[#Foes].life = 2
    elseif foetype == 'snake' then
       Foes[#Foes + 1] = Collider:addRectangle(x,y,20,24)
       Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 40
       Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'snake'
+      Foes[#Foes].life = 1
    end
 end
 
@@ -157,7 +168,7 @@ function addSword()
 	Sword = Collider:addRectangle(0,0,24,24)
 	Sword.Type = 'Sword'
 	Collider:addToGroup('Link',Sword)
-	Collider:setPassive(Sword)
+	Collider:setGhost(Sword)
 end
 
 function sword()
@@ -168,9 +179,9 @@ function sword()
 		elseif Link.heading == 'right'then Sword:moveTo(x+36,y+15)
 		elseif Link.heading == 'left' then Sword:moveTo(x-12,y+15)
 		end
-		Collider:setActive(Sword)
+		Collider:setSolid(Sword)
 	else
-		Collider:setPassive(Sword)
+		Collider:setGhost(Sword)
 	end
 end
 
