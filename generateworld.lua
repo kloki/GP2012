@@ -109,9 +109,9 @@ function createworld(m)
    elseif worldtype==3 then
       world=waterworld(world,m)
    elseif worldtype==4 then
-      world=villageworld(world,m)
-   elseif worldtype==5 then
       world=hermitworld(world,m)
+   elseif worldtype==5 then
+      world=villageworld(world,m)
    elseif worldtype==6 then
       world=testworld(world,m)
    end
