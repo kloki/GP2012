@@ -29,6 +29,12 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == "Heart" then
 		   deleteObject("Heart",shape_b.location)
 		   if health<8 then health=health+1 end 
+		elseif Type_b == "Door" then
+		   currentworld=numberofworlds+currentworld
+		   Link:moveTo(400,330)
+		elseif Type_b == "Door2" then
+		   currentworld=currentworld-numberofworlds
+		   Link:moveTo(shape_b.returnlocation[1],shape_b.returnlocation[2])
 	  	elseif Type_b == "Chest" then
 		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
 		   modifyObject("Chest",shape_b.location,"OpenChest")

@@ -14,6 +14,14 @@ function drawworld(world1)
    end   
 end
 
+function drawhouse(world)
+   love.graphics.setColor(0,0,0)
+   love.graphics.rectangle('fill',0,0,800,608)
+   love.graphics.setColor(255,255,255)
+   love.graphics.draw(images[world],280,224)
+end
+
+
 function drawmap(overworld)
    --Needs to change the map that unvisited areas are hidden for the player
    love.graphics.setColor(238,221,130)

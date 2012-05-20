@@ -70,7 +70,13 @@ function love.draw()
       drawStart()
    else
       --WORLD
-      drawworld(worlds[currentworld])
+      if currentworld>numberofworlds then 
+	 drawhouse(worlds[currentworld])
+
+      else  
+	 drawworld(worlds[currentworld]) 
+
+      end
       drawmap(overworld)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
@@ -78,7 +84,7 @@ function love.draw()
       drawSprite()
       
       --ENEMIES
-      drawFoes()
+      if currentworld<numberofworlds then  drawFoes() end --no enemies in house
       
       --DEBUG
       --for debug draw bounding boxes
