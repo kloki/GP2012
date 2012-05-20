@@ -84,7 +84,7 @@ function love.draw()
       drawSprite()
       
       --ENEMIES
-      if currentworld<numberofworlds then  drawFoes() end --no enemies in house
+      drawFoes()
       
       --DEBUG
       --for debug draw bounding boxes

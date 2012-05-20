@@ -404,7 +404,7 @@ return world
 end
 
 function hermitworld(world,m)   
-   world=buildhouse(world,math.random(1,7),m,math.random(3,20),math.random(3,16))
+   world=buildhouse(world,math.random(1,6),m,math.random(3,20),math.random(3,16))
 
 return world
 end
