@@ -256,7 +256,8 @@ end
 function add32x32(world,m,tiletype)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-   world[y][x]=tiletype
+   if inlist(world[y][x],forbiddenlist) then world=add32x32(world,m,tiletype) 
+   else world[y][x]=tiletype
    if m~=0 then
       table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
    end
@@ -344,8 +345,6 @@ function grassworld(world,m)
    for i=1,math.random(4,8) do
       world=addbushes(world,m,2,math.random(1,3),math.random(12,15))
    end
-   --scenery
-   world=addscenery(world,m)
    --trees
    for i=1,math.random(6,9) do
       world=add64x64(world,m,29)
@@ -404,14 +403,22 @@ return world
 end
 
 function hermitworld(world,m)   
-   world=buildhouse(world,math.random(1,6),m,math.random(3,20),math.random(3,16))
+   world=buildhouse(world,math.random(1,6),m,math.random(3,20),math.random(3,10))
+   world=addscenery(world,math.random(61,65),m,math.random(3,20),math.random(11,16))
+   for i=1,math.random(1,5) do
+      world=add64x64(world,m,29)
+   end
+   --for small bushes
+   for i=1,math.random(5,6) do
+      world=add32x32(world,0,math.random(45,46))
+   end
 
 return world
 end
 
 function buildhouse(world,typehouse,m,x,y)
    if typehouse==1 then
-      for i=0,1 do
+      for i=0,2 do
 	 for n=0,2 do
 	    world[y+n][x+i]=-1
 	 end
@@ -425,7 +432,7 @@ function buildhouse(world,typehouse,m,x,y)
    end
    
    if typehouse==2 then
-      for i=0,3 do
+      for i=0,4 do
 	 for n=0,2 do
 	    world[y+n][x+i]=-1
 	 end
@@ -439,7 +446,7 @@ function buildhouse(world,typehouse,m,x,y)
    end
    
    if typehouse==3 then
-      for i=0,2 do
+      for i=0,3 do
 	 for n=0,2 do
 	    world[y+n][x+i]=-1
 	 end
@@ -454,7 +461,7 @@ function buildhouse(world,typehouse,m,x,y)
 
    
    if typehouse>3 then
-      for i=0,2 do
+      for i=0,3 do
 	 for n=0,3 do
 	    world[y+n][x+i]=-1
 	 end
@@ -529,10 +536,7 @@ function testworld(world,m)
 return world
 end
 
-function addscenery(world,m)
-   object=math.random(61,65)
-   x=math.random(3,horizontaltiles-6)
-   y=math.random(3,verticaltiles-4)
+function addscenery(world,object,m,x,y)
    if object==61 then
       for i=0,1 do
 	 for n=0,1 do
