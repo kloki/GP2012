@@ -141,8 +141,8 @@ function createoverworld()
 	       if overworld[i+1][n]~=0 then x=x+1 end
 	       if overworld[i][n-1]~=0 then x=x+1 end
 	       if overworld[i][n+1]~=0 then x=x+1 end
-	       if x~=0 then
-		  if math.random()<(0.42/x) then
+	       if x==1  then
+		  if math.random()<(0.42) then
 		     overworld[i][n]=count
 		     count=count+1
 		  end
