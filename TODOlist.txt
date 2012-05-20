@@ -18,14 +18,14 @@ If item has been completed put in the done list.
   -write simple AIs for them
   
 * Map
-  -implement going inside houses
+
   -implement dunguons
 
 * GUI
   -these things shoulde be done at the end
   -make unvisited parts of the map not show on the minimap
-  -make start screen
   -make pause screen
+
 * Procedural stuff
   -Implement some sort of difficulty function
   -generate quests
@@ -42,4 +42,5 @@ If item has been completed put in the done list.
   -create inventory
   -create object to interact with
   -show inventory and such
-
+  -make start screen
+  -implement going inside houses
