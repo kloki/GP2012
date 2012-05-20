@@ -67,7 +67,7 @@ function loadtiles()
   
    
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,43,44,61,62,63,64,65}
+   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
 end
 
 
@@ -101,7 +101,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(4,4)
+   worldtype=math.random(1,4)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -256,10 +256,12 @@ end
 function add32x32(world,m,tiletype)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-   if inlist(world[y][x],forbiddenlist) then world=add32x32(world,m,tiletype) 
-   else world[y][x]=tiletype
-   if m~=0 then
-      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
+   if inlist(world[y][x],forbiddentiles) then world=add32x32(world,m,tiletype) 
+   else
+      world[y][x]=tiletype
+      if m~=0 then
+	 table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
+      end
    end
 return world
 end
@@ -405,11 +407,11 @@ end
 function hermitworld(world,m)   
    world=buildhouse(world,math.random(1,6),m,math.random(3,20),math.random(3,10))
    world=addscenery(world,math.random(61,65),m,math.random(3,20),math.random(11,16))
-   for i=1,math.random(1,5) do
+   for i=1,math.random(3,9) do
       world=add64x64(world,m,29)
    end
    --for small bushes
-   for i=1,math.random(5,6) do
+   for i=1,math.random(5,9) do
       world=add32x32(world,0,math.random(45,46))
    end
 
