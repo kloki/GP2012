@@ -112,9 +112,9 @@ function love.update(dt)
       --handle collisions
       Collider:update(dt)
       if oldworld ~= currentworld then
-	 removeObjects() 
+         removeObjects() 
          removeFoes()
-	 addObjects()
+         addObjects()
          addFoes()
       end
       --handle music streams
