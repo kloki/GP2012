@@ -130,20 +130,21 @@ end
 
 function addFoes()
    Foes = {}
-   local temp = math.random(1,4)
-   if temp == 1 then
-      addFoe(100,100,'snake')
-      addFoe(200,100,'snake')
-      addFoe(300,100,'snake')
-      addFoe(400,100,'snake')
-   elseif temp == 2 then
-      addFoe(200,300,'goron')
-      addFoe(300,500,'goron')
-      addFoe(200,250,'goron')
-   elseif temp == 3 then
-      addFoe(400,400,'snake')
+   if currentworld < numberofworlds then
+      local temp = math.random(1,3)
+      if temp == 1 then
+         addFoe(100,100,'snake')
+         addFoe(200,100,'snake')
+         addFoe(300,100,'snake')
+         addFoe(400,100,'snake')
+      elseif temp == 2 then
+         addFoe(200,300,'goron')
+         addFoe(300,500,'goron')
+         addFoe(200,250,'goron')
+      elseif temp == 3 then
+         addFoe(400,400,'snake')
+      end
    end
-      
 end
 
 function addFoe(x,y,foetype)
