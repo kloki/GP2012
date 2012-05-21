@@ -39,6 +39,9 @@ function loadSprites()
    snakeright:setMode("bounce")
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
+   
+   dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
+   dieAnim:setMode("once")
    --
    sprite = 'standdown'
    Link.heading = 'down'
@@ -193,6 +196,12 @@ function drawFoes(dt)
             elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
             elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
          end
+      elseif v.life == 0 then
+         dieAnim:draw(x,y)
+         if dieAnim:getCurrentFrame() == 5 then
+            dieAnim:reset()
+            v.life = -1
+         end
       end
    end
 end
@@ -202,6 +211,8 @@ function updateFoes(dt)
 	for i,v in ipairs(Foes) do
       if v.life > 0 then
          v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+      elseif v.life == 0 then
+         dieAnim:update(dt)
       end
 	end
 	goronrightRun:update(dt)
