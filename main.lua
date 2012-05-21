@@ -21,7 +21,7 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
-   --TEsound.playLooping("music/windfall-island.mp3")
+   TEsound.playLooping("music/menu-selection.mp3","music")
    
    --setup world
    tilesize=32
@@ -96,12 +96,14 @@ function love.draw()
       Sword:draw('line')
       love.graphics.setColor(255,255,255)
       love.graphics.print(test_output,100,100)
+      
    end
 end
 
 function love.update(dt)
    if startup then
       updateStart(dt)
+      start = true
    else
       local oldworld = currentworld
       --update sprite animation and position
@@ -111,13 +113,19 @@ function love.update(dt)
       sword()
       --handle collisions
       Collider:update(dt)
+      --change of worlds
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
          addObjects()
          addFoes()
       end
-      --handle music streams
+      --music
+      if start then 
+         TEsound.stop("music")
+         start = false
+         TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3" },"music")
+      end
       TEsound.cleanup()
    end
 end
@@ -125,7 +133,8 @@ end
 function love.keypressed(k)
    bttn = k
 	if k == ' ' then 
-		spressed = true 
+		spressed = true
+      TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
 	end
    if k == 'q' then
       love.event.push("quit")
