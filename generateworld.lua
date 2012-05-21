@@ -32,15 +32,15 @@ function loadtiles()
    images[35]=love.graphics.newImage("tiles/edges/trees-top-gate.png")
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
    images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
-   images[38]=love.graphics.newImage("tiles/bushes/small_bush.png")
+   --images[38]=love.graphics.newImage("tiles/")
    images[39]=love.graphics.newImage("tiles/house/house1.png")
    images[40]=love.graphics.newImage("tiles/house/house2.png")
    images[41]=love.graphics.newImage("tiles/house/house3.png")
    images[42]=love.graphics.newImage("tiles/house/tree-house.png")
-   images[43]=love.graphics.newImage("tiles/sand/sand1.png")
-   images[44]=love.graphics.newImage("tiles/sand/sand2.png")
-   images[45]=love.graphics.newImage("tiles/sand/sand3.png")
-   images[46]=love.graphics.newImage("tiles/sand/sand4.png")
+   images[43]=love.graphics.newImage("tiles/house/house4.png")
+   images[44]=love.graphics.newImage("tiles/house/house5.png")
+   images[45]=love.graphics.newImage("tiles/bushes/small_bush.png")
+   images[46]=love.graphics.newImage("tiles/bushes/mushroom.png")
    images[47]=love.graphics.newImage("tiles/objects/pot.png")
    images[48]=love.graphics.newImage("tiles/objects/treasure-chest.png")
    images[49]=love.graphics.newImage("tiles/objects/treasure-chest-opened.png")
@@ -49,10 +49,25 @@ function loadtiles()
    images[52]=love.graphics.newImage("tiles/path/path3.png")
    images[53]=love.graphics.newImage("tiles/path/path4.png")
    images[54]=love.graphics.newImage("tiles/path/path5.png")
+   images[55]=love.graphics.newImage("sprites/heart.png")
+   images[56]=love.graphics.newImage("tiles/objects/key1.png")
+   images[57]=love.graphics.newImage("tiles/objects/key2.png")
+   images[58]=love.graphics.newImage("tiles/objects/key3.png")
+   images[59]=love.graphics.newImage("tiles/objects/key4.png")
+   images[60]=love.graphics.newImage("tiles/objects/sword.png")
+   images[61]=love.graphics.newImage("tiles/scenery/lumber.png")
+   images[62]=love.graphics.newImage("tiles/scenery/oneye.png")
+   images[63]=love.graphics.newImage("tiles/scenery/schommel.png")
+   images[64]=love.graphics.newImage("tiles/scenery/stool.png")
+   images[65]=love.graphics.newImage("tiles/scenery/well.png")
+   images[66]=love.graphics.newImage("tiles/house/insidehouse1.png")
+   images[67]=love.graphics.newImage("tiles/house/insidehouse2.png")
+   images[68]=love.graphics.newImage("tiles/house/insidehouse3.png")
+   images[69]=love.graphics.newImage("tiles/house/insidehouse4.png")
+  
    
-
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
 end
 
 
@@ -62,8 +77,10 @@ function createworlds()
    for m=1,numberofworlds do
       worlds[m]=createworld(m)
    end
-   gatedworlds= buildgates(worlds)
-return gatedworlds
+   worlds= buildgates(worlds)
+   worlds=addkeys(worlds)
+   worlds=addchests(worlds)
+return worlds
 end
 
 
@@ -92,9 +109,11 @@ function createworld(m)
    elseif worldtype==3 then
       world=waterworld(world,m)
    elseif worldtype==4 then
-      world=villageworld(world,m)
-   elseif worldtype==5 then
       world=hermitworld(world,m)
+   elseif worldtype==5 then
+      world=villageworld(world,m)
+   elseif worldtype==6 then
+      world=testworld(world,m)
    end
 return world
 end
@@ -113,17 +132,17 @@ function createoverworld()
    count = 2
    while true do
       for i=1,sizeoverworld[1] do
-	 if count==numberofworlds then break end
+	 if count==numberofworlds+1 then break end
 	 for n=1, sizeoverworld[2]do
-	    if count==numberofworlds then break end
+	    if count==numberofworlds+1 then break end
 	    if overworld[i][n]==0 then
 	       x=0
 	       if overworld[i-1][n]~=0 then x=x+1 end
 	       if overworld[i+1][n]~=0 then x=x+1 end
 	       if overworld[i][n-1]~=0 then x=x+1 end
 	       if overworld[i][n+1]~=0 then x=x+1 end
-	       if x~=0 then
-		  if math.random()<(0.42/x) then
+	       if x==1  then
+		  if math.random()<(0.42) then
 		     overworld[i][n]=count
 		     count=count+1
 		  end
@@ -131,8 +150,9 @@ function createoverworld()
 	    end
 	 end
       end
-      if count==numberofworlds then break end
+      if count==numberofworlds+1 then break end
    end
+
 return overworld
 end
 
@@ -207,7 +227,7 @@ function createblob(world,m,typeblob,length,width,x,y,typebush)
 	    table.insert(Objects[m],{(x-i-1)*tilesize,(n+y-1)*tilesize,32,32,'Object'})
 	 end	 
       end
-   else
+   elseif typeblob==1 then
       for n=0,length-1 do
 	 for i=0,math.random(0,width-1) do
 	    world[y+i][n+x]=typebush
@@ -224,8 +244,10 @@ return world
 end
    
 function addbushes(world,m,width,length,typebush)
-   x=math.random(width+2,horizontaltiles-width-length-1)
-   y=math.random(width+2,verticaltiles-length-width-1)
+   if math.random(1,2)==1 then x=math.random(width+2,10)
+   else x=math.random(16,horizontaltiles-width-length-1) end
+   if math.random(1,2)==1 then y=math.random(width+2,10)
+   else y=math.random(13,verticaltiles-length-width-1) end
    world=createblob(world,m,0,length,width,x,y,typebush)
    world=createblob(world,m,1,length,width,x,y,typebush)
 return world
@@ -234,17 +256,20 @@ end
 function add32x32(world,m,tiletype)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-   world[y][x]=tiletype
-   if m~=0 then
-      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
+   if inlist(world[y][x],forbiddentiles) then world=add32x32(world,m,tiletype) 
+   else
+      world[y][x]=tiletype
+      if m~=0 then
+	 table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})
+      end
    end
 return world
 end
 
 
 function add64x64(world,m,tiletype)
-   x=math.random(2,horizontaltiles-2)
-   y=math.random(2,verticaltiles-2)
+   x=math.random(3,horizontaltiles-3)
+   y=math.random(3,verticaltiles-3)
    if inlist(world[y][x],forbiddentiles) or inlist(world[y+1][x],forbiddentiles) or inlist(world[y+1][x+1],forbiddentiles) or inlist(world[y][x+1],forbiddentiles) then
       world=add64x64(world,m,tiletype)--if not possible to place tile try again
    else
@@ -319,11 +344,11 @@ end
 
 function grassworld(world,m)
    --add bushes
-   for i=1,math.random(1,3) do
-      world=addbushes(world,m,3,math.random(1,4),math.random(12,15))
+   for i=1,math.random(4,8) do
+      world=addbushes(world,m,2,math.random(1,3),math.random(12,15))
    end
    --trees
-   for i=1,math.random(1,9) do
+   for i=1,math.random(6,9) do
       world=add64x64(world,m,29)
    end
 
@@ -334,17 +359,22 @@ function cliffworld(world,m)
    
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,0,38)
+      world=add32x32(world,0,math.random(45,46))
    end
    --for cliff
    world=addcliff(world,m)
+   
+   --for tree
+   for i=1,math.random(1,2) do
+      world=add64x64(world,m,29)
+   end
 return world
 end
 
 function waterworld(world,m)
    --for small bushes
    for i=1,math.random(5,15) do
-      world=add32x32(world,0,38)
+      world=add32x32(world,0,math.random(45,46))
    end
    
    --water
@@ -369,19 +399,28 @@ function villageworld(world,m)
    world=buildhouse(world,2,m,8,3)
    world=buildhouse(world,3,m,15,3)
    world=buildhouse(world,4,m,22,3)
+   world=buildhouse(world,5,m,15,8)
+   world=buildhouse(world,6,m,22,8)
 return world
 end
 
 function hermitworld(world,m)   
-   world=buildhouse(world,math.random(1,4),m,math.random(3,20),math.random(3,16))
-   world=grassworld(world,m)
+   world=buildhouse(world,math.random(1,6),m,math.random(3,20),math.random(3,10))
+   world=addscenery(world,math.random(61,65),m,math.random(3,20),math.random(11,16))
+   for i=1,math.random(3,9) do
+      world=add64x64(world,m,29)
+   end
+   --for small bushes
+   for i=1,math.random(5,9) do
+      world=add32x32(world,0,math.random(45,46))
+   end
 
 return world
 end
 
 function buildhouse(world,typehouse,m,x,y)
    if typehouse==1 then
-      for i=0,1 do
+      for i=0,2 do
 	 for n=0,2 do
 	    world[y+n][x+i]=-1
 	 end
@@ -389,45 +428,171 @@ function buildhouse(world,typehouse,m,x,y)
       world[y][x]=39
       table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,55,'Object'})
       --door
-      table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+50,20,20,'Object'})
+      table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+50,20,20,'Door'})
+      xoutside=(x-1)*tilesize+22
+      youtside=(y-1)*tilesize+50+40
    end
-
+   
    if typehouse==2 then
-   for i=0,3 do
-      for n=0,2 do
-	 world[y+n][x+i]=-1
+      for i=0,4 do
+	 for n=0,2 do
+	    world[y+n][x+i]=-1
+	 end
       end
-   end
-   world[y][x]=40
-   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,116,64,'Object'})
+      world[y][x]=40
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,116,64,'Object'})
       --door
-   table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+60,20,20,'Object'})
-
+      table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+60,20,20,'Door'})
+      xoutside=(x-1)*tilesize+22
+      youtside=(y-1)*tilesize+60+40
    end
    
    if typehouse==3 then
+      for i=0,3 do
+	 for n=0,2 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=41
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,80,56,'Object'})
+      --door
+      table.insert(Objects[m],{(x-1)*tilesize+30,(y-1)*tilesize+55,20,20,'Door'})
+      xoutside=(x-1)*tilesize+30
+      youtside=(y-1)*tilesize+55+40
+   end
+
+   
+   if typehouse>3 then
+      for i=0,3 do
+	 for n=0,3 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=38+typehouse
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,42,'Object'})
+      --door
+      table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+40,20,20,'Door'})
+      xoutside=(x-1)*tilesize+22
+      youtside=(y-1)*tilesize+40+40
+   end
+   x=math.random(66,69)
+   worlds[m+numberofworlds]=x
+   addObjectshouse(m,x,xoutside,youtside)
+   return world
+end
+
+function addkeys(worlds)
+
+for key=56,59 do
+   v=math.random(1,numberofworlds)
+   worlds=placekey(worlds,v,key)
+end
+
+return worlds
+end
+
+function placekey(worlds,v,key)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
+   else 
+      if key==56 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key56'})
+      elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key57'})
+      elseif key==58 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key58'})
+      elseif key==59 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key59'})
+      end
+   end
+return worlds
+end
+
+function addchests()
+   for n=1,4 do
+      v=math.random(1,numberofworlds)
+      worlds=addchest(worlds,v)
+   end
+return worlds
+end
+
+function addchest(worlds,world,iteminchest)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+      
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
+   else 
+      table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Chest'})
+   end
+
+return worlds
+end
+
+function testworld(world,m)
+   y=10
+   x=10
    for i=0,2 do
       for n=0,2 do
 	 world[y+n][x+i]=-1
       end
    end
-   world[y][x]=41
-   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,80,56,'Object'})
-   --door
-   table.insert(Objects[m],{(x-1)*tilesize+30,(y-1)*tilesize+55,20,20,'Object'})
-   end
-   
-   if typehouse==4 then
-   for i=0,2 do
-      for n=0,3 do
-	 world[y+n][x+i]=-1
+   world[y][x]=65
+   table.insert(Objects[m],{(x-1)*tilesize+10,(y-1)*tilesize,40,36,'Object'})
+return world
+end
+
+function addscenery(world,object,m,x,y)
+   if object==61 then
+      for i=0,1 do
+	 for n=0,1 do
+	    world[y+n][x+i]=-1
+	 end
       end
-   end
-   world[y][x]=42
-   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,42,'Object'})
-   --door
-   table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+40,20,20,'Object'})
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,38,38,'Object'})
+      table.insert(Objects[m],{(x-1)*tilesize+38,(y-1)*tilesize,26,10,'Object'})
+   elseif object==62 then
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Object'})  
+   elseif object==63 then
+      for i=0,1 do
+	 for n=0,0 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,44,32,'Object'})
+   elseif object==64 then
+      for i=0,1 do
+	 for n=0,1 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,56,36,'Object'})
+   elseif object==65 then
+      for i=0,2 do
+	 for n=0,2 do
+	    world[y+n][x+i]=-1
+	 end
+      end
+      world[y][x]=object
+      table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,40,36,'Object'})
 
    end
+
+
 return world
+end
+
+function addObjectshouse(m,x,xoutside,youtside)
+   Objects[m+numberofworlds]={}
+   --Walls
+   --Top
+   table.insert(Objects[m+numberofworlds],{280,224,240,20,'Object'})
+   --Down
+   table.insert(Objects[m+numberofworlds],{280,355,240,20,'Object'})
+   --Left
+   table.insert(Objects[m+numberofworlds],{280,244,25,131,'Object'})
+   --Rights
+   table.insert(Objects[m+numberofworlds],{495,244,25,131,'Object'})
+   --Door
+   table.insert(Objects[m+numberofworlds],{390,354,20,15,'Door2',xoutside+10,youtside})
 end

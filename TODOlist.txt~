@@ -1,0 +1,46 @@
+Todo list for procZELDA.
+
+If item has been completed put in the done list.
+
+* Artwork
+  -create lots of art work, Bigger object(beyond 32*32) like houses are fine.
+  -create an spriteatlas for the tiles just like the sprites.
+  
+
+* Zelda
+  -implements attacking. Make a system that shoots projectiles, and have the sword have an extreme small range this way the attacking is one system:
+      -implement space for sword
+      -implement enter for supersword
+      -implement ctrl for shooting
+  -destroy objects
+  -destroy enemies
+  -create inventory
+  -create object to interact with
+
+* Enemies
+  -create some sort of spawning system
+  -write simple AIs for them
+  
+* Map
+  -implement going inside houses
+  -implement dunguons
+
+* GUI
+  -these things shoulde be done at the end
+  -show inventory and such
+  -make unvisited parts of the map not show on the minimap
+  -make start screen
+  -make pause screen
+* Procedural stuff
+  -Implement some sort of difficulty function
+  -generate quests
+
+
+* Done
+  -complete animations of Zelda walking
+  -improve overworld to be more branching
+  -implement bigger structures
+  -create outside edges
+  -write a better blob function for nicer looking worlds
+  -find a solution for the ugly walls clifss are pretty good
+  -make a forbidden list of tiles to overwrite to prevent overlapping spritesgiy
