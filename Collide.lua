@@ -28,13 +28,16 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		   deleteObject(shape_b.key,shape_b.location)
 		elseif Type_b == "Heart" then
 		   deleteObject("Heart",shape_b.location)
-		   if health<8 then health=health+1 end 
+		   if health<8 then health=health+1 end
+         TEsound.play("sound-effects/Heart.wav","effect")
 		elseif Type_b == "Door" then
 		   currentworld=numberofworlds+currentworld
 		   Link:moveTo(400,330)
+         TEsound.play("sound-effects/Door1.wav","effect")
 		elseif Type_b == "Door2" then
 		   currentworld=currentworld-numberofworlds
 		   Link:moveTo(shape_b.returnlocation[1],shape_b.returnlocation[2])
+         TEsound.play("sound-effects/Door2.wav","effect")
 	  	elseif Type_b == "Chest" then
 		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
 		   modifyObject("Chest",shape_b.location,"OpenChest")
@@ -58,6 +61,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          shape_a.life = shape_a.life-1
          if shape_a.life < 1 then 
             Collider:setGhost(shape_a) 
+            TEsound.play("sound-effects/Enemy_Kill.wav","effect")
          else
             shape_a:move(1.5*mtv_x,1.5*mtv_x)
          end
