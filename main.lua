@@ -87,12 +87,13 @@ function love.draw()
       
       --DEBUG
       --for debug draw bounding boxes
-		--[[
+		
       for i=1,#Object do Object[i]:draw('line') end
       Link:draw('line')
       for i=1,#Foes do Foes[i]:draw('line') end
       love.graphics.setColor(255,0,0)
       for k,v in pairs(Portal) do v:draw('line') end
+		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
       love.graphics.setColor(255,255,255)--]]
 		test_output = tostring(Rupees)

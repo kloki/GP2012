@@ -58,7 +58,7 @@ function drawObjects(currentobjects)
       end
    end
 	for i,v in ipairs(Rupee) do
-		love.graphics.draw(images[70],v.x,v.y)
+		if v.exist then love.graphics.draw(images[70],v.x,v.y) end
 	end
 end
 

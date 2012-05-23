@@ -47,6 +47,8 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          TEsound.play("sound-effects/Chest_Open.wav","effect")
 		elseif Type_b == "Rupee" then
 			Rupees = Rupees+1
+			shape_b.exist = false
+			Collider:remove(shape_b)
 			TEsound.play("sound-effects/Rupee.wav","effect")
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then

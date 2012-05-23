@@ -204,8 +204,9 @@ function sword()
 end
 
 function addRupee(x,y)
-	Rupee[#Rupee+1] = Collider:addRectangle(0,0,24,24)
+	Rupee[#Rupee+1] = Collider:addRectangle(x,y,24,24)
 	Rupee[#Rupee].Type = 'Rupee'
+	Rupee[#Rupee].exist = true
 	Rupee[#Rupee].x, Rupee[#Rupee].y = x,y
 	Collider:addToGroup('Object',Rupee[#Rupee])
 end
