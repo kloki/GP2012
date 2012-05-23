@@ -1,6 +1,8 @@
 require ('lAnA')
 function loadSprites()
    sheet = love.graphics.newImage("sprites/LinkMC1test.gif")
+   sworddown = love.graphics.newImage("sprites/sworddown.png")
+   swordright = love.graphics.newImage("sprites/swordright2.png")
 
    linkdownS = love.graphics.newQuad(24,12,20,32,720,1024)
    linkleftS = love.graphics.newQuad(24,44,20,30,720,1024)
@@ -13,10 +15,10 @@ function loadSprites()
    linkupRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
    linkleftRun = newAnimation(sheet,27,32,0.1,10,52,44,true)
    
-   linkdownSword = newAnimation(sheet,32,38,0.03,7,20,130,false)
-   linkrightSword = newAnimation(sheet,38,38,0.03,7,9,174,false)
-   linkupSword = newAnimation(sheet,32,40,0.03,7,12,215,false)
-   linkleftSword = newAnimation(sheet,38,38,0.03,7,9,174,true)
+   linkdownSword = newAnimation(sworddown,50,50,0.6,8,0,0,false)
+   linkrightSword = newAnimation(swordright,50,50,0.6,7,0,0,false)
+   linkupSword = newAnimation(sheet,32,40,0.6,7,12,215,false)
+   linkleftSword = newAnimation(swordright,50,50,0.6,7,1,1,true)
    linkdownSword:setMode("once")
    linkupSword:setMode("once")
    linkrightSword:setMode("once")
@@ -64,11 +66,11 @@ function drawSprite()
    elseif sprite == 'swordup' then
       linkupSword:draw(x,y)
    elseif sprite == 'sworddown' then
-      linkdownSword:draw(x,y)
+      linkdownSword:draw(x-14,y-10)
    elseif sprite == 'swordright' then
-      linkrightSword:draw(x,y)
+      linkrightSword:draw(x-5,y-7)
    elseif sprite == 'swordleft' then
-      linkleftSword:draw(x,y)
+      linkleftSword:draw(x-22,y-6)
 
    elseif sprite == 'standup' then
       love.graphics.drawq(sheet,linkupS,x,y)
