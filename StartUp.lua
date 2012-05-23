@@ -49,6 +49,10 @@ function updateStart(dt)
    if health == 0 then
       case = 'gameover'
    end
+   
+   if bttn == 'escape' then
+      case = 'main'
+   end
 
    if case == 'love' then
       if spressed or timer == 200 then
