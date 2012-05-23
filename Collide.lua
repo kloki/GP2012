@@ -17,7 +17,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == 'Foe' then
 		   --damage
          if shape_a.hit <= 0 then
-            shape_a.hit = 1 --cooldown time
+            shape_a.hit = cool_time --cooldown time
             health=health-1
             if health <1 then health = 1 end--for nothing if Link dies
             TEsound.play("sound-effects/Link_Hurt.wav","effect")
@@ -45,6 +45,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
 		   modifyObject("Chest",shape_b.location,"OpenChest")
          TEsound.play("sound-effects/Chest_Open.wav","effect")
+		elseif Type_b == "Rupee" then
+			Rupees = Rupees+1
+			TEsound.play("sound-effects/Rupee.wav","effect")
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 
@@ -65,7 +68,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			--remove foes
          shape_a.life = shape_a.life-1
          if shape_a.life < 1 then 
-            Collider:setGhost(shape_a) 
+            Collider:setGhost(shape_a)
+				x,y = shape_a:bbox()
+				addRupee(x,y)
             TEsound.play("sound-effects/Enemy_Kill.wav","effect")
          else
             shape_a:move(1.5*mtv_x,1.5*mtv_x)

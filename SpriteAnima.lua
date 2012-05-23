@@ -50,6 +50,7 @@ end
 
 function drawSprite()
 	local x,y = Link:bbox()
+	love.graphics.setColor(Link.color)
    --love.graphics.drawq(sheet,linkdownS,x,y)
    if sprite == 'moveup' then
       linkupRun:draw(x,y)
@@ -79,6 +80,7 @@ function drawSprite()
    elseif sprite == 'standdown' then
       love.graphics.drawq(sheet,linkdownS,x,y)
    end      
+	love.graphics.setColor(255,255,255)
 end
 
 function updateSprite(dt)

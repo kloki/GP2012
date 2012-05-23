@@ -65,7 +65,7 @@ function loadtiles()
    images[67]=love.graphics.newImage("tiles/house/insidehouse2.png")
    images[68]=love.graphics.newImage("tiles/house/insidehouse3.png")
    images[69]=love.graphics.newImage("tiles/house/insidehouse4.png")
-  
+   images[70]=love.graphics.newImage("tiles/objects/rupee.png")
    
    --here the list of tiles which cannot be drawnover
    forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
@@ -623,15 +623,15 @@ function addObjectshouse(m,x,xoutside,youtside)
 end
 
 function addspawns(world,m)
+	Spawnpoints[m]={}
    for i=1,10 do
-      Spawnpoints[m]={}
       addspawn(world,m)
    end
 end
 
 function addspawn(world,m)
-   x=math.random(2,24)
-   y=math.random(2,18)
+   x=math.random(3,23)
+   y=math.random(3,17)
    if world[y][x]<10 and world[y][x]>0 then
       table.insert(Spawnpoints[m],{x,y})
    else
