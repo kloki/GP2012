@@ -1,4 +1,5 @@
 require('util')
+require('quest')
 
 function loadtiles()
    images = {}
