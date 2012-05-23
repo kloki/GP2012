@@ -43,7 +43,7 @@ function love.load()
    addObjects()
 
    -- setup link
-	health=3
+	health=0
 	Rupees = 0
    inventory={}
    speed   = 200
