@@ -43,9 +43,18 @@ end
 
 function drawObjects(currentobjects)
    for i,v in ipairs(currentobjects) do
-      tile=determinetilenumber(v[5])
-      if tile~=1 then
-	 love.graphics.draw(images[tile],v[1],v[2])
+      if v[5]=='Gate' then  
+	 if v[6]=='Key56'then love.graphics.setColor(170,170,170)
+	 elseif v[6]=='Key57' then love.graphics.setColor(100,100,100)
+	 elseif v[6]=='Key58' then love.graphics.setColor(255,255,0)
+	 elseif v[6]=='Key59' then love.graphics.setColor(100,0,255) end
+	 love.graphics.rectangle('fill',v[1],v[2],v[3],v[4])	 
+	 love.graphics.setColor(255,255,255)
+      else
+	 tile=determinetilenumber(v[5])
+	 if tile~=1 then
+	    love.graphics.draw(images[tile],v[1],v[2])
+	 end
       end
    end
 end
@@ -55,6 +64,7 @@ function drawHUD(health,inventory)
    y=610
    for i=1,health do
       if i==5 then x=64 y=625 end --this puts the hearth in nice rows
+  
       love.graphics.draw(images[55],x,y)
       x=x+17	 
    end

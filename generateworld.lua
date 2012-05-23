@@ -77,8 +77,9 @@ function createworlds()
    for m=1,numberofworlds do
       worlds[m]=createworld(m)
    end
-   worlds= buildgates(worlds)
+   worlds=buildgates(worlds)
    worlds=addkeys(worlds)
+   adddoors(worlds)
    worlds=addchests(worlds)
 return worlds
 end
@@ -115,6 +116,7 @@ function createworld(m)
    elseif worldtype==6 then
       world=testworld(world,m)
    end
+   addspawns(world,m)
 return world
 end
 
@@ -316,10 +318,16 @@ function addcliff(world,m)
 	 world[9][i]=16
       end
       walkway=math.random(5,horizontaltiles-5)
-      world[8][walkway]=1
-      world[9][walkway]=1
-      world[8][walkway+1]=1
-      world[9][walkway+1]=1
+      world[7][walkway]=-1
+      world[8][walkway]=-1
+      world[9][walkway]=-1
+      world[10][walkway]=-1
+      world[7][walkway+1]=-1
+      world[8][walkway+1]=-1
+      world[9][walkway+1]=-1
+      world[10][walkway+1]=-1
+     
+
       table.insert(Objects[m],{32,7*tilesize+8,walkway*tilesize-64,15,'Object'})
       table.insert(Objects[m],{walkway*tilesize+32,7*tilesize+8,800-walkway*tilesize-64,15,'Object'})
    end
@@ -329,10 +337,14 @@ function addcliff(world,m)
 	 world[14][i]=16
       end
       walkway=math.random(5,horizontaltiles-5)
-      world[13][walkway]=1
-      world[14][walkway]=1
-      world[13][walkway+1]=1
-      world[14][walkway+1]=1
+      world[12][walkway]=-1
+      world[13][walkway]=-1
+      world[14][walkway]=-1
+      world[15][walkway]=-1
+      world[12][walkway+1]=-1 
+      world[13][walkway+1]=-1
+      world[14][walkway+1]=-1
+      world[15][walkway+1]=-1
       table.insert(Objects[m],{32,12*tilesize+8,walkway*tilesize-64,15,'Object'})
       table.insert(Objects[m],{walkway*tilesize+32,12*tilesize+8,800-walkway*tilesize-64,15,'Object'})      
    end
@@ -484,7 +496,9 @@ end
 function addkeys(worlds)
 
 for key=56,59 do
+  
    v=math.random(1,numberofworlds)
+   v=1
    worlds=placekey(worlds,v,key)
 end
 
@@ -504,6 +518,16 @@ function placekey(worlds,v,key)
    end
 return worlds
 end
+
+function adddoors(worlds)
+  
+   table.insert(Objects[1],{336,0,143,32,'Gate','Key56'})
+   table.insert(Objects[1],{336,576,143,32,'Gate','Key57'})
+   table.insert(Objects[1],{0,272,32,100,'Gate','Key58'})
+   table.insert(Objects[1],{768,272,32,100,'Gate','Key59'})
+end
+
+
 
 function addchests()
    for n=1,4 do
@@ -595,4 +619,21 @@ function addObjectshouse(m,x,xoutside,youtside)
    table.insert(Objects[m+numberofworlds],{495,244,25,131,'Object'})
    --Door
    table.insert(Objects[m+numberofworlds],{390,354,20,15,'Door2',xoutside+10,youtside})
+end
+
+function addspawns(world,m)
+   for i=1,10 do
+      Spawnpoints[m]={}
+      addspawn(world,m)
+   end
+end
+
+function addspawn(world,m)
+   x=math.random(2,24)
+   y=math.random(2,18)
+   if world[y][x]<10 and world[y][x]>0 then
+      table.insert(Spawnpoints[m],{x,y})
+   else
+      addspawn(world,m)
+   end
 end
