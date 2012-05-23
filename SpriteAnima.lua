@@ -43,6 +43,13 @@ function loadSprites()
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
    
+   green_rupee_sheet = love.graphics.newImage("tiles/objects/rupee_green.png")
+   blue_rupee_sheet  = love.graphics.newImage("tiles/objects/rupee_blue.png")
+   red_rupee_sheet   = love.graphics.newImage("tiles/objects/rupee_red.png")
+   rupee_green = newAnimation(green_rupee_sheet,15,20,0.12,3,1,1)
+   rupee_blue  = newAnimation(blue_rupee_sheet ,15,20,0.12,3,1,1)
+   rupee_red   = newAnimation(red_rupee_sheet  ,15,20,0.12,3,1,1)
+   
    dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
    dieAnim:setMode("once")
    --
@@ -240,4 +247,7 @@ function updateFoes(dt)
    snakedown:update(dt)
    snakeright:update(dt)
    snakeleft:update(dt)
+   rupee_green:update(dt)
+   rupee_blue:update(dt)
+   rupee_red:update(dt)   
 end
