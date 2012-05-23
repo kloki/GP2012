@@ -18,7 +18,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		   LinkHit = true
 		   --damage
 		   health=health-1
-		   if health <1 then health = 1 end--for nothing if Link dies
+		   --if health <1 then health = 1 end--for nothing if Link dies
 		   shape_a:move(mtv_x,mtv_y)
 		   --get the normal vector in direction of the enemy
 		   nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}

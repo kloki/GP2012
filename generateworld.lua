@@ -101,7 +101,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(1,4)
+   worldtype=math.random(2,2)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -115,6 +115,7 @@ function createworld(m)
    elseif worldtype==6 then
       world=testworld(world,m)
    end
+   addspawns(world,m)
 return world
 end
 
@@ -316,10 +317,16 @@ function addcliff(world,m)
 	 world[9][i]=16
       end
       walkway=math.random(5,horizontaltiles-5)
-      world[8][walkway]=1
-      world[9][walkway]=1
-      world[8][walkway+1]=1
-      world[9][walkway+1]=1
+      world[7][walkway]=-1
+      world[8][walkway]=-1
+      world[9][walkway]=-1
+      world[10][walkway]=-1
+      world[7][walkway+1]=-1
+      world[8][walkway+1]=-1
+      world[9][walkway+1]=-1
+      world[10][walkway+1]=-1
+     
+
       table.insert(Objects[m],{32,7*tilesize+8,walkway*tilesize-64,15,'Object'})
       table.insert(Objects[m],{walkway*tilesize+32,7*tilesize+8,800-walkway*tilesize-64,15,'Object'})
    end
@@ -329,10 +336,14 @@ function addcliff(world,m)
 	 world[14][i]=16
       end
       walkway=math.random(5,horizontaltiles-5)
-      world[13][walkway]=1
-      world[14][walkway]=1
-      world[13][walkway+1]=1
-      world[14][walkway+1]=1
+      world[12][walkway]=-1
+      world[13][walkway]=-1
+      world[14][walkway]=-1
+      world[15][walkway]=-1
+      world[12][walkway+1]=-1 
+      world[13][walkway+1]=-1
+      world[14][walkway+1]=-1
+      world[15][walkway+1]=-1
       table.insert(Objects[m],{32,12*tilesize+8,walkway*tilesize-64,15,'Object'})
       table.insert(Objects[m],{walkway*tilesize+32,12*tilesize+8,800-walkway*tilesize-64,15,'Object'})      
    end
@@ -595,4 +606,21 @@ function addObjectshouse(m,x,xoutside,youtside)
    table.insert(Objects[m+numberofworlds],{495,244,25,131,'Object'})
    --Door
    table.insert(Objects[m+numberofworlds],{390,354,20,15,'Door2',xoutside+10,youtside})
+end
+
+function addspawns(world,m)
+   for i=1,10 do
+      Spawnpoints[m]={}
+      addspawn(world,m)
+   end
+end
+
+function addspawn(world,m)
+   x=math.random(2,24)
+   y=math.random(2,18)
+   if world[y][x]<10 and world[y][x]>0 then
+      table.insert(Spawnpoints[m],{x,y})
+   else
+      addspawn(world,m)
+   end
 end

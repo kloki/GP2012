@@ -31,6 +31,7 @@ function love.load()
    numberofworlds=25 --no more than 6*12
    loadtiles()
    Objects={}
+   Spawnpoints={}--Spawnpoint[x]={{x,y},{x,y},...}
    for i=1,numberofworlds do
       Objects[i]={}
    end
