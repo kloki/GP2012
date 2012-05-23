@@ -77,8 +77,9 @@ function createworlds()
    for m=1,numberofworlds do
       worlds[m]=createworld(m)
    end
-   worlds= buildgates(worlds)
+   worlds=buildgates(worlds)
    worlds=addkeys(worlds)
+   adddoors(worlds)
    worlds=addchests(worlds)
 return worlds
 end
@@ -101,7 +102,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(2,2)
+   worldtype=math.random(1,4)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -495,7 +496,9 @@ end
 function addkeys(worlds)
 
 for key=56,59 do
+  
    v=math.random(1,numberofworlds)
+   v=1
    worlds=placekey(worlds,v,key)
 end
 
@@ -515,6 +518,13 @@ function placekey(worlds,v,key)
    end
 return worlds
 end
+
+function adddoors(worlds)
+   table.insert(Objects[1],{5*tilesize,5*tilesize,64,64,'Gate','Key56'})
+
+end
+
+
 
 function addchests()
    for n=1,4 do

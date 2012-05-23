@@ -19,6 +19,12 @@ function addObjects()
 			   Object[#Object].Type = 'Heart'
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='Gate' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'Gate'
+			   Object[#Object].KeyType = v[6]
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}
 			elseif v[5]=='Door' then
 			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Object[#Object].Type = 'Door'

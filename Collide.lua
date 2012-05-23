@@ -23,6 +23,9 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		   --get the normal vector in direction of the enemy
 		   nv = {mtv_x/( math.sqrt(mtv_x^2 + mtv_y^2)),mtv_y/( math.sqrt(mtv_x^2 + mtv_y^2))}
 		   shape_a:move(40*nv[1],40*nv[2])
+		elseif Type_b == "Gate" then
+		   Link:move(mtv_x,mtv_y)
+		   if inlist(shape_b.KeyType,inventory) then deleteObject('Gate',shape_b.location) end
 		elseif Type_b == "Key" then
 		   table.insert(inventory,shape_b.key) 
 		   deleteObject(shape_b.key,shape_b.location)
