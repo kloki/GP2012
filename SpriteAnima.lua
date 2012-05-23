@@ -209,12 +209,24 @@ end
 function updateFoes(dt)
 	local x,y
 	for i,v in ipairs(Foes) do
+      --walk in a random direction
+      v.turnprob = math.min(v.turnprob + 0.001*dt,0.2)
+      if math.random() < v.turnprob then
+         if math.random() > 0.5 then
+            v.dir = {v.dir[2],v.dir[1]}
+         else
+            v.dir = {-v.dir[2],-v.dir[1]}
+         end
+         v.turnprob = 0 --reset turn probability
+      end
+      --update movement
       if v.life > 0 then
          v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
       elseif v.life == 0 then
          dieAnim:update(dt)
       end
 	end
+   --update animations (for efficiency change this to updating only the used animations)
 	goronrightRun:update(dt)
 	goronleftRun:update(dt)
 	goronupRun:update(dt)

@@ -90,6 +90,7 @@ function addLink(x,y,w,h)
 	Link = Collider:addRectangle(x,y,w,h)
 
    Link.Type = 'Link'
+   Link.hit = 0
 	Collider:addToGroup("Link",Link)
 end
 
@@ -126,6 +127,7 @@ function updateLink(dt)
    end
    
    Link:move(dx,dy)
+   if Link.hit > 0 then Link.hit = Link.hit -1*dt end
 end
 
 function addFoes()
@@ -152,17 +154,17 @@ function addFoe(x,y,foetype)
       Foes[#Foes + 1] = Collider:addRectangle(x,y,24,30)
       Foes[#Foes].dir = {0,-1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 30
-      Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'goron'
       Foes[#Foes].life = 2
    elseif foetype == 'snake' then
       Foes[#Foes + 1] = Collider:addRectangle(x,y,20,24)
       Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 40
-      Foes[#Foes].Type = 'Foe'
       Foes[#Foes].sprite = 'snake'
       Foes[#Foes].life = 1
    end
+   Foes[#Foes].Type = 'Foe'
+   Foes[#Foes].turnprob = 0 --probability of turning on a given moment initialized on zero
 end
 
 function removeFoes()
