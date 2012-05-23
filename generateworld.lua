@@ -520,8 +520,11 @@ return worlds
 end
 
 function adddoors(worlds)
-   table.insert(Objects[1],{5*tilesize,5*tilesize,64,64,'Gate','Key56'})
-
+  
+   table.insert(Objects[1],{336,0,143,32,'Gate','Key56'})
+   table.insert(Objects[1],{336,576,143,32,'Gate','Key57'})
+   table.insert(Objects[1],{0,272,32,100,'Gate','Key58'})
+   table.insert(Objects[1],{768,272,32,100,'Gate','Key59'})
 end
 
 
