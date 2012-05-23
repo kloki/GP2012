@@ -57,6 +57,9 @@ function drawObjects(currentobjects)
 	 end
       end
    end
+	for i,v in ipairs(Rupee) do
+		if v.exist then love.graphics.draw(images[70],v.x,v.y) end
+	end
 end
 
 function drawHUD(health,inventory)

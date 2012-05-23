@@ -45,7 +45,7 @@ function addObjects()
 			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Object[#Object].Type = 'OpenChest'
 			   Collider:addToGroup("Object",Object[#Object])
-			   Object[#Object].location={v[1],v[2]}	
+			   Object[#Object].location={v[1],v[2]}
 			else 
 			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Portal[v[5]].Type = 'Portal'
@@ -97,6 +97,7 @@ function addLink(x,y,w,h)
 
    Link.Type = 'Link'
    Link.hit = 0
+	Link.color = {255,255,255}
 	Collider:addToGroup("Link",Link)
 end
 
@@ -133,25 +134,22 @@ function updateLink(dt)
    end
    
    Link:move(dx,dy)
-   if Link.hit > 0 then Link.hit = Link.hit -1*dt end
+   if Link.hit > 0 then 
+		Link.hit = Link.hit -1*dt
+		if math.cos(Link.hit*(1/0.1)*3.14) > 0 then
+			Link.color = {255,0,0}
+		else
+			Link.color = {255,255,255}
+		end
+	else
+		Link.color = {255,255,255}
+	end
 end
 
 function addFoes()
    Foes = {}
    if currentworld < numberofworlds then
-      local temp = math.random(1,3)
-      if temp == 1 then
-         addFoe(100,100,'snake')
-         addFoe(200,100,'snake')
-         addFoe(300,100,'snake')
-         addFoe(400,100,'snake')
-      elseif temp == 2 then
-         addFoe(200,300,'goron')
-         addFoe(300,500,'goron')
-         addFoe(200,250,'goron')
-      elseif temp == 3 then
-         addFoe(400,400,'snake')
-      end
+		for i=1,8 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,'snake') end
    end
 end
 
@@ -205,3 +203,10 @@ function sword()
 	end
 end
 
+function addRupee(x,y)
+	Rupee[#Rupee+1] = Collider:addRectangle(x,y,24,24)
+	Rupee[#Rupee].Type = 'Rupee'
+	Rupee[#Rupee].exist = true
+	Rupee[#Rupee].x, Rupee[#Rupee].y = x,y
+	Collider:addToGroup('Object',Rupee[#Rupee])
+end

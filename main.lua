@@ -41,19 +41,14 @@ function love.load()
    overworld=createoverworld()
    worlds=createworlds()
    addObjects()
-   
-   --zelda
-   
-   health=3
-   inventory={}
-
-   --setup enemies
-   number_of_enemies = 5
-   enemy_speed = 50
 
    -- setup link
+	health=3
+	Rupees = 0
+   inventory={}
    speed   = 200
    d_speed = 140
+	cool_time = 0.7
 	addLink(300,300,24,30)
 	loadSprites()
 	addSword()
@@ -61,6 +56,8 @@ function love.load()
 	--setup enemies
 	Foes = {}
 	addFoes()
+	
+	Rupee = {}
 end
 
 --The screen is drawn in three steps
@@ -73,10 +70,10 @@ function love.draw()
    else
       --WORLD
       if currentworld>numberofworlds then 
-	 drawhouse(worlds[currentworld])
+		drawhouse(worlds[currentworld])
 
       else  
-	 drawworld(worlds[currentworld]) 
+		drawworld(worlds[currentworld]) 
 
       end
       drawmap(overworld)
@@ -90,13 +87,16 @@ function love.draw()
       
       --DEBUG
       --for debug draw bounding boxes
+		
       for i=1,#Object do Object[i]:draw('line') end
       Link:draw('line')
       for i=1,#Foes do Foes[i]:draw('line') end
       love.graphics.setColor(255,0,0)
       for k,v in pairs(Portal) do v:draw('line') end
+		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
-      love.graphics.setColor(255,255,255)
+      love.graphics.setColor(255,255,255)--]]
+		test_output = tostring(Rupees)
       love.graphics.print(test_output,100,100)
       
    end
