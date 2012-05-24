@@ -43,7 +43,7 @@ function love.load()
    addObjects()
 
    -- setup link
-	health=3
+	health=0
 	Rupees = 0
    inventory={}
    speed   = 200
@@ -65,7 +65,7 @@ end
 --:Link
 --:Enemies
 function love.draw()
-   if startup or health==0 then
+   if startup or health==0 or bttn == 'escape' then
       drawStart()
    else
       --WORLD
@@ -103,7 +103,7 @@ function love.draw()
 end
 
 function love.update(dt)
-   if startup then
+   if startup or bttn == 'escape' then
       updateStart(dt)
       start = true
    else
@@ -134,6 +134,7 @@ end
 
 function love.keypressed(k)
    bttn = k
+   print(bttn)
 	if k == ' ' then 
 		spressed = true
       TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
