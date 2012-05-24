@@ -2,22 +2,41 @@ require('util')
 
 function quest(worlds)
 
-   lank=blankmap(overworld)
-   printtable(overworld)
-   printtable(blank)
+   blank=blankmap(overworld)
+   --printtable(overworld)
+   --printtable(blank)
    --place gates
    blank=place4gates(blank)
- 
-   printtable(blank)
-   blank=creep(blank,{3,6},2)
+   --printtable(blank)
+   blank=creep(blank,{3,6})
    blank[3][6]=99
    printtable(blank)
-   addkeys(worlds)
-   adddoors(worlds)
+   adddoors(blank)
+   --key1
+   addkeys(worlds,blank,56)
+   blank=resetblank(blank,10)
+   printtable(blank)
+   --key2
+   blank=creep(blank,{3,6})
+   addkeys(worlds,blank,57)
+   blank=resetblank(blank,20)
+   printtable(blank)
+   
+   --key3
+   blank=creep(blank,{3,6})
+   addkeys(worlds,blank,58)
+   blank=resetblank(blank,30)
+   printtable(blank)
+
+   --key4
+   blank=creep(blank,{3,6})
+   addkeys(worlds,blank,59)
+   blank=resetblank(blank,40)
+   printtable(blank)
 end
 
 
-function creep(blank,coordinates,mark)
+function creep(blank,coordinates)
    if blank[coordinates[1]][coordinates[2]+1]==1 then blank=grow(blank,coordinates[1],coordinates[2]+1) end
    if blank[coordinates[1]][coordinates[2]-1]==1 then blank=grow(blank,coordinates[1],coordinates[2]-1) end
    if blank[coordinates[1]+1][coordinates[2]]==1 then blank=grow(blank,coordinates[1]+1,coordinates[2]) end
@@ -27,6 +46,7 @@ end
 
 function grow(blank,x,y)
    blank[x][y]=2
+   
    if blank[x][y+1]==1 then blank=grow(blank,x,y+1) end
    if blank[x][y-1]==1 then blank=grow(blank,x,y-1) end
    if blank[x+1][y]==1 then blank=grow(blank,x+1,y) end
@@ -87,13 +107,11 @@ function blankmap(map)
    return blank
 end
 
-function addkeys(worlds)
-   
-   for key=56,59 do
-      v=math.random(1,numberofworlds)
-      v=1
-      placekey(worlds,v,key)
-   end
+function addkeys(worlds,blank,key)
+   v=math.random(1,numberofworlds)
+   coordinates=getcoordinates(v)
+   if blank[coordinates[1]][coordinates[2]]~=2 then addkeys(worlds,blank,key)
+   else placekey(worlds,v,key) end
 end
 
 function placekey(worlds,v,key)
@@ -110,9 +128,46 @@ function placekey(worlds,v,key)
 
 end
 
-function adddoors(worlds)
-   table.insert(Objects[1],{336,0,143,32,'Gate','Key56'})
-   table.insert(Objects[1],{336,576,143,32,'Gate','Key57'})
-   table.insert(Objects[1],{0,272,32,100,'Gate','Key58'})
-   table.insert(Objects[1],{768,272,32,100,'Gate','Key59'})
+
+
+
+
+function adddoors(blank)
+   for i=1,12 do
+      for n=1,6 do
+	 if blank[n][i]==10 then
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key56'})  end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key56'})  end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key56'})  end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key56'})  end
+	 end
+	 if blank[n][i]==20 then
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key57'})  end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key57'})  end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key57'})  end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key57'})  end
+	 end
+	 if blank[n][i]==30 then
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key58'})  end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key58'})  end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key58'})  end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key58'})  end
+	 end
+	 if blank[n][i]==40 then
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key59'})  end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key59'})  end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key59'})  end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key59'})  end
+	 end
+      end
+   end
+end
+
+function resetblank(blank,gate)
+   for i=1,12 do
+      for n=1,6 do
+	 if blank[n][i]==2 or blank[n][i]==gate then blank[n][i]=1 end
+      end
+   end
+return blank
 end
