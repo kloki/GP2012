@@ -5,11 +5,12 @@ function quest(worlds)
    lank=blankmap(overworld)
    printtable(overworld)
    printtable(blank)
-       --breakingpoint
-   coordinates=findbreakingpoint()
-   blank[coordinates[1]][coordinates[2]]=71
+   --place gates
+   blank=place4gates(blank)
+ 
    printtable(blank)
-   blank=creep(blank,coordinates,2)
+   blank=creep(blank,{3,6},2)
+   blank[3][6]=99
    printtable(blank)
    addkeys(worlds)
    adddoors(worlds)
@@ -17,10 +18,10 @@ end
 
 
 function creep(blank,coordinates,mark)
-   if blank[coordinates[1]][coordinates[2]+1]~=0 then blank=grow(blank,coordinates[1],coordinates[2]+1)
-   elseif blank[coordinates[1]][coordinates[2]-1]~=0 then blank=grow(blank,coordinates[1],coordinates[2]-1)
-   elseif blank[coordinates[1]+1][coordinates[2]]~=0 then blank=grow(blank,coordinates[1]+1,coordinates[2])
-   elseif blank[coordinates[1]-1][coordinates[2]]~=0 then blank=grow(blank,coordinates[1]-1,coordinates[2]) end
+   if blank[coordinates[1]][coordinates[2]+1]==1 then blank=grow(blank,coordinates[1],coordinates[2]+1) end
+   if blank[coordinates[1]][coordinates[2]-1]==1 then blank=grow(blank,coordinates[1],coordinates[2]-1) end
+   if blank[coordinates[1]+1][coordinates[2]]==1 then blank=grow(blank,coordinates[1]+1,coordinates[2]) end
+   if blank[coordinates[1]-1][coordinates[2]]==1 then blank=grow(blank,coordinates[1]-1,coordinates[2]) end
 return blank
 end
 
@@ -31,6 +32,26 @@ function grow(blank,x,y)
    if blank[x+1][y]==1 then blank=grow(blank,x+1,y) end
    if blank[x-1][y]==1 then blank=grow(blank,x-1,y) end
   
+return blank
+end
+
+
+function place4gates(blank)
+   doubles={}
+   for i=1,4 do
+      blank=place1gate(blank,i*10)
+   end
+
+return blank
+end
+
+function place1gate(blank,gate)
+   coordinates=findbreakingpoint()
+   if inlist(coordinates,doubles) then blank=place1gate(blank,gate)
+   else
+      table.insert(doubles,coordinates)
+      blank[coordinates[1]][coordinates[2]]=gate
+   end
 return blank
 end
 
