@@ -2,25 +2,25 @@ require('util')
 
 function quest(worlds)
 
-   blank=blankmap(overworld)
+   lank=blankmap(overworld)
    printtable(overworld)
    printtable(blank)
-      --breakingpoint
-   coor=findbreakingpoint()
-   blank[coor[1]][coor[2]]=71
+       --breakingpoint
+   coordinates=findbreakingpoint()
+   blank[coordinates[1]][coordinates[2]]=71
    printtable(blank)
-   blank=creep(blank,coor,2)
+   blank=creep(blank,coordinates,2)
    printtable(blank)
    addkeys(worlds)
    adddoors(worlds)
 end
 
 
-function creep(blank,coor,mark)
-   if blank[coor[1]][coor[2]+1]~=0 then blank=grow(blank,coor[1],coor[2]+1)
-   elseif blank[coor[1]][coor[2]-1]~=0 then blank=grow(blank,coor[1],coor[2]-1)
-   elseif blank[coor[1]+1][coor[2]]~=0 then blank=grow(blank,coor[1]+1,coor[2])
-   elseif blank[coor[1]-1][coor[2]]~=0 then blank=grow(blank,coor[1]-1,coor[2]) end
+function creep(blank,coordinates,mark)
+   if blank[coordinates[1]][coordinates[2]+1]~=0 then blank=grow(blank,coordinates[1],coordinates[2]+1)
+   elseif blank[coordinates[1]][coordinates[2]-1]~=0 then blank=grow(blank,coordinates[1],coordinates[2]-1)
+   elseif blank[coordinates[1]+1][coordinates[2]]~=0 then blank=grow(blank,coordinates[1]+1,coordinates[2])
+   elseif blank[coordinates[1]-1][coordinates[2]]~=0 then blank=grow(blank,coordinates[1]-1,coordinates[2]) end
 return blank
 end
 
@@ -36,23 +36,23 @@ end
 
 function findbreakingpoint()
    breakingpoint=math.random(1,numberofworlds)
-   coor=getcoor(breakingpoint)
+   coordinates=getcoordinates(breakingpoint)
    x=0
-   if overworld[coor[1]][coor[2]+1]~=0 then x=x+1 end
-   if overworld[coor[1]][coor[2]-1]~=0 then x=x+1 end
-   if overworld[coor[1]+1][coor[2]]~=0 then x=x+1 end
-   if overworld[coor[1]-1][coor[2]]~=0 then x=x+1 end
-   if x>2 then coor=findbreakingpoint() end
-return coor
+   if overworld[coordinates[1]][coordinates[2]+1]~=0 then x=x+1 end
+   if overworld[coordinates[1]][coordinates[2]-1]~=0 then x=x+1 end
+   if overworld[coordinates[1]+1][coordinates[2]]~=0 then x=x+1 end
+   if overworld[coordinates[1]-1][coordinates[2]]~=0 then x=x+1 end
+   if x>2 then coordinates=findbreakingpoint() end
+return coordinates
 end
 
-function getcoor(number) 
+function getcoordinates(number) 
    for i=1,12 do
       for n=1,6 do
-	 if overworld[n][i]==number then coor={n,i} break end
+	 if overworld[n][i]==number then coordinates={n,i} break end
       end
    end
-return coor
+return coordinates
 end
 
 function blankmap(map)
