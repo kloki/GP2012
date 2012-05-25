@@ -64,6 +64,8 @@ end
 function removeObjects()
 	for i=1,#Object do Collider:remove(Object[i]) end
 	for k,v in pairs(Portal) do Collider:remove(v) end
+   for  i=1,#Rupee do Collider:remove(Rupee[i]) end
+   Rupee = {}
 end
 
 function deleteObject(object,location)
@@ -148,8 +150,15 @@ end
 
 function addFoes()
    Foes = {}
+   local foe_type, foe_num
    if currentworld < numberofworlds then
-		for i=1,8 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,'crow') end
+      if currentworld%3==0 then foe_type = 'crow'
+      elseif currentworld%3==1 then foe_type = 'goron'
+      elseif currentworld%3==2 then foe_type = 'snake' end
+      if currentworld < 10 then foe_num = 6
+      elseif currentworld < 20 then foe_num = 8
+      else foe_num = 10 end
+      for i=1,foe_num do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,foe_type) end
    end
 end
 
@@ -211,9 +220,13 @@ function sword()
 	end
 end
 
-function addRupee(x,y)
+function addRupee(x,y,color)
 	Rupee[#Rupee+1] = Collider:addRectangle(x,y,16,20)
 	Rupee[#Rupee].Type = 'Rupee'
+   Rupee[#Rupee].color = color
+   if     color == 'red'   then Rupee[#Rupee].value = 20 
+   elseif color == 'blue'  then Rupee[#Rupee].value = 5
+   elseif color == 'green' then Rupee[#Rupee].value = 1 end
 	Rupee[#Rupee].exist = true
 	Rupee[#Rupee].x, Rupee[#Rupee].y = x,y
 	Collider:addToGroup('Object',Rupee[#Rupee])

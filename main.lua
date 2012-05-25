@@ -85,9 +85,13 @@ function love.draw()
       --ENEMIES
       drawFoes()
       
+      --RUPEES
+      rupee_green:draw(tilesize*7,tilesize*19.2)
+      love.graphics.setColor(0,0,0)
+		love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
+      love.graphics.setColor(255,255,255)
+      
       --DEBUG
-      --for debug draw bounding boxes
-		
       for i=1,#Object do Object[i]:draw('line') end
       Link:draw('line')
       for i=1,#Foes do Foes[i]:draw('line') end
@@ -95,14 +99,16 @@ function love.draw()
       for k,v in pairs(Portal) do v:draw('line') end
 		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
-      love.graphics.setColor(255,255,255)--]]
-		test_output = tostring(Rupees)
+      love.graphics.setColor(255,255,255)
+      fps = love.timer.getFPS( )
+      test_output = test_output .. tostring(fps)
       love.graphics.print(test_output,100,100)
       
    end
 end
 
 function love.update(dt)
+   test_output = ''
    if startup or bttn == 'escape' then
       updateStart(dt)
       start = true
