@@ -43,6 +43,19 @@ function loadSprites()
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
    
+   crow_sheet = love.graphics.newImage("sprites/crow.png")
+   crowstill,crowleft,crowright = {},{},{}
+   crowstill['blue'] = love.graphics.newQuad(1,1,20,18,100,37)
+   crowstill['red']  = love.graphics.newQuad(1,19,20,18,100,37)
+   crowleft['blue']  = newAnimation(crow_sheet,20,18,0.08,4,20,1,false)
+   crowleft['red'] = newAnimation(crow_sheet,20,18,0.08,4,20,19,false)
+   crowright['blue']  = newAnimation(crow_sheet,20,18,0.08,4,20,1,true)
+   crowright['red'] = newAnimation(crow_sheet,20,18,0.08,4,20,19,true)
+   crowleft['blue']:setMode("bounce")
+   crowleft['red']:setMode("bounce")
+   crowright['blue']:setMode("bounce")
+   crowright['red']:setMode("bounce")
+   
    green_rupee_sheet = love.graphics.newImage("tiles/objects/rupee_green.png")
    blue_rupee_sheet  = love.graphics.newImage("tiles/objects/rupee_blue.png")
    red_rupee_sheet   = love.graphics.newImage("tiles/objects/rupee_red.png")
@@ -207,6 +220,10 @@ function drawFoes(dt)
             elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
             elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
             elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
+         elseif Foes[i].sprite == 'crow' then
+            if     Foes[i].dir[1] == 0 and Foes[i].dir[2] == 0 then love.graphics.drawq(crow_sheet,crowstill[Foes[i].color],x,y)
+            elseif Foes[i].dir[1] == -1 then crowleft[Foes[i].color]:draw(x,y)
+            else crowright[Foes[i].color]:draw(x,y) end
          end
       elseif v.life == 0 then
          dieAnim:draw(x,y)
@@ -247,6 +264,10 @@ function updateFoes(dt)
    snakedown:update(dt)
    snakeright:update(dt)
    snakeleft:update(dt)
+   for _,color in pairs{'red','blue'} do
+      crowleft[color]:update(dt)
+      crowright[color]:update(dt)
+   end   
    rupee_green:update(dt)
    rupee_blue:update(dt)
    rupee_red:update(dt)   

@@ -149,7 +149,7 @@ end
 function addFoes()
    Foes = {}
    if currentworld < numberofworlds then
-		for i=1,8 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,'snake') end
+		for i=1,8 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,'crow') end
    end
 end
 
@@ -166,6 +166,14 @@ function addFoe(x,y,foetype)
       Foes[#Foes].speed = 40
       Foes[#Foes].sprite = 'snake'
       Foes[#Foes].life = 1
+   elseif foetype == 'crow' then
+      Foes[#Foes+1] = Collider:addRectangle(x,y,20,18)
+      Foes[#Foes].dir = {1,0}
+      Foes[#Foes].speed = 60
+      Foes[#Foes].sprite = 'crow'
+      Foes[#Foes].life = 1
+      --randomly give the crow a color
+      if math.random() > 0.5 then Foes[#Foes].color = 'red' else Foes[#Foes].color = 'blue' end
    end
    Foes[#Foes].Type = 'Foe'
    Foes[#Foes].turnprob = 0 --probability of turning on a given moment initialized on zero
