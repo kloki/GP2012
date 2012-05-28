@@ -132,7 +132,7 @@ function love.update(dt)
       if start then 
          TEsound.stop("music")
          start = false
-         TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields" },"music")
+         TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields.mp3" },"music")
       end
       TEsound.cleanup()
    end
