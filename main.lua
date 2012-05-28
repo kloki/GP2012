@@ -149,6 +149,10 @@ function love.keypressed(k)
       love.event.push("quit")
       love.event.push("q")
    end
+   if k== 'b' then
+      bpressed = true
+      --play boomerang sound
+   end
 end
 
 function love.keyreleased(k)

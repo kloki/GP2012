@@ -3,7 +3,7 @@ function loadSprites()
    sheet = love.graphics.newImage("sprites/LinkMC1test.gif")
    sworddown = love.graphics.newImage("sprites/sworddown.png")
    swordright = love.graphics.newImage("sprites/swordright2.png")
-   swordup = love.graphics.newImage("sprites/swordup.png")
+   swordup = love.graphics.newImage("sprites/swordup2.png")
 
    linkdownS = love.graphics.newQuad(24,12,20,32,720,1024)
    linkleftS = love.graphics.newQuad(24,44,20,30,720,1024)
@@ -24,6 +24,16 @@ function loadSprites()
    linkupSword:setMode("once")
    linkrightSword:setMode("once")
    linkleftSword:setMode("once")
+   
+   --link throwing boomerang
+   linkdownBoomerang = newAnimation(sheet,27,30,0.08,6,31,599,false)
+   linkrightBoomerang = newAnimation(sheet,30,30,0.08,6,212,599,false)
+   linkleftBoomerang = newAnimation(sheet,30,30,0.08,6,212,599,true)
+   linkupBoomerang = newAnimation(sheet,29,30,0.08,6,402,599,false)
+   linkdownBoomerang:setMode("once")
+   linkrightBoomerang:setMode("once")
+   linkleftBoomerang:setMode("once")
+   linkupBoomerang:setMode("once")
 	
 	goron_sheet = love.graphics.newImage("sprites/goron.png")
    goron_sheet2 = love.graphics.newImage("sprites/goronfront.png")
@@ -94,6 +104,15 @@ function drawSprite()
    elseif sprite == 'swordleft' then
       linkleftSword:draw(x-22,y-6)
 
+   elseif sprite == 'boomerangdown' then
+      linkdownBoomerang:draw(x,y)
+   elseif sprite == 'boomerangright' then
+      linkrightBoomerang:draw(x,y)
+   elseif sprite == 'boomerangleft' then
+      linkleftBoomerang:draw(x,y)
+   elseif sprite == 'boomerangup' then
+      linkupBoomerang:draw(x,y)
+      
    elseif sprite == 'standup' then
       love.graphics.drawq(sheet,linkupS,x,y)
    elseif sprite == 'standright' then
@@ -152,6 +171,36 @@ function updateSprite(dt)
             spressed = false
             linkleftSword:reset()
          end
+      end
+   elseif bpressed then
+      if Link.heading == 'down' then
+         linkdownBoomerang:update(dt)
+         sprite = 'boomerangdown'
+         if linkdownBoomerang:getCurrentFrame() == 6 then
+            bpressed = false
+            linkdownBoomerang:reset()
+         end
+      elseif Link.heading == 'right' then
+         linkrightBoomerang:update(dt)
+         sprite = 'boomerangright'
+         if linkrightBoomerang:getCurrentFrame() == 6 then
+            bpressed = false
+            linkrightBoomerang:reset()
+         end      
+      elseif Link.heading == 'left' then
+         linkleftBoomerang:update(dt)
+         sprite = 'boomerangleft'
+         if linkleftBoomerang:getCurrentFrame() == 6 then
+            bpressed = false
+            linkleftBoomerang:reset()
+         end      
+      elseif Link.heading == 'up' then
+         linkupBoomerang:update(dt)
+         sprite = 'boomerangup'
+         if linkupBoomerang:getCurrentFrame() == 6 then
+            bpressed = false
+            linkupBoomerang:reset()
+         end      
       end
    elseif move then
       if u then
