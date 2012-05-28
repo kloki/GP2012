@@ -59,9 +59,10 @@ end
 function place4gates(blank)
    doubles={}
    for i=1,4 do
-      blank=place1gate(blank,i*10)
+      for n=1,3 do
+	 blank=place1gate(blank,i*10)
+      end
    end
-
 return blank
 end
 
