@@ -207,6 +207,7 @@ end
 function drawFoes(dt)
    local x,y
    for i, v in ipairs(Foes) do
+      love.graphics.setColor(v.color)
       x,y = v:bbox()
       --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
       if Foes[i].life > 0 then
@@ -221,9 +222,9 @@ function drawFoes(dt)
             elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
             elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
          elseif Foes[i].sprite == 'crow' then
-            if     Foes[i].dir[1] == 0 and Foes[i].dir[2] == 0 then love.graphics.drawq(crow_sheet,crowstill[Foes[i].color],x,y)
-            elseif Foes[i].dir[1] == -1 then crowleft[Foes[i].color]:draw(x,y)
-            else crowright[Foes[i].color]:draw(x,y) end
+            if     Foes[i].dir[1] == 0 and Foes[i].dir[2] == 0 then love.graphics.drawq(crow_sheet,crowstill[Foes[i].col],x,y)
+            elseif Foes[i].dir[1] == -1 then crowleft[Foes[i].col]:draw(x,y)
+            else crowright[Foes[i].col]:draw(x,y) end
          end
       elseif v.life == 0 then
          dieAnim:draw(x,y)
@@ -232,6 +233,7 @@ function drawFoes(dt)
             v.life = -1
          end
       end
+      love.graphics.setColor(255,255,255)
    end
 end
 
@@ -251,7 +253,18 @@ function updateFoes(dt)
       --update movement
       if v.life > 0 then
          v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+         if v.hit > 0 then 
+            v.hit = v.hit -1*dt
+            if math.cos(v.hit*(1/0.1)*3.14) > 0 then
+               v.color = {255,0,0}
+            else
+               v.color = {255,255,255}
+            end
+         else
+            v.color = {255,255,255}
+         end
       elseif v.life == 0 then
+         v.color = {255,255,255}
          dieAnim:update(dt)
       end
 	end

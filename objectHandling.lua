@@ -182,21 +182,16 @@ function addFoe(x,y,foetype)
       Foes[#Foes].sprite = 'crow'
       Foes[#Foes].life = 1
       --randomly give the crow a color
-      if math.random() > 0.5 then Foes[#Foes].color = 'red' else Foes[#Foes].color = 'blue' end
+      if math.random() > 0.5 then Foes[#Foes].col = 'red' else Foes[#Foes].col = 'blue' end
    end
+   Foes[#Foes].hit = 0
+   Foes[#Foes].color = {255,255,255}
    Foes[#Foes].Type = 'Foe'
    Foes[#Foes].turnprob = 0 --probability of turning on a given moment initialized on zero
 end
 
 function removeFoes()
    for k,v in ipairs(Foes) do Collider:remove(v) end
-end
-
-function updateFoes(dt)
-	local x,y
-	for i=1,#Foes do
-		Foes[i]:move(Foes[i].dir[1]*Foes[i].speed*dt,Foes[i].dir[2]*Foes[i].speed*dt)
-	end
 end
 
 function addSword()
