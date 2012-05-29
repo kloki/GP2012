@@ -52,7 +52,6 @@ function love.load()
 	addLink(300,300,24,30)
 	loadSprites()
 	addSword()
-   --addBoem()
 	
 	--setup enemies
 	Foes = {}
@@ -86,25 +85,30 @@ function love.draw()
       --ENEMIES
       drawFoes()
       
+      --RUPEES
+      rupee_green:draw(tilesize*7,tilesize*19.2)
+      love.graphics.setColor(0,0,0)
+		love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
+      love.graphics.setColor(255,255,255)
+      
       --DEBUG
-      --for debug draw bounding boxes
-		
       for i=1,#Object do Object[i]:draw('line') end
       Link:draw('line')
       for i=1,#Foes do Foes[i]:draw('line') end
       love.graphics.setColor(255,0,0)
       for k,v in pairs(Portal) do v:draw('line') end
-		--for k,v in pairs(Rupee) do v:draw('line') end
+      		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
-      --Boem:draw('line')
-      love.graphics.setColor(255,255,255)--]]
-		test_output = tostring(Rupees)
+      love.graphics.setColor(255,255,255)
+      fps = love.timer.getFPS( )
+      test_output = test_output .. tostring(fps)
       love.graphics.print(test_output,100,100)
       
    end
 end
 
 function love.update(dt)
+   test_output = ''
    if startup or bttn == 'escape' then
       updateStart(dt)
       start = true
@@ -115,7 +119,6 @@ function love.update(dt)
       updateSprite(dt)
       updateFoes(dt)
       sword()
-      --boem()
       --handle collisions
       Collider:update(dt)
       --change of worlds
@@ -129,7 +132,7 @@ function love.update(dt)
       if start then 
          TEsound.stop("music")
          start = false
-         TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3" },"music")
+         TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields.mp3" },"music")
       end
       TEsound.cleanup()
    end
@@ -138,19 +141,10 @@ end
 function love.keypressed(k)
    bttn = k
    print(bttn)
-
-   -- space bttn for sword
 	if k == ' ' then 
 		spressed = true
       TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
 	end
-
-   -- control button for Boemerang
-   if k == 'lctrl' or k == 'rctrl' then
-      cpressed = true
-   end
-
-
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")

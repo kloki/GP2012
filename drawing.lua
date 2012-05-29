@@ -58,7 +58,11 @@ function drawObjects(currentobjects)
       end
    end
 	for i,v in ipairs(Rupee) do
-		if v.exist then love.graphics.draw(images[70],v.x,v.y) end
+		if v.exist then 
+         if v.color == 'green' then rupee_green:draw(v.x,v.y)
+         elseif v.color == 'blue' then rupee_blue:draw(v.x,v.y)
+         elseif v.color == 'red' then rupee_red:draw(v.x,v.y) end
+      end
 	end
 end
 

@@ -57,6 +57,26 @@ function loadSprites()
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
    
+   crow_sheet = love.graphics.newImage("sprites/crow.png")
+   crowstill,crowleft,crowright = {},{},{}
+   crowstill['blue'] = love.graphics.newQuad(1,1,20,18,100,37)
+   crowstill['red']  = love.graphics.newQuad(1,19,20,18,100,37)
+   crowleft['blue']  = newAnimation(crow_sheet,20,18,0.08,4,20,1,false)
+   crowleft['red'] = newAnimation(crow_sheet,20,18,0.08,4,20,19,false)
+   crowright['blue']  = newAnimation(crow_sheet,20,18,0.08,4,20,1,true)
+   crowright['red'] = newAnimation(crow_sheet,20,18,0.08,4,20,19,true)
+   crowleft['blue']:setMode("bounce")
+   crowleft['red']:setMode("bounce")
+   crowright['blue']:setMode("bounce")
+   crowright['red']:setMode("bounce")
+   
+   green_rupee_sheet = love.graphics.newImage("tiles/objects/rupee_green.png")
+   blue_rupee_sheet  = love.graphics.newImage("tiles/objects/rupee_blue.png")
+   red_rupee_sheet   = love.graphics.newImage("tiles/objects/rupee_red.png")
+   rupee_green = newAnimation(green_rupee_sheet,15,20,0.12,3,1,1)
+   rupee_blue  = newAnimation(blue_rupee_sheet ,15,20,0.12,3,1,1)
+   rupee_red   = newAnimation(red_rupee_sheet  ,15,20,0.12,3,1,1)
+   
    dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
    dieAnim:setMode("once")
 
@@ -222,6 +242,7 @@ end
 function drawFoes(dt)
    local x,y
    for i, v in ipairs(Foes) do
+      love.graphics.setColor(v.color)
       x,y = v:bbox()
       --love.graphics.drawq(goron_sheet,goronfrontS,x,y)
       if Foes[i].life > 0 then
@@ -235,6 +256,10 @@ function drawFoes(dt)
             elseif Foes[i].dir[2] == -1 then snakeup:draw(x,y)
             elseif Foes[i].dir[1] == 1  then snakeright:draw(x,y)
             elseif Foes[i].dir[1] == -1 then snakeleft:draw(x,y) end
+         elseif Foes[i].sprite == 'crow' then
+            if     Foes[i].dir[1] == 0 and Foes[i].dir[2] == 0 then love.graphics.drawq(crow_sheet,crowstill[Foes[i].col],x,y)
+            elseif Foes[i].dir[1] == -1 then crowleft[Foes[i].col]:draw(x,y)
+            else crowright[Foes[i].col]:draw(x,y) end
          end
       elseif v.life == 0 then
          dieAnim:draw(x,y)
@@ -243,6 +268,7 @@ function drawFoes(dt)
             v.life = -1
          end
       end
+      love.graphics.setColor(255,255,255)
    end
 end
 
@@ -262,7 +288,18 @@ function updateFoes(dt)
       --update movement
       if v.life > 0 then
          v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+         if v.hit > 0 then 
+            v.hit = v.hit -1*dt
+            if math.cos(v.hit*(1/0.1)*3.14) > 0 then
+               v.color = {255,0,0}
+            else
+               v.color = {255,255,255}
+            end
+         else
+            v.color = {255,255,255}
+         end
       elseif v.life == 0 then
+         v.color = {255,255,255}
          dieAnim:update(dt)
       end
 	end
@@ -275,4 +312,12 @@ function updateFoes(dt)
    snakedown:update(dt)
    snakeright:update(dt)
    snakeleft:update(dt)
+   for _,color in pairs{'red','blue'} do
+      crowleft[color]:update(dt)
+      crowright[color]:update(dt)
+   end   
+   rupee_green:update(dt)
+   rupee_blue:update(dt)
+   rupee_red:update(dt)   
 end
+
