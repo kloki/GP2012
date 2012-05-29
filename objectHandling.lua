@@ -226,3 +226,31 @@ function addRupee(x,y,color)
 	Rupee[#Rupee].x, Rupee[#Rupee].y = x,y
 	Collider:addToGroup('Object',Rupee[#Rupee])
 end
+
+
+--[[
+function addBoem()
+   Boem = Collider:addRectangle(0,0,15,15)
+   Boem.Type = 'Boem'
+   Collider:addToGroup('Link',Boem)
+   Collider:setGhost(Boem)
+end
+
+function boem()
+   if cpressed then
+      local x,y Link:bbox()
+		if     Link.heading == 'down' then Sword:moveTo(x+12,y+45)
+		elseif Link.heading == 'up'   then Sword:moveTo(x+12,y-9)
+		elseif Link.heading == 'right'then Sword:moveTo(x+36,y+15)
+		elseif Link.heading == 'left' then Sword:moveTo(x-12,y+15)
+      end
+      Collider:setSolid(Boem)
+   else
+      Collider:setGhost(Boem)
+   end
+end
+
+function updateBoem(dt)
+end]]
+
+

@@ -1,9 +1,7 @@
 require ('lAnA')
 function loadSprites()
+   --LINK
    sheet = love.graphics.newImage("sprites/LinkMC1test.gif")
-   sworddown = love.graphics.newImage("sprites/sworddown.png")
-   swordright = love.graphics.newImage("sprites/swordright2.png")
-   swordup = love.graphics.newImage("sprites/swordup2.png")
 
    linkdownS = love.graphics.newQuad(24,12,20,32,720,1024)
    linkleftS = love.graphics.newQuad(24,44,20,30,720,1024)
@@ -15,7 +13,21 @@ function loadSprites()
    linkrightRun = newAnimation(sheet,27,32,0.1,10,52,44,false)
    linkupRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
    linkleftRun = newAnimation(sheet,27,32,0.1,10,52,44,true)
+
+   --BOEMERANG
+   boemerang = love.graphics.newImage("sprites/Boemerang.png")
+   boemdown = love.graphics.newImage("sprites/Boemdown.png")
+
+   Boem = newAnimation(boemerang,20,40,0.1,6,1,1,false)
+   linkdownBoem = newAnimation(boemdown,50,50,0.06,6,1,1,false)
+   Boem:setMode("once")
+   linkdownBoem:setMode("once")
    
+   --SWORD
+   sworddown = love.graphics.newImage("sprites/sworddown.png")
+   swordright = love.graphics.newImage("sprites/swordright2.png")
+   swordup = love.graphics.newImage("sprites/swordup2.png")
+
    linkdownSword = newAnimation(sworddown,50,50,0.06,8,1,1,false)
    linkrightSword = newAnimation(swordright,50,50,0.06,7,1,1,false)
    linkupSword = newAnimation(swordup,50,50,0.06,8,1,1,false)
@@ -35,6 +47,7 @@ function loadSprites()
    linkleftBoomerang:setMode("once")
    linkupBoomerang:setMode("once")
 	
+   --GORON
 	goron_sheet = love.graphics.newImage("sprites/goron.png")
    goron_sheet2 = love.graphics.newImage("sprites/goronfront.png")
    goronfrontS = love.graphics.newQuad(162,12,26,30,368,448)
@@ -43,6 +56,7 @@ function loadSprites()
 	goronupRun    = newAnimation(goron_sheet,30.5,30,0.15,7,82,89,false)
 	gorondownRun  = newAnimation(goron_sheet2,29,30,0.1,8,0,0,false)
    
+   --SNAKE
    snake_sheet = love.graphics.newImage("sprites/snake.png")
    snakeleft  = newAnimation(snake_sheet,24,16,0.1,4,2, 3,false)
    snakeright = newAnimation(snake_sheet,24,16,0.1,4,2,25,false)
@@ -75,7 +89,8 @@ function loadSprites()
    
    dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
    dieAnim:setMode("once")
-   --
+
+   --VARIABLES
    sprite = 'standdown'
    Link.heading = 'down'
    move = false
@@ -84,7 +99,6 @@ end
 function drawSprite()
 	local x,y = Link:bbox()
 	love.graphics.setColor(Link.color)
-   --love.graphics.drawq(sheet,linkdownS,x,y)
    if sprite == 'moveup' then
       linkupRun:draw(x,y)
    elseif sprite == 'movedown' then
@@ -121,6 +135,10 @@ function drawSprite()
       love.graphics.drawq(sheet,linkleftS,x,y)
    elseif sprite == 'standdown' then
       love.graphics.drawq(sheet,linkdownS,x,y)
+
+   elseif sprite == 'boemdown' then
+      linkdownBoem:draw(x-10,y-8)
+      Boem:draw(xboem+5,yboem)
    end      
 	love.graphics.setColor(255,255,255)
 end
@@ -130,8 +148,10 @@ function updateSprite(dt)
    d = love.keyboard.isDown("down")
    r = love.keyboard.isDown("right")
    l = love.keyboard.isDown("left")
-   --s = love.keyboard.isDown(" ")
-   --b = love.keyboard.isDown("lctrl")
+   local x,y = Link:bbox()
+   xboem = x
+   yboem = y
+
    -- hier logica
    if u or d or r or l then
       move = true
@@ -139,8 +159,23 @@ function updateSprite(dt)
       move = false
    end
 
-
-   if spressed then
+   if cpressed then
+      move = false
+      if Link.heading == 'down' then
+         linkdownBoem:update(dt)
+         sprite = 'boemdown'
+         yboem = y+15*Boem:getCurrentFrame()
+         Boem:update(dt)
+         if linkdownBoem:getCurrentFrame() == 5 then
+            cpressed = false
+            yboem=y
+            Boem:reset()
+            linkdownBoem:reset()
+         end         
+      else
+         cpressed = false
+      end
+   elseif spressed then
       move = false
       if Link.heading == 'down' then
          linkdownSword:update(dt)
