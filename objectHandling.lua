@@ -109,32 +109,36 @@ function updateLink(dt)
    r = love.keyboard.isDown("right")
    l = love.keyboard.isDown("left")
    local dx,dy = 0,0
-   if u then
-      if r then
-	 dy = -d_speed*dt
-	 dx =  d_speed*dt
+   if spressed or cpressed then
+   else
+      
+      if u then
+         if r then
+	    dy = -d_speed*dt
+	    dx =  d_speed*dt
+         elseif l then
+	    dy = -d_speed*dt
+	    dx = -d_speed*dt
+         else
+	    dy = -speed*dt
+         end
+      elseif d then
+         if r then
+	    dy = d_speed*dt
+	    dx = d_speed*dt
+         elseif l then
+	    dy =  d_speed*dt
+	    dx = -d_speed*dt
+         else
+	    dy = speed*dt
+         end
+      elseif r then
+         dx = speed*dt
       elseif l then
-	 dy = -d_speed*dt
-	 dx = -d_speed*dt
-      else
-	 dy = -speed*dt
+         dx = -speed*dt
       end
-   elseif d then
-      if r then
-	 dy = d_speed*dt
-	 dx = d_speed*dt
-      elseif l then
-	 dy =  d_speed*dt
-	 dx = -d_speed*dt
-      else
-	 dy = speed*dt
-      end
-   elseif r then
-      dx = speed*dt
-   elseif l then
-      dx = -speed*dt
    end
-   
+      
    Link:move(dx,dy)
    if Link.hit > 0 then 
 		Link.hit = Link.hit -1*dt
