@@ -52,7 +52,7 @@ function love.load()
 	addLink(300,300,24,30)
 	loadSprites()
 	addSword()
-   --addBoem()
+   addBoomerang()
 	
 	--setup enemies
 	Foes = {}
@@ -80,6 +80,7 @@ function love.draw()
       drawmap(overworld)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
+      drawWeapons()
       --LINK
       drawSprite()
       
@@ -100,7 +101,7 @@ function love.draw()
       for k,v in pairs(Portal) do v:draw('line') end
       		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
-      --Boem:draw('line')
+      Boomerang:draw('line')
 
       love.graphics.setColor(255,255,255)
       fps = love.timer.getFPS( )
@@ -121,6 +122,7 @@ function love.update(dt)
       updateLink(dt)
       updateSprite(dt)
       updateFoes(dt)
+      updateWeapons(dt)
       sword()
       --boem()
       --handle collisions
@@ -152,18 +154,13 @@ function love.keypressed(k)
       TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
 	end
 
-   -- control button for Boemerang
-   if k == 'lctrl' or k == 'rctrl' then
-      cpressed = true
-   end
-
-
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")
    end
    if k== 'b' then
       bpressed = true
+      initBoomerang()
       --play boomerang sound
    end
 end

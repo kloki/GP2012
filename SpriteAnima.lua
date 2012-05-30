@@ -14,14 +14,9 @@ function loadSprites()
    linkupRun = newAnimation(sheet,23,32,0.1,10,61,80,false)
    linkleftRun = newAnimation(sheet,27,32,0.1,10,52,44,true)
 
-   --BOEMERANG
+   --BOOMERANG
    boemerang = love.graphics.newImage("sprites/Boemerang.png")
-   boemdown = love.graphics.newImage("sprites/Boemdown.png")
-
-   Boem = newAnimation(boemerang,20,40,0.1,6,1,1,false)
-   linkdownBoem = newAnimation(boemdown,50,50,0.06,6,1,1,false)
-   Boem:setMode("once")
-   linkdownBoem:setMode("once")
+   BoomerangAnim = newAnimation(boemerang,20,40,0.06,6,1,1,false)
    
    --SWORD
    sworddown = love.graphics.newImage("sprites/sworddown.png")
@@ -135,11 +130,8 @@ function drawSprite()
       love.graphics.drawq(sheet,linkleftS,x,y)
    elseif sprite == 'standdown' then
       love.graphics.drawq(sheet,linkdownS,x,y)
-
-   elseif sprite == 'boemdown' then
-      linkdownBoem:draw(x-10,y-8)
-      Boem:draw(xboem+5,yboem)
    end      
+   
 	love.graphics.setColor(255,255,255)
 end
 
@@ -159,23 +151,7 @@ function updateSprite(dt)
       move = false
    end
 
-   if cpressed then
-      move = false
-      if Link.heading == 'down' then
-         linkdownBoem:update(dt)
-         sprite = 'boemdown'
-         yboem = y+15*Boem:getCurrentFrame()
-         Boem:update(dt)
-         if linkdownBoem:getCurrentFrame() == 5 then
-            cpressed = false
-            yboem=y
-            Boem:reset()
-            linkdownBoem:reset()
-         end         
-      else
-         cpressed = false
-      end
-   elseif spressed then
+   if spressed then
       move = false
       if Link.heading == 'down' then
          linkdownSword:update(dt)
@@ -370,3 +346,15 @@ function updateFoes(dt)
    rupee_red:update(dt)   
 end
 
+function drawWeapons()
+   if Boomerang.active then BoomerangAnim:draw(Boomerang.x,Boomerang.y) end
+end
+
+function updateWeapons(dt)
+   if Boomerang.active then 
+      BoomerangAnim:update(dt) 
+      Boomerang.x = Boomerang.x + Boomerang.speed*Boomerang.dir[1]*dt
+      Boomerang.y = Boomerang.y + Boomerang.speed*Boomerang.dir[2]*dt
+      Boomerang:moveTo(Boomerang.x+8,Boomerang.y+16)
+   end
+end

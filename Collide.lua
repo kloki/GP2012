@@ -67,20 +67,19 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          shape_b:move(-mtv_x/2,-mtv_y/2)
          shape_b.dir = {-shape_b.dir[1],-shape_b.dir[2]}
 		elseif Type_b == 'Sword' then
-         --damage
-         if shape_a.hit <= 0 then
-            shape_a.hit = cool_time --cooldown time
-            shape_a.life = shape_a.life-1
-            if shape_a.life < 1 then 
-               Collider:setGhost(shape_a)
-               x,y = shape_a:bbox()
-               if math.random()>0.6 then if math.random()>0.8 then addRupee(x,y,'blue') else addRupee(x,y,'green') end end
-               TEsound.play("sound-effects/Enemy_Kill.wav","effect")
-            else
-               TEsound.play("sound-effects/Enemy_Hit.wav","effect")
-            end
-         end
+         enemyHit(shape_a)
          shape_a:move(mtv_x,mtv_y)
+      elseif Type_b == 'Boomerang' then
+         enemyHit(shape_a)
+         shape_b:move(mtv_x,mtv_y)
+         shape_b.dir = {-shape_b.dir[1],-shape_b.dir[2]}
+      end
+   elseif Type_a == 'Boomerang' or Type_b == 'Boomerang' then
+      if Type_b == 'Boomerang' then 
+         shape_a,shape_b,Type_a,Type_b,mtv_x,mtv_y = shape_b,shape_a,Type_b,Type_a,-mtv_x,-mtv_y end
+      if Type_b == 'Object' or Type_b == 'Gate' then
+         shape_a:move(mtv_x,mtv_y)
+         shape_a.dir = {-shape_a.dir[1],-shape_a.dir[2]}
       end
 	end
 end
@@ -88,4 +87,19 @@ end
 -- this is called when two shapes stop colliding
 function collision_stop(dt, shape_a, shape_b)
    
+end
+
+function enemyHit(shape)
+   if shape.hit <= 0 then
+      shape.hit = cool_time --cooldown time
+      shape.life = shape.life-1
+      if shape.life < 1 then 
+         Collider:setGhost(shape)
+         x,y = shape:bbox()
+         if math.random()>0.6 then if math.random()>0.8 then addRupee(x,y,'blue') else addRupee(x,y,'green') end end
+         TEsound.play("sound-effects/Enemy_Kill.wav","effect")
+      else
+         TEsound.play("sound-effects/Enemy_Hit.wav","effect")
+      end
+   end
 end

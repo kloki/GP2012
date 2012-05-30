@@ -227,7 +227,26 @@ function addRupee(x,y,color)
 	Collider:addToGroup('Object',Rupee[#Rupee])
 end
 
+function addBoomerang()
+	Boomerang = Collider:addRectangle(0,0,20,20)
+	Boomerang.Type = 'Boomerang'
+   Boomerang.speed = 80
+	Collider:addToGroup('Link',Boomerang)
+	Collider:setGhost(Boomerang)
+end
 
+function initBoomerang()
+   if     Link.heading == 'up'    then Boomerang.dir = {0,-1}
+   elseif Link.heading == 'down'  then Boomerang.dir = {0,1}
+   elseif Link.heading == 'left'  then Boomerang.dir = {-1,0}
+   elseif Link.heading == 'right' then Boomerang.dir = {1,0} end
+   local x,y = Link:bbox()
+   Boomerang.x = x
+   Boomerang.y = y
+   Boomerang.active = true
+   Boomerang:moveTo(Boomerang.x,Boomerang.y)
+   Collider:setSolid(Boomerang)
+end
 --[[
 function addBoem()
    Boem = Collider:addRectangle(0,0,15,15)
