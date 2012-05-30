@@ -85,6 +85,9 @@ function loadSprites()
    dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
    dieAnim:setMode("once")
 
+   --SPECIAL
+   alert = love.graphics.newImage("sprites/alert.png")
+   
    --VARIABLES
    sprite = 'standdown'
    Link.heading = 'down'
@@ -286,6 +289,9 @@ function drawFoes(dt)
             elseif Foes[i].dir[1] == -1 then crowleft[Foes[i].col]:draw(x,y)
             else crowright[Foes[i].col]:draw(x,y) end
          end
+         if v.alert then
+            love.graphics.draw(alert,x+10,y+10)
+         end
       elseif v.life == 0 then
          dieAnim:draw(x,y)
          if dieAnim:getCurrentFrame() == 5 then
@@ -326,6 +332,11 @@ function updateFoes(dt)
       elseif v.life == 0 then
          v.color = {255,255,255}
          dieAnim:update(dt)
+      end
+      local Foe_x,Foe_y = v:bbox()
+      local Link_x, Link_y = v:bbox()
+      if ((Foe_x - Link_x)^2 + (Foe_y - Link_y)^2) < 20 then
+         v.alert = true
       end
 	end
    --update animations (for efficiency change this to updating only the used animations)

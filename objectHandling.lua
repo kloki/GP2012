@@ -184,6 +184,7 @@ function addFoe(x,y,foetype)
       --randomly give the crow a color
       if math.random() > 0.5 then Foes[#Foes].col = 'red' else Foes[#Foes].col = 'blue' end
    end
+   Foes[#Foes].alert = false 
    Foes[#Foes].hit = 0
    Foes[#Foes].color = {255,255,255}
    Foes[#Foes].Type = 'Foe'
