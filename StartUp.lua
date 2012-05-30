@@ -4,7 +4,11 @@ function loadStart()
    Smenu = love.graphics.newImage("tiles/start/mainmenu.png")
    Ssprite = love.graphics.newImage("tiles/start/MC-Items.png")
    Ssword = love.graphics.newQuad(0,0,25,27,180,274)
-   Ssword:flip(true,false) 
+   Ssword:flip(true,false)
+   gameover = love.graphics.newImage("tiles/start/gameover.png")
+   dieS = love.graphics.newImage("sprites/die.png")
+   die =  newAnimation(dieS,25,40,0.15,13,1,1)
+   die:setMode("once")
    m = 's'
    bp= false
 
@@ -36,8 +40,9 @@ function drawStart()
          love.graphics.drawq(Ssprite,Ssword,330,267)
       end
    elseif case == 'gameover' then
-      love.graphics.setColor(0,100,0,255)
-      love.graphics.print("GAME OVER", 100, 100)
+      love.graphics.setColor(255,255,255,255)
+      love.graphics.draw(gameover)
+      die:draw(400,320)
    elseif case == 'options' then
       love.graphics.setColor(0,100,0,255)
       love.graphics.print('Options', 200,200 )
@@ -75,8 +80,10 @@ function updateStart(dt)
       end
    elseif case == 'options' then
    elseif case == 'gameover' then
+      die:update(dt)
       startup = true
       if spressed then
+         die:reset()
          spressed = false
          case = 'main'
          health = 4
