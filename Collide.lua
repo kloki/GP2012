@@ -19,7 +19,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          if shape_a.hit <= 0 then
             shape_a.hit = cool_time --cooldown time
             health=health-1
-            if health <1 then health = 1 end--for nothing if Link dies
+            --if health <1 then health = 1 end--for nothing if Link dies
             TEsound.play("sound-effects/Link_Hurt.wav","effect")
          end
          shape_a:move(mtv_x,mtv_y)
