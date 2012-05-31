@@ -290,7 +290,7 @@ function drawFoes(dt)
             else crowright[Foes[i].col]:draw(x,y) end
          end
          if v.alert then
-            love.graphics.draw(alert,x+10,y+10)
+            love.graphics.draw(alert,x+16,y-10)
          end
       elseif v.life == 0 then
          dieAnim:draw(x,y)
@@ -334,9 +334,12 @@ function updateFoes(dt)
          dieAnim:update(dt)
       end
       local Foe_x,Foe_y = v:bbox()
-      local Link_x, Link_y = v:bbox()
-      if ((Foe_x - Link_x)^2 + (Foe_y - Link_y)^2) < 20 then
+      local Link_x, Link_y = Link:bbox()
+      if math.sqrt(math.pow(Foe_x - Link_x,2) + math.pow(Foe_y - Link_y,2)) < 100
+         and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
          v.alert = true
+      else
+         v.alert = false
       end
 	end
    --update animations (for efficiency change this to updating only the used animations)
