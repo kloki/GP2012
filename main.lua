@@ -43,7 +43,7 @@ function love.load()
    addObjects()
 
    -- setup link
-	health=0
+	health=4
 	Rupees = 0
    inventory={}
    speed   = 200
@@ -165,6 +165,10 @@ function love.keypressed(k)
    if k== 'b' then
       bpressed = true
       --play boomerang sound
+   end
+   if k == 'escape' then
+      epressed = true
+      startup = true
    end
 end
 
