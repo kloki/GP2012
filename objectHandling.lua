@@ -41,6 +41,16 @@ function addObjects()
 			   Object[#Object].Type = 'Chest'
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].location={v[1],v[2]}	
+			elseif v[5]=='bettersword' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'bettersword'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='boomerangitem' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'boomerangitem'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}		
 			elseif v[5]=='OpenChest' then
 			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Object[#Object].Type = 'OpenChest'
@@ -172,19 +182,19 @@ function addFoe(x,y,foetype)
       Foes[#Foes].dir = {0,-1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 30
       Foes[#Foes].sprite = 'goron'
-      Foes[#Foes].life = 2
+      Foes[#Foes].life = 4
    elseif foetype == 'snake' then
       Foes[#Foes + 1] = Collider:addRectangle(x,y,20,24)
       Foes[#Foes].dir = {0,1} --vector for direction the Foe is facing (x,y)
       Foes[#Foes].speed = 40
       Foes[#Foes].sprite = 'snake'
-      Foes[#Foes].life = 1
+      Foes[#Foes].life = 3
    elseif foetype == 'crow' then
       Foes[#Foes+1] = Collider:addRectangle(x,y,20,18)
       Foes[#Foes].dir = {1,0}
       Foes[#Foes].speed = 60
       Foes[#Foes].sprite = 'crow'
-      Foes[#Foes].life = 1
+      Foes[#Foes].life = 2
       --randomly give the crow a color
       if math.random() > 0.5 then Foes[#Foes].col = 'red' else Foes[#Foes].col = 'blue' end
    end
@@ -236,6 +246,8 @@ function addBoomerang()
 	Boomerang = Collider:addRectangle(0,0,20,20)
 	Boomerang.Type = 'Boomerang'
    Boomerang.speed = 80
+   Boomerang.timer = 0
+   Boomerang.life = 6
 	Collider:addToGroup('Link',Boomerang)
 	Collider:setGhost(Boomerang)
 end
@@ -249,8 +261,15 @@ function initBoomerang()
    Boomerang.x = x
    Boomerang.y = y
    Boomerang.active = true
+   Boomerang.timer = 0
+   Boomerang.life = 6
    Boomerang:moveTo(Boomerang.x,Boomerang.y)
    Collider:setSolid(Boomerang)
+end
+
+function removeBoomerang()
+   Boomerang.active = false
+   Collider:setGhost(Boomerang)
 end
 --[[
 function addBoem()

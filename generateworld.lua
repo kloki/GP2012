@@ -66,7 +66,9 @@ function loadtiles()
    images[68]=love.graphics.newImage("tiles/house/insidehouse3.png")
    images[69]=love.graphics.newImage("tiles/house/insidehouse4.png")
    images[70]=love.graphics.newImage("tiles/objects/rupee.png")
-   
+   images[71]=love.graphics.newImage("tiles/objects/sword2.png")
+   images[72]=love.graphics.newImage("tiles/objects/boemobj.png")
+
    --here the list of tiles which cannot be drawnover
    forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
 end
@@ -81,6 +83,7 @@ function createworlds()
    worlds=buildgates(worlds)
    quest(worlds)
    worlds=addchests(worlds)
+   worlds=addweapons(worlds)
 return worlds
 end
 
@@ -495,8 +498,29 @@ end
 
 
 
+function addweapons(worlds)
+--bettersword
+   worlds=addweapon(worlds,1,'bettersword')
 
-function addchests()
+--boomerang
+   worlds=addweapon(worlds,1,'boomerangitem')
+
+
+return worlds
+end
+
+function addweapon(worlds,v,weapon)
+   x=math.random(2,horizontaltiles-1)
+   y=math.random(2,verticaltiles-1)
+      
+   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then addweapon(worlds,v,weapon)--only on grass
+   else 
+      table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,weapon})
+   end
+return worlds
+end
+
+function addchests(worlds)
    for n=1,4 do
       v=math.random(1,numberofworlds)
       worlds=addchest(worlds,v)
@@ -504,11 +528,13 @@ function addchests()
 return worlds
 end
 
+
 function addchest(worlds,world,iteminchest)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-      
-   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
+   if worlds[v+numberofworlds]~=nil then --place in houses
+      table.insert(Objects[v+numberofworlds],{310,310,32,32,'Chest'})
+   elseif worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
    else 
       table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Chest'})
    end

@@ -43,22 +43,25 @@ function love.load()
    addObjects()
 
    -- setup link
-	health=0
-	Rupees = 0
+   health=0
+   Rupees = 0
+   havebettersword=false
+   haveboomerang=false
+   damage=1
    inventory={}
    speed   = 200
    d_speed = 140
-	cool_time = 0.7
-	addLink(300,300,24,30)
-	loadSprites()
-	addSword()
+   cool_time = 0.7
+   addLink(300,300,24,30)
+   loadSprites()
+   addSword()
    addBoomerang()
-	
-	--setup enemies
-	Foes = {}
-	addFoes()
-	
-	Rupee = {}
+   
+   --setup enemies
+   Foes = {}
+   addFoes()
+   
+   Rupee = {}
 end
 
 --The screen is drawn in three steps
@@ -90,7 +93,7 @@ function love.draw()
       --RUPEES
       rupee_green:draw(tilesize*7,tilesize*19.2)
       love.graphics.setColor(0,0,0)
-		love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
+      love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
       love.graphics.setColor(255,255,255)
       
       --DEBUG
@@ -139,6 +142,8 @@ function love.update(dt)
          TEsound.stop("music")
          start = false
          TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields.mp3" },"music")
+	 TEsound.volume("music", 0.4)
+	 
       end
       TEsound.cleanup()
    end
@@ -158,7 +163,7 @@ function love.keypressed(k)
       love.event.push("quit")
       love.event.push("q")
    end
-   if k== 'b' then
+   if haveboomerang and k== 'b' then
       bpressed = true
       initBoomerang()
       --play boomerang sound

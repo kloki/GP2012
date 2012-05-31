@@ -370,5 +370,12 @@ function updateWeapons(dt)
       Boomerang.x = Boomerang.x + Boomerang.speed*Boomerang.dir[1]*dt
       Boomerang.y = Boomerang.y + Boomerang.speed*Boomerang.dir[2]*dt
       Boomerang:moveTo(Boomerang.x+8,Boomerang.y+16)
+      Boomerang.timer = Boomerang.timer + dt
+      Boomerang.life = Boomerang.life - dt
+      if Boomerang.life < 0 then removeBoomerang() end
+      if Boomerang.timer > 0.27 then 
+         TEsound.play("sound-effects/Boomerang.wav",{"effect","boomerang"}) 
+         Boomerang.timer = 0
+      end
    end
 end
