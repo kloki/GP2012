@@ -29,22 +29,32 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == "Key" then
 		   table.insert(inventory,shape_b.key) 
 		   deleteObject(shape_b.key,shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
+		elseif Type_b == "bettersword" then
+		   havebettersword=true
+		   damage=2
+		   deleteObject("bettersword",shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
+		elseif Type_b == "boomerangitem" then
+		   haveboomerang=true
+		   deleteObject("boomerangitem",shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
 		elseif Type_b == "Heart" then
 		   deleteObject("Heart",shape_b.location)
 		   if health<8 then health=health+1 end
-         TEsound.play("sound-effects/Heart.wav","effect")
+		   TEsound.play("sound-effects/Heart.wav","effect")
 		elseif Type_b == "Door" then
 		   currentworld=numberofworlds+currentworld
 		   Link:moveTo(400,330)
-         TEsound.play("sound-effects/Door1.wav","effect")
+		   TEsound.play("sound-effects/Door1.wav","effect")
 		elseif Type_b == "Door2" then
 		   currentworld=currentworld-numberofworlds
 		   Link:moveTo(shape_b.returnlocation[1],shape_b.returnlocation[2])
-         TEsound.play("sound-effects/Door2.wav","effect")
+		   TEsound.play("sound-effects/Door2.wav","effect")
 	  	elseif Type_b == "Chest" then
 		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
 		   modifyObject("Chest",shape_b.location,"OpenChest")
-         TEsound.play("sound-effects/Chest_Open.wav","effect")
+		   TEsound.play("sound-effects/Chest_Open.wav","effect")
 		elseif Type_b == "Rupee" then
 			Rupees = Rupees+shape_b.value
 			shape_b.exist = false
@@ -92,7 +102,7 @@ end
 function enemyHit(shape)
    if shape.hit <= 0 then
       shape.hit = cool_time --cooldown time
-      shape.life = shape.life-1
+      shape.life = shape.life-damage
       if shape.life < 1 then 
          Collider:setGhost(shape)
          x,y = shape:bbox()

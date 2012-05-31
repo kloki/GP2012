@@ -41,6 +41,16 @@ function addObjects()
 			   Object[#Object].Type = 'Chest'
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].location={v[1],v[2]}	
+			elseif v[5]=='bettersword' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'bettersword'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='boomerangitem' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'boomerangitem'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}		
 			elseif v[5]=='OpenChest' then
 			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Object[#Object].Type = 'OpenChest'

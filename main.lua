@@ -45,14 +45,17 @@ function love.load()
    -- setup link
 	health=0
 	Rupees = 0
-   inventory={}
-   speed   = 200
-   d_speed = 140
+	havebettersword=false
+	haveboomerang=false
+	damage=1
+	inventory={}
+	speed   = 200
+	d_speed = 140
 	cool_time = 0.7
 	addLink(300,300,24,30)
 	loadSprites()
 	addSword()
-   addBoomerang()
+	addBoomerang()
 	
 	--setup enemies
 	Foes = {}
@@ -158,7 +161,7 @@ function love.keypressed(k)
       love.event.push("quit")
       love.event.push("q")
    end
-   if k== 'b' then
+   if haveboomerang and k== 'b' then
       bpressed = true
       initBoomerang()
       --play boomerang sound
