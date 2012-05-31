@@ -23,6 +23,7 @@ function love.load()
    --load music
    TEsound.playLooping("music/menu-selection.mp3","music")
    TEsound.tagVolume("music", 0.5)
+   TEsound.tagVolume("boomerang",0.5)
    
    --setup world
    tilesize=32
