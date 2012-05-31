@@ -532,8 +532,9 @@ end
 function addchest(worlds,world,iteminchest)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-      
-   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
+   if worlds[v+numberofworlds]~=nil then --place in houses
+      table.insert(Objects[v+numberofworlds],{310,310,32,32,'Chest'})
+   elseif worlds[v][y][x]>10 or worlds[v][y][x]<1 then addchest(worlds,world,iteminchest)--only place keys on grass
    else 
       table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Chest'})
    end
