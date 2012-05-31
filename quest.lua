@@ -19,18 +19,21 @@ function quest(worlds)
    --key2
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,57)
+   printtable(blank)
    blank=resetblank(blank,20)
    printtable(blank)
    
    --key3
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,58)
+   printtable(blank)
    blank=resetblank(blank,30)
    printtable(blank)
 
    --key4
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,59)
+   printtable(blank)
    blank=resetblank(blank,40)
    printtable(blank)
 end
