@@ -16,13 +16,13 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			Link:moveTo(388-shape_b.ix*358,305-shape_b.iy*270) --links new position translated from the center of the screen
 		elseif Type_b == 'Foe' then
 		   --damage
-         if shape_a.hit <= 0 then
-            shape_a.hit = cool_time --cooldown time
-            health=health-1
-            if health <1 then health = 1 end--for nothing if Link dies
-            TEsound.play("sound-effects/Link_Hurt.wav","effect")
-         end
-         shape_a:move(mtv_x,mtv_y)
+		   if shape_a.hit <= 0 then
+		      shape_a.hit = cool_time --cooldown time
+		      health=health-1
+		      if health <1 then health = 1 end--for nothing if Link dies
+		      TEsound.play("sound-effects/Link_Hurt.wav","effect")
+		   end
+		   shape_a:move(mtv_x,mtv_y)
 		elseif Type_b == "Gate" then
 		   Link:move(mtv_x,mtv_y)
 		   if inlist(shape_b.KeyType,inventory) then deleteObject('Gate',shape_b.location) end
