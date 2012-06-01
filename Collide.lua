@@ -107,7 +107,14 @@ function enemyHit(shape)
       if shape.life < 1 then 
          Collider:setGhost(shape)
          x,y = shape:bbox()
-         if math.random()>0.6 then if math.random()>0.8 then addRupee(x,y,'blue') else addRupee(x,y,'green') end end
+         if math.random()>0.6 then 
+            if math.random()>0.8 then addRupee(x,y,'blue') 
+            else addRupee(x,y,'green') end
+         elseif math.random()>0.7 then
+            table.insert(Objects[currentworld],{x+6,y+6,15,15,'Heart'})
+            removeObjects()
+            addObjects()
+         end
          TEsound.play("sound-effects/Enemy_Kill.wav","effect")
       else
          TEsound.play("sound-effects/Enemy_Hit.wav","effect")

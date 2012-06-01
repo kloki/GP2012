@@ -6,7 +6,7 @@ function loadtiles()
    for i=0,9 do
       images[i+1] = love.graphics.newImage("tiles/grass/grass" .. tostring(i) .. ".png")
    end
-   images[11]=love.graphics.newImage("sprites/wall.gif")
+   --images[11]=love.graphics.newImage("sprites/wall.gif")
    images[12]=love.graphics.newImage("tiles/bushes/bush.png")
    images[13]=love.graphics.newImage("tiles/bushes/redberrybush.png")
    images[14]=love.graphics.newImage("tiles/bushes/purpleberrybush.png")
