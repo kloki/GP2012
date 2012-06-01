@@ -56,6 +56,11 @@ function addObjects()
 			   Object[#Object].Type = 'OpenChest'
 			   Collider:addToGroup("Object",Object[#Object])
 			   Object[#Object].location={v[1],v[2]}
+			elseif v[5]=='Arch' then
+			   Object[#Object+1] = Collider:addRectangle(v[1],v[2],v[3],v[4])
+			   Object[#Object].Type = 'Arch'
+			   Collider:addToGroup("Object",Object[#Object])
+			   Object[#Object].location={v[1],v[2]}
 			else 
 			   Portal[v[5]] = Collider:addRectangle(v[1],v[2],v[3],v[4])
 			   Portal[v[5]].Type = 'Portal'

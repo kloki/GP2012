@@ -143,28 +143,28 @@ function adddoors(blank)
    for i=1,12 do
       for n=1,6 do
 	 if blank[n][i]==10 then
-	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key56'})  end
-	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key56'})  end
-	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key56'})  end
-	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key56'})  end
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key56',78}) table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Arch',91}) end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key56',74}) table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Arch',90}) end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key56',82}) table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Arch',92}) end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key56',86}) table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Arch',93}) end
 	 end
 	 if blank[n][i]==20 then
-	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key57'})  end
-	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key57'})  end
-	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key57'})  end
-	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key57'})  end
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key57',79})  table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Arch',91}) end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key57',75}) table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Arch',90}) end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key57',83}) table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Arch',92}) end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key57',87}) table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Arch',93})  end
 	 end
 	 if blank[n][i]==30 then
-	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key58'})  end
-	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key58'})  end
-	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key58'})  end
-	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key58'})  end
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key58',80})  table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Arch',91}) end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key58',76})table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Arch',90})  end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key58',84}) table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Arch',92}) end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key58',88})  table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Arch',93}) end
 	 end
 	 if blank[n][i]==40 then
-	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key59'})  end
-	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key59'})  end
-	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key59'})  end
-	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key59'})  end
+	    if overworld[n+1][i]>0 then table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Gate','Key59',81})  table.insert(Objects[overworld[n+1][i]],{336,0,143,32,'Arch',91}) end
+	    if overworld[n-1][i]>0 then table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Gate','Key59',77}) table.insert(Objects[overworld[n-1][i]],{336,576,143,32,'Arch',90}) end
+	    if overworld[n][i+1]>0 then table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Gate','Key59',85}) table.insert(Objects[overworld[n][i+1]],{0,272,32,100,'Arch',92}) end
+	    if overworld[n][i-1]>0 then table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Gate','Key59',89}) table.insert(Objects[overworld[n][i-1]],{768,272,32,100,'Arch',93})  end
 	 end
       end
    end

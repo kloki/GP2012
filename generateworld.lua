@@ -32,8 +32,8 @@ function loadtiles()
    images[34]=love.graphics.newImage("tiles/edges/trees-bottom-gate.png")
    images[35]=love.graphics.newImage("tiles/edges/trees-top-gate.png")
    images[36]=love.graphics.newImage("tiles/edges/trees-left-gate.png")
-   images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png")
-   --images[38]=love.graphics.newImage("tiles/")
+   images[37]=love.graphics.newImage("tiles/edges/trees-right-gate.png") 
+   images[38]=love.graphics.newImage("tiles/objects/swordground.png")
    images[39]=love.graphics.newImage("tiles/house/house1.png")
    images[40]=love.graphics.newImage("tiles/house/house2.png")
    images[41]=love.graphics.newImage("tiles/house/house3.png")
@@ -68,9 +68,31 @@ function loadtiles()
    images[70]=love.graphics.newImage("tiles/objects/rupee.png")
    images[71]=love.graphics.newImage("tiles/objects/sword2.png")
    images[72]=love.graphics.newImage("tiles/objects/boemobj.png")
+   images[73]=love.graphics.newImage("tiles/cliff/stairs.png")
+   images[74]=love.graphics.newImage("tiles/gates/door-bottom.png")
+   images[75]=love.graphics.newImage("tiles/gates/door-bottom57.png")
+   images[76]=love.graphics.newImage("tiles/gates/door-bottom58.png")
+   images[77]=love.graphics.newImage("tiles/gates/door-bottom59.png")
+   images[78]=love.graphics.newImage("tiles/gates/door-top.png")
+   images[79]=love.graphics.newImage("tiles/gates/door-top57.png")
+   images[80]=love.graphics.newImage("tiles/gates/door-top58.png")
+   images[81]=love.graphics.newImage("tiles/gates/door-top59.png")
+   images[82]=love.graphics.newImage("tiles/gates/door-left.png")
+   images[83]=love.graphics.newImage("tiles/gates/door-left57.png")
+   images[84]=love.graphics.newImage("tiles/gates/door-left58.png")
+   images[85]=love.graphics.newImage("tiles/gates/door-left59.png")
+   images[86]=love.graphics.newImage("tiles/gates/door-right.png")
+   images[87]=love.graphics.newImage("tiles/gates/door-right57.png")
+   images[88]=love.graphics.newImage("tiles/gates/door-right58.png")
+   images[89]=love.graphics.newImage("tiles/gates/door-right59.png")
+   images[90]=love.graphics.newImage("tiles/gates/gate-bottom.png")
+   images[91]=love.graphics.newImage("tiles/gates/gate-top.png")
+   images[92]=love.graphics.newImage("tiles/gates/gate-left.png")
+   images[93]=love.graphics.newImage("tiles/gates/gate-right.png")
 
+   
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73}
 end
 
 
@@ -81,8 +103,8 @@ function createworlds()
       worlds[m]=createworld(m)
    end
    worlds=buildgates(worlds)
-   quest(worlds)
    worlds=addchests(worlds)
+   quest(worlds)
    worlds=addweapons(worlds)
 return worlds
 end
@@ -322,7 +344,7 @@ function addcliff(world,m)
       end
       walkway=math.random(5,horizontaltiles-5)
       world[7][walkway]=-1
-      world[8][walkway]=-1
+      world[8][walkway]=73
       world[9][walkway]=-1
       world[10][walkway]=-1
       world[7][walkway+1]=-1
@@ -341,7 +363,7 @@ function addcliff(world,m)
       end
       walkway=math.random(5,horizontaltiles-5)
       world[12][walkway]=-1
-      world[13][walkway]=-1
+      world[13][walkway]=73
       world[14][walkway]=-1
       world[15][walkway]=-1
       world[12][walkway+1]=-1 
