@@ -40,11 +40,16 @@ function love.load()
    currentworld=1
    coor={3,6} --y,x
    overworld=createoverworld()
+   knownmap={}
+   for i=1,6 do
+      knownmap[i]={0,0,0,0,0,0,0,0,0,0,0,0}
+   end
+   knownmap[3][6]=1
    worlds=createworlds()
    addObjects()
 
    -- setup link
-   health=0
+   health=4
    Rupees = 0
    havebettersword=false
    haveboomerang=false
@@ -70,6 +75,7 @@ end
 --:Link
 --:Enemies
 function love.draw()
+   print(health)
    if startup or health==0 or bttn == 'escape' then
       drawStart()
    else
@@ -82,6 +88,7 @@ function love.draw()
 
       end
       drawmap(overworld)
+      --drawmap(knownmap)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
       drawWeapons()
@@ -117,7 +124,7 @@ end
 
 function love.update(dt)
    test_output = ''
-   if startup or bttn == 'escape' then
+   if startup or bttn == 'escape' or health == 0 then
       updateStart(dt)
       start = true
    else
@@ -171,6 +178,10 @@ function love.keypressed(k)
          initBoomerang()
       end
       --play boomerang sound
+   end
+   if k == 'escape' then
+      epressed = true
+      startup = true
    end
 end
 
