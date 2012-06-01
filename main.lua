@@ -21,6 +21,7 @@ function love.load()
 
    -- alle text
    loadText()
+   
 
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
