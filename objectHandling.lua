@@ -248,6 +248,7 @@ function addBoomerang()
    Boomerang.speed = 120
    Boomerang.timer = 0
    Boomerang.life = 6
+   Boomerang.active = false
 	Collider:addToGroup('Link',Boomerang)
 	Collider:setGhost(Boomerang)
 end
