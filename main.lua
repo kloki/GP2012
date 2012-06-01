@@ -75,7 +75,6 @@ end
 --:Link
 --:Enemies
 function love.draw()
-   print(health)
    if startup or health==0 or bttn == 'escape' then
       drawStart()
    else
