@@ -71,6 +71,8 @@ function love.load()
    addZelda()
    
    Rupee = {}
+   
+   Debug = true
 end
 
 --The screen is drawn in three steps
@@ -109,19 +111,21 @@ function love.draw()
       love.graphics.setColor(255,255,255)
       
       --DEBUG
-      for i=1,#Object do Object[i]:draw('line') end
-      Link:draw('line')
-      for i=1,#Foes do Foes[i]:draw('line') end
-      love.graphics.setColor(255,0,0)
-      for k,v in pairs(Portal) do v:draw('line') end
-      		--for k,v in pairs(Rupee) do v:draw('line') end
-      Sword:draw('line')
-      Boomerang:draw('line')
+      if Debug then
+         for i=1,#Object do Object[i]:draw('line') end
+         Link:draw('line')
+         for i=1,#Foes do Foes[i]:draw('line') end
+         love.graphics.setColor(255,0,0)
+         for k,v in pairs(Portal) do v:draw('line') end
+               --for k,v in pairs(Rupee) do v:draw('line') end
+         Sword:draw('line')
+         Boomerang:draw('line')
 
-      love.graphics.setColor(255,255,255)
-      fps = love.timer.getFPS( )
-      test_output = test_output .. tostring(fps)
-      love.graphics.print(test_output,100,100)
+         love.graphics.setColor(255,255,255)
+         fps = love.timer.getFPS( )
+         test_output = test_output .. tostring(fps)
+         love.graphics.print(test_output,100,100)
+      end
       
    end
 end
@@ -151,6 +155,7 @@ function love.update(dt)
          addObjects()
          addFoes()
          if currentworld == 2 then
+            TEsound.play("sound-effects/Zelda_Hey.wav","effect")
             Zelda.active = true
          else
             Zelda.active = false
@@ -193,6 +198,7 @@ function love.keypressed(k)
       epressed = true
       startup = true
    end
+   if k == 'd' then Debug = not(Debug) end
 end
 
 function love.keyreleased(k)

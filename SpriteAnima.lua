@@ -328,7 +328,27 @@ function updateFoes(dt)
             end
             v.turnprob = 0 --reset turn probability
          end
-         v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+         
+         --If Link is in sight move towards Link
+         local Foe_x,Foe_y, Foe_w, Foe_h = v:bbox()
+         local Link_x, Link_y, Link_w, Link_h = Link:bbox()
+         Link_x, Link_y = 0.5*Link_w+Link_x, 0.5*Link_h+Link_y
+         Foe_x, Foe_y = 0.5*Foe_w + Foe_x, 0.5*Foe_h + Foe_y
+         local dif = {Link_x - Foe_x,Link_y - Foe_y}
+         if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 140
+            and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
+            v.alert = true
+            if dif[1] > dif[2] then
+               if dif[1] > 0 then v.dir = {1,0} else v.dir = {-1,0} end
+            else  
+               if dif[2] > 0 then v.dir = {0,1} else v.dir = {0,-1} end
+            end
+            test_output = tostring(dif[1]) .. ' - ' .. tostring(dif[2])
+         else
+            v.alert = false
+         end
+         
+         --If hit blink
          if v.hit > 0 then 
             v.hit = v.hit -1*dt
             if math.cos(v.hit*(1/0.1)*3.14) > 0 then
@@ -339,20 +359,9 @@ function updateFoes(dt)
          else
             v.color = {255,255,255}
          end
-         local Foe_x,Foe_y = v:bbox()
-         local Link_x, Link_y = Link:bbox()
-         local dif = {Link_x - Foe_x,Link_y - Foe_y}
-         if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 140
-            and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
-            v.alert = true
-            if dif[1] > dif[2] then
-               if dif[1] > 0 then v.dir = {1,0} else v.dir = {-1,0} end
-            else  
-               if dif[2] > 0 then v.dir = {0,1} else v.dir = {0,-1} end
-            end
-         else
-            v.alert = false
-         end
+
+         --Move Foe
+         v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
       elseif v.life == 0 then
          v.color = {255,255,255}
          dieAnim:update(dt)
@@ -405,7 +414,10 @@ end
 
 function updateZelda(dt)
    if Zelda.active then
+      Collider:setSolid(Zelda)
       Zelda:move(Zelda.speed*Zelda.dir*dt,0)
       if Zelda.dir > 0 then zeldaright:update(dt) else zeldaleft:update(dt) end
+   else
+      Collider:setGhost(Zelda)
    end
 end
