@@ -106,7 +106,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(2,2)
+   worldtype=math.random(1,4)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
