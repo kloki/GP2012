@@ -13,6 +13,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == 'Portal' then
 			coor = {coor[1] + shape_b.iy, coor[2] + shape_b.ix}
 			currentworld = overworld[coor[1] ][coor[2] ]
+			knownmap[coor[1]][coor[2]]=1
 			Link:moveTo(388-shape_b.ix*358,305-shape_b.iy*270) --links new position translated from the center of the screen
 		elseif Type_b == 'Foe' then
 		   --damage

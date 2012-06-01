@@ -40,6 +40,11 @@ function love.load()
    currentworld=1
    coor={3,6} --y,x
    overworld=createoverworld()
+   knownmap={}
+   for i=1,6 do
+      knownmap[i]={0,0,0,0,0,0,0,0,0,0,0,0}
+   end
+   knownmap[3][6]=1
    worlds=createworlds()
    addObjects()
 
@@ -83,6 +88,7 @@ function love.draw()
 
       end
       drawmap(overworld)
+      --drawmap(knownmap)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
       drawWeapons()
