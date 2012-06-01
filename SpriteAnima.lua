@@ -338,7 +338,7 @@ function updateFoes(dt)
          if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 140
             and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
             v.alert = true
-            if dif[1] > dif[2] then
+            if math.abs(dif[1]) > math.abs(dif[2]) then
                if dif[1] > 0 then v.dir = {1,0} else v.dir = {-1,0} end
             else  
                if dif[2] > 0 then v.dir = {0,1} else v.dir = {0,-1} end
