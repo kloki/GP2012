@@ -306,18 +306,18 @@ end
 function updateFoes(dt)
 	local x,y
 	for i,v in ipairs(Foes) do
-      --walk in a random direction
-      v.turnprob = math.min(v.turnprob + 0.001*dt,0.2)
-      if math.random() < v.turnprob then
-         if math.random() > 0.5 then
-            v.dir = {v.dir[2],v.dir[1]}
-         else
-            v.dir = {-v.dir[2],-v.dir[1]}
-         end
-         v.turnprob = 0 --reset turn probability
-      end
-      --update movement
+      --update foe
       if v.life > 0 then
+         --walk in a random direction
+         v.turnprob = math.min(v.turnprob + 0.001*dt,0.2)
+         if math.random() < v.turnprob then
+            if math.random() > 0.5 then
+               v.dir = {v.dir[2],v.dir[1]}
+            else
+               v.dir = {-v.dir[2],-v.dir[1]}
+            end
+            v.turnprob = 0 --reset turn probability
+         end
          v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
          if v.hit > 0 then 
             v.hit = v.hit -1*dt
@@ -329,17 +329,23 @@ function updateFoes(dt)
          else
             v.color = {255,255,255}
          end
+         local Foe_x,Foe_y = v:bbox()
+         local Link_x, Link_y = Link:bbox()
+         local dif = {Link_x - Foe_x,Link_y - Foe_y}
+         if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 100
+            and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
+            v.alert = true
+            if dif[1] > dif[2] then
+               if dif[1] > 0 then v.dir = {1,0} else v.dir = {-1,0} end
+            else  
+               if dif[2] > 0 then v.dir = {0,1} else v.dir = {0,-1} end
+            end
+         else
+            v.alert = false
+         end
       elseif v.life == 0 then
          v.color = {255,255,255}
          dieAnim:update(dt)
-      end
-      local Foe_x,Foe_y = v:bbox()
-      local Link_x, Link_y = Link:bbox()
-      if math.sqrt(math.pow(Foe_x - Link_x,2) + math.pow(Foe_y - Link_y,2)) < 100
-         and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
-         v.alert = true
-      else
-         v.alert = false
       end
 	end
    --update animations (for efficiency change this to updating only the used animations)

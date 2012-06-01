@@ -49,7 +49,7 @@ function love.load()
    addObjects()
 
    -- setup link
-   health=0
+   health=4
    Rupees = 0
    havebettersword=false
    haveboomerang=false
@@ -123,7 +123,7 @@ end
 
 function love.update(dt)
    test_output = ''
-   if startup or bttn == 'escape' then
+   if startup or bttn == 'escape' or health == 0 then
       updateStart(dt)
       start = true
    else
@@ -141,7 +141,7 @@ function love.update(dt)
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
-         removeBoomerang()
+         removeBoomerang() 
          addObjects()
          addFoes()
       end
@@ -172,8 +172,10 @@ function love.keypressed(k)
       love.event.push("q")
    end
    if haveboomerang and k== 'b' then
-      bpressed = true
-      initBoomerang()
+      if Boomerang.active == false then
+         bpressed = true
+         initBoomerang()
+      end
       --play boomerang sound
    end
    if k == 'escape' then

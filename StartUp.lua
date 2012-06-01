@@ -85,17 +85,13 @@ function updateStart(dt)
       die:update(dt)
       startup = true
       if spressed then
-         die:reset()
-         spressed = false
-         case = 'main'
-         health = 4
+         love.load()
       end
    end
 end
 
 
 function button(mp,v)
-   print(bttn)
    if bttn == 'down' then
       mp = (mp +1)%v
    elseif bttn == 'up' then
