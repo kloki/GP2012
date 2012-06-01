@@ -3,36 +3,36 @@ require('util')
 function quest(worlds)
 
    blank=blankmap(overworld)
-   --printtable(overworld)
-   --printtable(blank)
    --place gates
    blank=place4gates(blank)
    --printtable(blank)
    blank=creep(blank,{3,6})
    blank[3][6]=99
-   printtable(blank)
    adddoors(blank)
    --key1
    addkeys(worlds,blank,56)
    blank=resetblank(blank,10)
-   printtable(blank)
+   --printtable(blank)
    --key2
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,57)
+   --printtable(blank)
    blank=resetblank(blank,20)
-   printtable(blank)
+   --printtable(blank)
    
    --key3
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,58)
+   --printtable(blank)
    blank=resetblank(blank,30)
-   printtable(blank)
+   --printtable(blank)
 
    --key4
    blank=creep(blank,{3,6})
    addkeys(worlds,blank,59)
+   --printtable(blank)
    blank=resetblank(blank,40)
-   printtable(blank)
+   --printtable(blank)
 end
 
 
@@ -118,7 +118,13 @@ end
 function placekey(worlds,v,key)
    x=math.random(2,horizontaltiles-1)
    y=math.random(2,verticaltiles-1)
-   if worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
+   if worlds[v+numberofworlds]~=nil then --place in houses
+      if key==56 then table.insert(Objects[v+numberofworlds],{450,310,32,32,'Key56'})
+      elseif key==57 then table.insert(Objects[v+numberofworlds],{450,330,32,32,'Key57'})
+      elseif key==58 then table.insert(Objects[v+numberofworlds],{430,310,32,32,'Key58'})
+      elseif key==59 then table.insert(Objects[v+numberofworlds],{430,330,32,32,'Key59'})
+      end
+   elseif worlds[v][y][x]>10 or worlds[v][y][x]<1 then placekey(worlds,v,key)--only place keys on grass
    else 
       if key==56 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key56'})
       elseif key==57 then table.insert(Objects[v],{(x-1)*tilesize,(y-1)*tilesize,32,32,'Key57'})

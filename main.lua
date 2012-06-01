@@ -23,6 +23,7 @@ function love.load()
    --load music
    TEsound.playLooping("music/menu-selection.mp3","music")
    TEsound.tagVolume("music", 0.5)
+   TEsound.tagVolume("boomerang",0.5)
    
    --setup world
    tilesize=32
@@ -43,22 +44,25 @@ function love.load()
    addObjects()
 
    -- setup link
-	health=4
-	Rupees = 0
+   health=0
+   Rupees = 0
+   havebettersword=false
+   haveboomerang=false
+   damage=1
    inventory={}
    speed   = 200
    d_speed = 140
-	cool_time = 0.7
-	addLink(300,300,24,30)
-	loadSprites()
-	addSword()
-   --addBoem()
-	
-	--setup enemies
-	Foes = {}
-	addFoes()
-	
-	Rupee = {}
+   cool_time = 0.7
+   addLink(300,300,24,30)
+   loadSprites()
+   addSword()
+   addBoomerang()
+   
+   --setup enemies
+   Foes = {}
+   addFoes()
+   
+   Rupee = {}
 end
 
 --The screen is drawn in three steps
@@ -80,6 +84,7 @@ function love.draw()
       drawmap(overworld)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
+      drawWeapons()
       --LINK
       drawSprite()
       
@@ -89,7 +94,7 @@ function love.draw()
       --RUPEES
       rupee_green:draw(tilesize*7,tilesize*19.2)
       love.graphics.setColor(0,0,0)
-		love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
+      love.graphics.print(tostring(Rupees),tilesize*8,tilesize*19.2)
       love.graphics.setColor(255,255,255)
       
       --DEBUG
@@ -100,7 +105,7 @@ function love.draw()
       for k,v in pairs(Portal) do v:draw('line') end
       		--for k,v in pairs(Rupee) do v:draw('line') end
       Sword:draw('line')
-      --Boem:draw('line')
+      Boomerang:draw('line')
 
       love.graphics.setColor(255,255,255)
       fps = love.timer.getFPS( )
@@ -121,6 +126,7 @@ function love.update(dt)
       updateLink(dt)
       updateSprite(dt)
       updateFoes(dt)
+      updateWeapons(dt)
       sword()
       --boem()
       --handle collisions
@@ -129,6 +135,7 @@ function love.update(dt)
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
+         removeBoomerang()
          addObjects()
          addFoes()
       end
@@ -137,6 +144,8 @@ function love.update(dt)
          TEsound.stop("music")
          start = false
          TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields.mp3" },"music")
+	 TEsound.volume("music", 0.4)
+	 
       end
       TEsound.cleanup()
    end
@@ -152,18 +161,13 @@ function love.keypressed(k)
       TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
 	end
 
-   -- control button for Boemerang
-   if k == 'lctrl' or k == 'rctrl' then
-      cpressed = true
-   end
-
-
    if k == 'q' then
       love.event.push("quit")
       love.event.push("q")
    end
-   if k== 'b' then
+   if haveboomerang and k== 'b' then
       bpressed = true
+      initBoomerang()
       --play boomerang sound
    end
    if k == 'escape' then

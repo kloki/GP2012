@@ -19,7 +19,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          if shape_a.hit <= 0 then
             shape_a.hit = cool_time --cooldown time
             health=health-1
-            if health <1 then health = 1 end--for nothing if Link dies
+            --if health <1 then health = 1 end--for nothing if Link dies
             TEsound.play("sound-effects/Link_Hurt.wav","effect")
          end
          shape_a:move(mtv_x,mtv_y)
@@ -29,22 +29,32 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 		elseif Type_b == "Key" then
 		   table.insert(inventory,shape_b.key) 
 		   deleteObject(shape_b.key,shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
+		elseif Type_b == "bettersword" then
+		   havebettersword=true
+		   damage=2
+		   deleteObject("bettersword",shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
+		elseif Type_b == "boomerangitem" then
+		   haveboomerang=true
+		   deleteObject("boomerangitem",shape_b.location)
+		   TEsound.play("sound-effects/Fanfare_Item.wav","effect")
 		elseif Type_b == "Heart" then
 		   deleteObject("Heart",shape_b.location)
 		   if health<8 then health=health+1 end
-         TEsound.play("sound-effects/Heart.wav","effect")
+		   TEsound.play("sound-effects/Heart.wav","effect")
 		elseif Type_b == "Door" then
 		   currentworld=numberofworlds+currentworld
 		   Link:moveTo(400,330)
-         TEsound.play("sound-effects/Door1.wav","effect")
+		   TEsound.play("sound-effects/Door1.wav","effect")
 		elseif Type_b == "Door2" then
 		   currentworld=currentworld-numberofworlds
 		   Link:moveTo(shape_b.returnlocation[1],shape_b.returnlocation[2])
-         TEsound.play("sound-effects/Door2.wav","effect")
+		   TEsound.play("sound-effects/Door2.wav","effect")
 	  	elseif Type_b == "Chest" then
 		   table.insert(Objects[currentworld],{shape_b.location[1]+6,shape_b.location[2]+6,15,15,'Heart'})
 		   modifyObject("Chest",shape_b.location,"OpenChest")
-         TEsound.play("sound-effects/Chest_Open.wav","effect")
+		   TEsound.play("sound-effects/Chest_Open.wav","effect")
 		elseif Type_b == "Rupee" then
 			Rupees = Rupees+shape_b.value
 			shape_b.exist = false
@@ -67,20 +77,19 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          shape_b:move(-mtv_x/2,-mtv_y/2)
          shape_b.dir = {-shape_b.dir[1],-shape_b.dir[2]}
 		elseif Type_b == 'Sword' then
-         --damage
-         if shape_a.hit <= 0 then
-            shape_a.hit = cool_time --cooldown time
-            shape_a.life = shape_a.life-1
-            if shape_a.life < 1 then 
-               Collider:setGhost(shape_a)
-               x,y = shape_a:bbox()
-               if math.random()>0.6 then if math.random()>0.8 then addRupee(x,y,'blue') else addRupee(x,y,'green') end end
-               TEsound.play("sound-effects/Enemy_Kill.wav","effect")
-            else
-               TEsound.play("sound-effects/Enemy_Hit.wav","effect")
-            end
-         end
+         enemyHit(shape_a)
          shape_a:move(mtv_x,mtv_y)
+      elseif Type_b == 'Boomerang' then
+         enemyHit(shape_a)
+         shape_b:move(mtv_x,mtv_y)
+         shape_b.dir = {-shape_b.dir[1],-shape_b.dir[2]}
+      end
+   elseif Type_a == 'Boomerang' or Type_b == 'Boomerang' then
+      if Type_b == 'Boomerang' then 
+         shape_a,shape_b,Type_a,Type_b,mtv_x,mtv_y = shape_b,shape_a,Type_b,Type_a,-mtv_x,-mtv_y end
+      if Type_b == 'Object' or Type_b == 'Gate' or Type_b == 'Portal' then
+         shape_a:move(mtv_x,mtv_y)
+         shape_a.dir = {-shape_a.dir[1],-shape_a.dir[2]}
       end
 	end
 end
@@ -88,4 +97,19 @@ end
 -- this is called when two shapes stop colliding
 function collision_stop(dt, shape_a, shape_b)
    
+end
+
+function enemyHit(shape)
+   if shape.hit <= 0 then
+      shape.hit = cool_time --cooldown time
+      shape.life = shape.life-damage
+      if shape.life < 1 then 
+         Collider:setGhost(shape)
+         x,y = shape:bbox()
+         if math.random()>0.6 then if math.random()>0.8 then addRupee(x,y,'blue') else addRupee(x,y,'green') end end
+         TEsound.play("sound-effects/Enemy_Kill.wav","effect")
+      else
+         TEsound.play("sound-effects/Enemy_Hit.wav","effect")
+      end
+   end
 end

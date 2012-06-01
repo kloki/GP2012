@@ -75,7 +75,11 @@ function drawHUD(health,inventory)
       love.graphics.draw(images[55],x,y)
       x=x+17	 
    end
-   love.graphics.draw(images[60],153,610)
+   --sword
+   if havebettersword then love.graphics.draw(images[71],153,610)
+   else love.graphics.draw(images[60],153,610) end
+   --boomerang
+   if haveboomerang then love.graphics.draw(images[72],185,610) end
    x=600
    for k,v in pairs(inventory) do 
       number=determinetilenumber(v)
@@ -93,6 +97,8 @@ function determinetilenumber(name)
    elseif name=='Heart'then number=55
    elseif name=='Chest'then number=48
    elseif name=='OpenChest'then number=49
+   elseif name=='bettersword'then number=71
+   elseif name=='boomerangitem'then number=72
    end
 return number
 end
