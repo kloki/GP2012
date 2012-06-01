@@ -95,12 +95,12 @@ function updateStart(dt)
       die:update(dt)
       startup = true
       if spressed then
-         love.load()
+         --love.load()
       end
    elseif case == 'win' then
       startup = true
       if spressed then
-         love.load()
+         --love.load()
       end
    end
 end
