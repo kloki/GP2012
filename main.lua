@@ -7,6 +7,7 @@ require 'drawing'
 require 'objectHandling'
 require 'SpriteAnima'
 require 'StartUp'
+require 'Text'
 
 function love.load()
    --some debug stuff
@@ -16,6 +17,11 @@ function love.load()
    startup = true
    loadStart()
    bttn = 'none'
+   tmr = 0
+
+   -- alle text
+   loadText()
+   
 
    --initialize library
    Collider = HC(100, on_collision, collision_stop)
@@ -49,6 +55,7 @@ function love.load()
    addObjects()
 
    -- setup link
+   win = false
    health=4
    Rupees = 0
    havebettersword=false
@@ -80,7 +87,7 @@ end
 --:Link
 --:Enemies
 function love.draw()
-   if startup or health==0 or bttn == 'escape' then
+   if startup or health==0 or bttn == 'escape' or win then
       drawStart()
    else
       --WORLD
@@ -104,6 +111,9 @@ function love.draw()
       --ENEMIES
       drawFoes()
       
+      --TEXT
+      drawText()
+
       --RUPEES
       rupee_green:draw(tilesize*7,tilesize*19.2)
       love.graphics.setColor(0,0,0)
@@ -132,7 +142,7 @@ end
 
 function love.update(dt)
    test_output = ''
-   if startup or bttn == 'escape' or health == 0 then
+   if startup or bttn == 'escape' or health == 0 or win then
       updateStart(dt)
       start = true
    else
@@ -144,6 +154,7 @@ function love.update(dt)
       updateWeapons(dt)
       updateZelda(dt)
       sword()
+      updateText(dt)
       --boem()
       --handle collisions
       Collider:update(dt)
@@ -175,11 +186,10 @@ end
 
 function love.keypressed(k)
    bttn = k
-   print(bttn)
 
    -- space bttn for sword
-	if k == ' ' then 
-		spressed = true
+	if k == ' ' then
+      spressed = true
       TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
 	end
 

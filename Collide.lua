@@ -20,13 +20,13 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          if shape_a.hit <= 0 then
             shape_a.hit = cool_time --cooldown time
             health=health-1
-            if health <1 then health = 1 end--for nothing if Link dies
+            --if health <1 then health = 1 end--for nothing if Link dies
             TEsound.play("sound-effects/Link_Hurt.wav","effect")
          end
          shape_a:move(mtv_x,mtv_y)
 		elseif Type_b == "Gate" then
 		   Link:move(mtv_x,mtv_y)
-		   if inlist(shape_b.KeyType,inventory) then deleteObject('Gate',shape_b.location) end
+		   if inlist(shape_b.KeyType,inventory) then deleteObject('Gate',shape_b.location) else botsgate = true end
 		elseif Type_b == "Key" then
 		   table.insert(inventory,shape_b.key) 
 		   deleteObject(shape_b.key,shape_b.location)

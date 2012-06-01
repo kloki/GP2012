@@ -6,6 +6,7 @@ function loadStart()
    Ssword = love.graphics.newQuad(0,0,25,27,180,274)
    Ssword:flip(true,false)
    gameover = love.graphics.newImage("tiles/start/gameover.png")
+   winS = love.graphics.newImage("tiles/start/win.png")
    dieS = love.graphics.newImage("sprites/die.png")
    die =  newAnimation(dieS,25,40,0.15,13,1,1)
    die:setMode("once")
@@ -46,6 +47,10 @@ function drawStart()
    elseif case == 'options' then
       love.graphics.setColor(0,100,0,255)
       love.graphics.print('Options', 200,200 )
+   elseif case == 'win' then
+      love.graphics.setColor(255,255,255,255)
+      love.graphics.draw(winS)
+      -- hier kan nog de scoor worden getekend
    end
 end
 
@@ -53,6 +58,11 @@ function updateStart(dt)
    timer = timer + 1
    if health == 0 then
       case = 'gameover'
+      startup = true
+   end
+   
+   if win then
+      case = 'win'
       startup = true
    end
    
@@ -83,6 +93,11 @@ function updateStart(dt)
    elseif case == 'options' then
    elseif case == 'gameover' then
       die:update(dt)
+      startup = true
+      if spressed then
+         love.load()
+      end
+   elseif case == 'win' then
       startup = true
       if spressed then
          love.load()
