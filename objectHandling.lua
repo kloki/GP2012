@@ -245,7 +245,7 @@ end
 function addBoomerang()
 	Boomerang = Collider:addRectangle(0,0,20,20)
 	Boomerang.Type = 'Boomerang'
-   Boomerang.speed = 80
+   Boomerang.speed = 120
    Boomerang.timer = 0
    Boomerang.life = 6
 	Collider:addToGroup('Link',Boomerang)

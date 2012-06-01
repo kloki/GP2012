@@ -135,6 +135,7 @@ function love.update(dt)
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
+         removeBoomerang()
          addObjects()
          addFoes()
       end
