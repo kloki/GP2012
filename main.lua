@@ -141,6 +141,7 @@ function love.update(dt)
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
+         removeBoomerang()
          addObjects()
          addFoes()
       end
@@ -174,6 +175,10 @@ function love.keypressed(k)
       bpressed = true
       initBoomerang()
       --play boomerang sound
+   end
+   if k == 'escape' then
+      epressed = true
+      startup = true
    end
 end
 
