@@ -22,19 +22,15 @@ function drawhouse(world)
 end
 
 
-function drawmap(overworld)
+function drawmap(map)
    --Needs to change the map that unvisited areas are hidden for the player
    love.graphics.setColor(238,221,130)
    love.graphics.rectangle('fill',0,608,800,tilesize)
    for i=1,sizeoverworld[1] do
       for n=1, sizeoverworld[2] do
-	 if overworld[i][n]==0 then
-	    love.graphics.setColor(255,255,255)	 
-	 elseif overworld[i][n]==currentworld then 
-	    love.graphics.setColor(255,0,0)
-	 else
-	    love.graphics.setColor(0,0,0)
-	 end
+	 if i==coor[1] and n==coor[2] then love.graphics.setColor(255,0,0) 
+	 elseif map[i][n]>0 then love.graphics.setColor(0,0,0)
+	 else love.graphics.setColor(255,255,255) end
 	 love.graphics.rectangle('fill',5+(n-1)*4,610+(i-1)*4,4,4)
       end
    end
