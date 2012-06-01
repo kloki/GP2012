@@ -124,7 +124,7 @@ end
 
 function love.update(dt)
    test_output = ''
-   if startup or bttn == 'escape' then
+   if startup or bttn == 'escape' or health == 0 then
       updateStart(dt)
       start = true
    else
