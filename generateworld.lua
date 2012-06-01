@@ -103,8 +103,8 @@ function createworlds()
       worlds[m]=createworld(m)
    end
    worlds=buildgates(worlds)
-   quest(worlds)
    worlds=addchests(worlds)
+   quest(worlds)
    worlds=addweapons(worlds)
 return worlds
 end

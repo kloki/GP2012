@@ -40,12 +40,9 @@ end
 function drawObjects(currentobjects)
    for i,v in ipairs(currentobjects) do
       if v[5]=='Gate' then  
-	 if v[6]=='Key56'then love.graphics.setColor(170,170,170)
-	 elseif v[6]=='Key57' then love.graphics.setColor(100,100,100)
-	 elseif v[6]=='Key58' then love.graphics.setColor(255,255,0)
-	 elseif v[6]=='Key59' then love.graphics.setColor(100,0,255) end
-	 love.graphics.rectangle('fill',v[1],v[2],v[3],v[4])	 
-	 love.graphics.setColor(255,255,255)
+	 love.graphics.draw(images[v[7]],v[1],v[2])
+      elseif v[5]=='Arch' then  
+	 love.graphics.draw(images[v[6]],v[1],v[2])
       else
 	 tile=determinetilenumber(v[5])
 	 if tile~=1 then
