@@ -50,6 +50,7 @@ function drawStart()
 end
 
 function updateStart(dt)
+   --print(case)
    timer = timer + 1
    if health == 0 then
       case = 'gameover'
