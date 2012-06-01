@@ -68,9 +68,10 @@ function loadtiles()
    images[70]=love.graphics.newImage("tiles/objects/rupee.png")
    images[71]=love.graphics.newImage("tiles/objects/sword2.png")
    images[72]=love.graphics.newImage("tiles/objects/boemobj.png")
+   images[73]=love.graphics.newImage("tiles/cliff/stairs.png")
 
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73}
 end
 
 
@@ -105,7 +106,7 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(1,4)
+   worldtype=math.random(2,2)
    if worldtype==1 then
       world=grassworld(world,m)
    elseif worldtype==2 then
@@ -322,7 +323,7 @@ function addcliff(world,m)
       end
       walkway=math.random(5,horizontaltiles-5)
       world[7][walkway]=-1
-      world[8][walkway]=-1
+      world[8][walkway]=73
       world[9][walkway]=-1
       world[10][walkway]=-1
       world[7][walkway+1]=-1
@@ -341,7 +342,7 @@ function addcliff(world,m)
       end
       walkway=math.random(5,horizontaltiles-5)
       world[12][walkway]=-1
-      world[13][walkway]=-1
+      world[13][walkway]=73
       world[14][walkway]=-1
       world[15][walkway]=-1
       world[12][walkway+1]=-1 
