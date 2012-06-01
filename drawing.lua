@@ -90,7 +90,7 @@ function determinetilenumber(name)
    elseif name=='Heart'then number=55
    elseif name=='Chest'then number=48
    elseif name=='OpenChest'then number=49
-   elseif name=='bettersword'then number=71
+   elseif name=='bettersword'then number=38
    elseif name=='boomerangitem'then number=72
    end
 return number
