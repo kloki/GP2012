@@ -61,6 +61,11 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 			shape_b.exist = false
 			Collider:remove(shape_b)
 			TEsound.play("sound-effects/Rupee.wav","effect")
+      elseif Type_b == "Zelda" then
+         shape_b:move(-1.2*mtv_x,-1.2*mtv_y)
+         shape_b.dir = -shape_b.dir
+         TEsound.play("sound-effects/Zelda_Laugh.wav","effect")
+         --WON!!!
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then
 		if Type_b == 'Foe' then 
@@ -91,6 +96,13 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
       if Type_b == 'Object' or Type_b == 'Gate' or Type_b == 'Portal' then
          shape_a:move(mtv_x,mtv_y)
          shape_a.dir = {-shape_a.dir[1],-shape_a.dir[2]}
+      end
+   elseif Type_a == 'Zelda' or Type_b == 'Zelda' then
+      if Type_b == 'Zelda' then 
+         shape_a,shape_b,Type_a,Type_b,mtv_x,mtv_y = shape_b,shape_a,Type_b,Type_a,-mtv_x,-mtv_y end
+      if Type_b == 'Object' or Type_b == 'Gate' or Type_b == 'Portal' then
+         shape_a:move(1.2*mtv_x,1.2*mtv_y)
+         shape_a.dir = -shape_a.dir
       end
 	end
 end

@@ -67,6 +67,9 @@ function love.load()
    Foes = {}
    addFoes()
    
+   --setup Zelda
+   addZelda()
+   
    Rupee = {}
 end
 
@@ -93,6 +96,8 @@ function love.draw()
       drawWeapons()
       --LINK
       drawSprite()
+      --Zelda
+      drawZelda()
       
       --ENEMIES
       drawFoes()
@@ -133,6 +138,7 @@ function love.update(dt)
       updateSprite(dt)
       updateFoes(dt)
       updateWeapons(dt)
+      updateZelda(dt)
       sword()
       --boem()
       --handle collisions
@@ -141,9 +147,14 @@ function love.update(dt)
       if oldworld ~= currentworld then
          removeObjects() 
          removeFoes()
-         removeBoomerang() 
+         removeBoomerang()
          addObjects()
          addFoes()
+         if currentworld == 2 then
+            Zelda.active = true
+         else
+            Zelda.active = false
+         end
       end
       --music
       if start then 

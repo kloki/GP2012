@@ -272,6 +272,14 @@ function removeBoomerang()
    Boomerang.active = false
    Collider:setGhost(Boomerang)
 end
+
+function addZelda()
+   Zelda = Collider:addRectangle(400,400,16,26)
+   Zelda.speed = 40
+   Zelda.Type = 'Zelda'
+   Zelda.dir = 1
+   Zelda.active = false
+end
 --[[
 function addBoem()
    Boem = Collider:addRectangle(0,0,15,15)

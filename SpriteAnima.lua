@@ -32,7 +32,14 @@ function loadSprites()
    linkrightSword:setMode("once")
    linkleftSword:setMode("once")
    
-   --link throwing boomerang
+   --ZELDA
+   zelda_sheet = love.graphics.newImage("sprites/zelda.png")
+   zeldaright  = newAnimation(zelda_sheet,17,28,0.06,9,1,32,false)
+   zeldaleft = newAnimation(zelda_sheet,17,28,0.06,9,1,32,true)
+   zeldacheer = newAnimation(zelda_sheet,33,24,0.06,6,1,102,false)
+   zeldacheer:setMode("once")
+   
+   --LINK BOOMERANG
    linkdownBoomerang = newAnimation(sheet,27,30,0.08,6,31,599,false)
    linkrightBoomerang = newAnimation(sheet,30,30,0.08,6,212,599,false)
    linkleftBoomerang = newAnimation(sheet,30,30,0.08,6,212,599,true)
@@ -62,6 +69,7 @@ function loadSprites()
    snakedown:setMode("bounce")
    snakeup :setMode("bounce")
    
+   --CROWS
    crow_sheet = love.graphics.newImage("sprites/crow.png")
    crowstill,crowleft,crowright = {},{},{}
    crowstill['blue'] = love.graphics.newQuad(1,1,20,18,100,37)
@@ -75,6 +83,7 @@ function loadSprites()
    crowright['blue']:setMode("bounce")
    crowright['red']:setMode("bounce")
    
+   --RUPEES
    green_rupee_sheet = love.graphics.newImage("tiles/objects/rupee_green.png")
    blue_rupee_sheet  = love.graphics.newImage("tiles/objects/rupee_blue.png")
    red_rupee_sheet   = love.graphics.newImage("tiles/objects/rupee_red.png")
@@ -82,6 +91,7 @@ function loadSprites()
    rupee_blue  = newAnimation(blue_rupee_sheet ,15,20,0.12,3,1,1)
    rupee_red   = newAnimation(red_rupee_sheet  ,15,20,0.12,3,1,1)
    
+   --DYING
    dieAnim = newAnimation(snake_sheet,24,22,0.1,5,0,112,false)
    dieAnim:setMode("once")
 
@@ -332,7 +342,7 @@ function updateFoes(dt)
          local Foe_x,Foe_y = v:bbox()
          local Link_x, Link_y = Link:bbox()
          local dif = {Link_x - Foe_x,Link_y - Foe_y}
-         if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 100
+         if math.sqrt(math.pow(dif[1],2) + math.pow(dif[2],2)) < 140
             and v.dir[1]*(Foe_x - Link_x) <= 0 and v.dir[2]*(Foe_y - Link_y) <= 0 then
             v.alert = true
             if dif[1] > dif[2] then
@@ -383,5 +393,19 @@ function updateWeapons(dt)
          TEsound.play("sound-effects/Boomerang.wav",{"effect","boomerang"}) 
          Boomerang.timer = 0
       end
+   end
+end
+
+function drawZelda()
+   if Zelda.active then
+      local x,y = Zelda:bbox()
+      if Zelda.dir > 0 then zeldaright:draw(x,y) else zeldaleft:draw(x,y) end
+   end
+end
+
+function updateZelda(dt)
+   if Zelda.active then
+      Zelda:move(Zelda.speed*Zelda.dir*dt,0)
+      if Zelda.dir > 0 then zeldaright:update(dt) else zeldaleft:update(dt) end
    end
 end
