@@ -17,7 +17,6 @@ function love.load()
    startup = true
    loadStart()
    bttn = 'none'
-   tmr = 0
 
    -- alle text
    loadText()
@@ -144,7 +143,6 @@ function love.update(dt)
    test_output = ''
    if startup or bttn == 'escape' or health == 0 or win then
       updateStart(dt)
-      start = true
    else
       local oldworld = currentworld
       --update sprite animation and position

@@ -65,6 +65,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          shape_b:move(-1.2*mtv_x,-1.2*mtv_y)
          shape_b.dir = -shape_b.dir
          TEsound.play("sound-effects/Zelda_Laugh.wav","effect")
+         win = true
          --WON!!!
 		end
 	elseif Type_a == 'Foe' or Type_b == 'Foe' then

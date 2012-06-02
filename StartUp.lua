@@ -26,6 +26,8 @@ function loadStart()
 
 end
 
+
+
 function drawStart()
    if case == 'love' then
       --love.graphics.setColor(0,100,0,255)
@@ -53,6 +55,8 @@ function drawStart()
       -- hier kan nog de scoor worden getekend
    end
 end
+
+
 
 function updateStart(dt)
    timer = timer + 1
@@ -85,6 +89,7 @@ function updateStart(dt)
       if m == 0 and spressed then
          startup = false
          spressed = false
+         gamestarted = true
       elseif m ==1 and spressed then
          case = 'options'
       elseif m == 2 and spressed then
