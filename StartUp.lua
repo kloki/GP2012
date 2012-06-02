@@ -9,12 +9,13 @@ function loadStart()
    winS = love.graphics.newImage("tiles/start/win.png")
    dieS = love.graphics.newImage("sprites/die.png")
    die =  newAnimation(dieS,25,40,0.15,13,1,1)
+   optS = love.graphics.newImage("tiles/start/options.png")
    die:setMode("once")
    m = 0
    bp= false
 
 
-   --mooie font en achtergrondkleur
+   --mooie font
    local f = love.graphics.newFont("tiles/start/adam.ttf",20)
    love.graphics.setFont(f)
    
@@ -47,8 +48,10 @@ function drawStart()
       love.graphics.draw(gameover)
       die:draw(400,320)
    elseif case == 'options' then
+      love.graphics.draw(optS)
       love.graphics.setColor(0,100,0,255)
-      love.graphics.print('Options', 200,200 )
+      love.graphics.print("Music",300,300)
+      love.graphics.setColor(255,255,255,255)
    elseif case == 'win' then
       love.graphics.setColor(255,255,255,255)
       love.graphics.draw(winS)

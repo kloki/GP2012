@@ -6,6 +6,7 @@ function loadText()
 
    botsgate = false
    gamestarted = false
+   foundboem = false
 end
 
 function drawText()
@@ -26,7 +27,7 @@ end
 function updateText(dt)
    if gamestarted then
       count = count + 1
-      if count < 250 then
+      if count < 150 then
           gamestarted = true
       else
          gamestarted = false
@@ -35,10 +36,19 @@ function updateText(dt)
    end
    if botsgate then
       count = count + 1
-      if count < 200 then
+      if count < 150 then
          botsgate = true
       else
          botsgate =false
+         count = 0
+      end
+   end
+   if foundboem then
+      count = count + 1
+      if count < 150 then
+         foundboem = true
+      else
+         foundboem = false
          count = 0
       end
    end

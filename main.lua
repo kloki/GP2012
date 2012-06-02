@@ -26,9 +26,11 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
+   musvol = 0.1
+   sounvol = 0.1
    TEsound.playLooping("music/menu-selection.mp3","music")
-   TEsound.tagVolume("music", 0.5)
-   TEsound.tagVolume("boomerang",0.5)
+   TEsound.tagVolume("music", musvol)
+   TEsound.tagVolume("boomerang",sounvol)
    
    --setup world
    tilesize=32
@@ -175,7 +177,7 @@ function love.update(dt)
          TEsound.stop("music")
          start = false
          TEsound.playLooping({"music/windfall-island.mp3","music/dragon-roost-island.mp3","music/outset-island.mp3","music/hyrule-fields.mp3" },"music")
-	 TEsound.volume("music", 0.4)
+	 TEsound.volume("music", musvol)
 	 
       end
       TEsound.cleanup()
@@ -184,11 +186,15 @@ end
 
 function love.keypressed(k)
    bttn = k
-
+   if k== 'i' then
+      TEsound.volume("music", 0)
+   end
    -- space bttn for sword
 	if k == ' ' then
       spressed = true
-      TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
+      if startup == false then
+         TEsound.play({"sound-effects/Sword1.wav","sound-effects/Sword2.wav","sound-effects/Sword3.wav"},"effect")
+      end   
 	end
 
    if k == 'q' then
