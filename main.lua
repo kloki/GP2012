@@ -26,8 +26,8 @@ function love.load()
    Collider = HC(100, on_collision, collision_stop)
    
    --load music
-   musvol = 0.1
-   sounvol = 0.1
+   musvol = 0.5
+   sounvol = 0.5
    TEsound.playLooping("music/menu-selection.mp3","music")
    TEsound.tagVolume("music", musvol)
    TEsound.tagVolume("boomerang",sounvol)
