@@ -28,6 +28,7 @@ function love.load()
    --load music
    musvol = 0.5
    sounvol = 0.5
+   TEsound.stop("music")
    TEsound.playLooping("music/menu-selection.mp3","music")
    TEsound.tagVolume("music", musvol)
    TEsound.tagVolume("boomerang",sounvol)
