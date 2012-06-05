@@ -279,7 +279,7 @@ function removeBoomerang()
 end
 
 function addZelda()
-   Zelda = Collider:addRectangle(400,400,16,26)
+   Zelda = Collider:addRectangle(380,260,16,26)
    Zelda.speed = 40
    Zelda.Type = 'Zelda'
    Zelda.dir = 1
