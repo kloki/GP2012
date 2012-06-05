@@ -107,7 +107,7 @@ function createworlds()
    worlds=buildgates(worlds)
    worlds=addchests(worlds)
    quest(worlds)
-   worlds=addweapons(worlds)
+   --worlds=addweapons(worlds)
 return worlds
 end
 
@@ -130,8 +130,8 @@ function createworld(m)
    end
    --add worldtypes
    if m==numberofworlds then zeldaworld(world,m)
-   elseif m==numberofworlds-1 then swordworld(world,m)
-   elseif m==numberofworlds-2 then boomerangworld(world,m)
+   elseif m==8 then swordworld(world,m)
+   elseif m==12 then boomerangworld(world,m)
    else worldtype=math.random(1,4)
       if worldtype==1 then
 	 world=grassworld(world,m)
