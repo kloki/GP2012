@@ -38,7 +38,7 @@ function love.load()
    horizontaltiles=25
    verticaltiles=19
    sizeoverworld={6,12}
-   numberofworlds=10 --no more than 6*12
+   numberofworlds=25 --no more than 6*12
    loadtiles()
    Objects={}
    Spawnpoints={}--Spawnpoint[x]={{x,y},{x,y},...}
@@ -81,6 +81,7 @@ function love.load()
    
    Rupee = {}
    
+   godmode = true
    Debug = true
 end
 
@@ -166,7 +167,7 @@ function love.update(dt)
          removeBoomerang()
          addObjects()
          addFoes()
-         if currentworld == 2 then
+         if currentworld == 2*numberofworlds then
             TEsound.play("sound-effects/Zelda_Hey.wav","effect")
             Zelda.active = true
          else
@@ -214,6 +215,7 @@ function love.keypressed(k)
       startup = true
    end
    if k == 'd' then Debug = not(Debug) end
+   if k == 'g' then godmode = not(godmode) end
 end
 
 function love.keyreleased(k)

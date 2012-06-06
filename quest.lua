@@ -178,3 +178,5 @@ function resetblank(blank,gate)
    end
 return blank
 end
+
+

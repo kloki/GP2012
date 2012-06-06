@@ -89,10 +89,12 @@ function loadtiles()
    images[91]=love.graphics.newImage("tiles/gates/gate-top.png")
    images[92]=love.graphics.newImage("tiles/gates/gate-left.png")
    images[93]=love.graphics.newImage("tiles/gates/gate-right.png")
+   images[94]=love.graphics.newImage("tiles/house/insidedungeon.png")
+   images[95]=love.graphics.newImage("tiles/house/dungeon.png")   
 
    
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73,94}
 end
 
 
@@ -105,7 +107,7 @@ function createworlds()
    worlds=buildgates(worlds)
    worlds=addchests(worlds)
    quest(worlds)
-   worlds=addweapons(worlds)
+   --worlds=addweapons(worlds)
 return worlds
 end
 
@@ -127,19 +129,23 @@ function createworld(m)
       end
    end
    --add worldtypes
-   worldtype=math.random(1,4)
-   if worldtype==1 then
-      world=grassworld(world,m)
-   elseif worldtype==2 then
-      world=cliffworld(world,m)
-   elseif worldtype==3 then
-      world=waterworld(world,m)
-   elseif worldtype==4 then
-      world=hermitworld(world,m)
-   elseif worldtype==5 then
-      world=villageworld(world,m)
-   elseif worldtype==6 then
-      world=testworld(world,m)
+   if m==numberofworlds then zeldaworld(world,m)
+   elseif m==8 then swordworld(world,m)
+   elseif m==12 then boomerangworld(world,m)
+   else worldtype=math.random(1,4)
+      if worldtype==1 then
+	 world=grassworld(world,m)
+      elseif worldtype==2 then
+	 world=cliffworld(world,m)
+      elseif worldtype==3 then
+	 world=waterworld(world,m)
+      elseif worldtype==4 then
+	 world=hermitworld(world,m)
+      elseif worldtype==5 then
+	 world=villageworld(world,m)
+      elseif worldtype==6 then
+	 world=testworld(world,m)
+      end
    end
    addspawns(world,m)
 return world
@@ -651,4 +657,65 @@ function addspawn(world,m)
    else
       addspawn(world,m)
    end
+end
+
+function buildcave(world,m,x,y)
+   for i=0,3 do
+      for n=0,3 do
+	 world[y+n][x+i]=-1
+      end
+   end
+   world[y][x]=95
+   table.insert(Objects[m],{(x-1)*tilesize,(y-1)*tilesize,64,42,'Object'})
+   --door
+   table.insert(Objects[m],{(x-1)*tilesize+22,(y-1)*tilesize+40,20,20,'Door'})
+   xoutside=(x-1)*tilesize+22
+   youtside=(y-1)*tilesize+40+40 
+   worlds[m+numberofworlds]=94
+   addObjectshouse(m,x,xoutside,youtside)
+   return world
+end
+
+function zeldaworld(world,m)   
+   world=buildcave(world,m,math.random(3,20),math.random(3,10))
+   
+   for i=1,math.random(3,9) do
+      world=add64x64(world,m,29)
+   end
+   --for small bushes
+   for i=1,math.random(5,9) do
+      world=add32x32(world,0,math.random(45,46))
+   end
+
+return world
+end
+
+
+function swordworld(world,m)   
+   world=buildcave(world,m,math.random(3,20),math.random(3,10))
+   
+   for i=1,math.random(3,9) do
+      world=add64x64(world,m,29)
+   end
+   --for small bushes
+   for i=1,math.random(5,9) do
+      world=add32x32(world,0,math.random(45,46))
+   end
+   table.insert(Objects[m+numberofworlds],{384,260,32,32,'bettersword'})
+return world
+end
+
+
+function boomerangworld(world,m)   
+   world=buildcave(world,m,math.random(3,20),math.random(3,10))
+   
+   for i=1,math.random(3,9) do
+      world=add64x64(world,m,29)
+   end
+   --for small bushes
+   for i=1,math.random(5,9) do
+      world=add32x32(world,0,math.random(45,46))
+   end
+   table.insert(Objects[m+numberofworlds],{384,260,32,32,'boomerangitem'})
+return world
 end
