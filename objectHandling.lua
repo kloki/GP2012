@@ -170,14 +170,14 @@ end
 function addFoes()
    Foes = {}
    local foe_type, foe_num
+   local dist = math.abs(3-coor[1]) + math.abs(6-coor[2]);
+   if dist == 1 then foe_type = 'crow'
+   elseif dist == 2 then foe_type = 'crow'
+   elseif dist == 3 then  foe_type = 'snake'
+   elseif dist == 4 then foe_type = 'goron'
+   elseif dist > 4 then foe_type = 'snake' end
    if currentworld < numberofworlds then
-      if currentworld%3==0 then foe_type = 'crow'
-      elseif currentworld%3==1 then foe_type = 'goron'
-      elseif currentworld%3==2 then foe_type = 'snake' end
-      if currentworld < 10 then foe_num = 6
-      elseif currentworld < 20 then foe_num = 8
-      else foe_num = 10 end
-      for i=1,foe_num do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,foe_type) end
+      for i=1,dist*3 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,foe_type) end
    end
 end
 
