@@ -32,6 +32,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
       elseif Type_b == "bettersword" then
 	 havebettersword=true
+    swofo = true
 	 damage=2
 	 deleteObject("bettersword",shape_b.location)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
