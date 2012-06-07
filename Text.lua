@@ -8,7 +8,8 @@ function loadText()
 
    botsgate = false
    gamestarted = false
-   foundboem = false
+   fouboe = false
+   swofo = false
 end
 
 function drawText()
