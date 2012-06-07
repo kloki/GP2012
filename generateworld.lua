@@ -90,11 +90,14 @@ function loadtiles()
    images[92]=love.graphics.newImage("tiles/gates/gate-left.png")
    images[93]=love.graphics.newImage("tiles/gates/gate-right.png")
    images[94]=love.graphics.newImage("tiles/house/insidedungeon.png")
-   images[95]=love.graphics.newImage("tiles/house/dungeon.png")   
+   images[95]=love.graphics.newImage("tiles/house/dungeon.png")
+   images[96]=love.graphics.newImage("tiles/house/zeldahouseinside.png")
+   images[97]=love.graphics.newImage("tiles/house/castle.png")
+    
 
    
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73,95}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73,95,97}
 end
 
 
@@ -676,16 +679,28 @@ function buildcave(world,m,x,y)
    return world
 end
 
-function zeldaworld(world,m)   
-   world=buildcave(world,m,math.random(3,20),math.random(3,10))
-   
-   for i=1,math.random(3,9) do
-      world=add64x64(world,m,29)
+function zeldaworld(world,m)  
+   for i=0,10 do
+      for n=0,6 do
+	 world[6+n][8+i]=-1
+      end
    end
-   --for small bushes
-   for i=1,math.random(5,9) do
-      world=add32x32(world,0,math.random(45,46))
-   end
+   world[6][8]=97
+   table.insert(Objects[m],{(8-1)*tilesize+20,(6-1)*tilesize+2,300,130,'Object'})
+   table.insert(Objects[m],{(8-1)*tilesize+3,(6-1)*tilesize+120,95,78,'Object'})
+   table.insert(Objects[m],{(8-1)*tilesize+244,(6-1)*tilesize+120,95,78,'Object'})
+   --door
+   table.insert(Objects[m],{(8-1)*tilesize+155,(6-1)*tilesize+126,35,22,'Door'})
+   worlds[m+numberofworlds]=96
+
+   Objects[m+numberofworlds]={}
+   table.insert(Objects[m+numberofworlds],{250,60,278,15,'Object'})
+   table.insert(Objects[m+numberofworlds],{250,60,30,190,'Object'})
+   table.insert(Objects[m+numberofworlds],{500,60,30,190,'Object'})
+   table.insert(Objects[m+numberofworlds],{250,225,60,190,'Object'})
+   table.insert(Objects[m+numberofworlds],{470,225,60,190,'Object'})
+   table.insert(Objects[m+numberofworlds],{250,360,280,30,'Object'})
+   table.insert(Objects[m+numberofworlds],{370,354,40,15,'Door2',(8-1)*tilesize+180,(6-1)*tilesize+175})
 
 return world
 end
