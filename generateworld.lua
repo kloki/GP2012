@@ -94,7 +94,7 @@ function loadtiles()
 
    
    --here the list of tiles which cannot be drawnover
-   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73,94}
+   forbiddentiles={-1,16,17,18,19,20,21,22,23,24,25,26,27,28,29,39,40,41,42,43,44,61,62,63,64,65,73,95}
 end
 
 
