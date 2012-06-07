@@ -18,7 +18,9 @@ function drawhouse(world)
    love.graphics.setColor(0,0,0)
    love.graphics.rectangle('fill',0,0,800,608)
    love.graphics.setColor(255,255,255)
-   love.graphics.draw(images[world],280,224)
+   if world==96 then love.graphics.draw(images[world],255,64)
+   else love.graphics.draw(images[world],280,224)
+   end
 end
 
 
