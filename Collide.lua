@@ -41,6 +41,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	 deleteObject("boomerangitem",shape_b.location)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
          foundboem = true
+         fouboe
       elseif Type_b == "Heart" then
 	 deleteObject("Heart",shape_b.location)
 	 if health<8 then health=health+1 end
