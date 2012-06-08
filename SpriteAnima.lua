@@ -357,11 +357,11 @@ function updateFoes(dt)
                v.color = {255,255,255}
             end
          else
+            --Move Foe
+            v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
             v.color = {255,255,255}
-         end
-
-         --Move Foe
-         v:move(v.dir[1]*v.speed*dt,v.dir[2]*v.speed*dt)
+         end        
+         
       elseif v.life == 0 then
          v.color = {255,255,255}
          dieAnim:update(dt)

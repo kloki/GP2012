@@ -171,13 +171,11 @@ function addFoes()
    Foes = {}
    local foe_type, foe_num
    local dist = math.abs(3-coor[1]) + math.abs(6-coor[2]);
-   if dist == 1 then foe_type = 'crow'
-   elseif dist == 2 then foe_type = 'crow'
-   elseif dist == 3 then  foe_type = 'snake'
-   elseif dist == 4 then foe_type = 'goron'
-   elseif dist > 4 then foe_type = 'snake' end
+   dist = math.min(dist,7)
+   no_foes = {0,2,3,5,6,7,8,8}
+   foe_types = {'','crow','snake','goron','snake','crow','goron','crow'}
    if currentworld < numberofworlds then
-      for i=1,dist*3 do addFoe(Spawnpoints[1][i][1]*tilesize,Spawnpoints[1][i][2]*tilesize,foe_type) end
+      for i=1,no_foes[dist+1] do addFoe(Spawnpoints[currentworld][i][1]*tilesize,Spawnpoints[currentworld][i][2]*tilesize,foe_types[dist+1]) end
    end
 end
 
@@ -208,6 +206,9 @@ function addFoe(x,y,foetype)
    Foes[#Foes].color = {255,255,255}
    Foes[#Foes].Type = 'Foe'
    Foes[#Foes].turnprob = 0 --probability of turning on a given moment initialized on zero
+   function Foes.turn()
+      Foes.speed = Foes.speed*-1
+   end
 end
 
 function removeFoes()

@@ -86,7 +86,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
          shape_b.dir = {-shape_b.dir[1],-shape_b.dir[2]}
       elseif Type_b == 'Sword' then
          enemyHit(shape_a)
-         shape_a:move(mtv_x,mtv_y)
+         shape_a:move(1.2*mtv_x,1.2*mtv_y)
       elseif Type_b == 'Boomerang' then
          enemyHit(shape_a)
          shape_b:move(mtv_x,mtv_y)
