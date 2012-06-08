@@ -8,7 +8,8 @@ function loadText()
 
    botsgate = false
    gamestarted = false
-   foundboem = false
+   fouboe = false
+   swofo = false
 end
 
 function drawText()
@@ -27,7 +28,7 @@ function drawText()
    if swofo then
       love.graphics.draw(swordfoun,x-180,y-110)
    end
-   if foundboem then
+   if fouboe then
       love.graphics.draw(boemfoun,x-180,y-110)
    end 
 end
