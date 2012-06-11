@@ -1,3 +1,4 @@
+
 require 'HardonCollider'
 require 'util'
 require 'objectHandling'
@@ -32,7 +33,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
       elseif Type_b == "bettersword" then
 	 havebettersword=true
-    swofo = true
+	 swordtext = true
 	 damage=2
 	 deleteObject("bettersword",shape_b.location)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
@@ -40,8 +41,7 @@ function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
 	 haveboomerang=true
 	 deleteObject("boomerangitem",shape_b.location)
 	 TEsound.play("sound-effects/Fanfare_Item.wav","effect")
-         foundboem = true
-         fouboe = true
+         boomerangtext = true
       elseif Type_b == "Heart" then
 	      deleteObject("Heart",shape_b.location)
 	 if health<8 then health=health+1 end

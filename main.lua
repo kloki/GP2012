@@ -38,7 +38,7 @@ function love.load()
    horizontaltiles=25
    verticaltiles=19
    sizeoverworld={6,12}
-   numberofworlds=20 --no more than 6*12
+   numberofworlds=25 --no more than 6*12
    loadtiles()
    Objects={}
    Spawnpoints={}--Spawnpoint[x]={{x,y},{x,y},...}
@@ -82,7 +82,7 @@ function love.load()
    Rupee = {}
    
    godmode = true
-   Debug = true
+   Debug = false
 end
 
 --The screen is drawn in three steps

@@ -1,5 +1,5 @@
 function loadText()
-   count = 0
+   counttext = 0
    begin = love.graphics.newImage("sprites/Startbaloon.png")
    gateru = love.graphics.newImage("sprites/gateru.png")
    gateld = love.graphics.newImage("sprites/gateld.png")
@@ -8,8 +8,8 @@ function loadText()
 
    botsgate = false
    gamestarted = false
-   fouboe = false
-   swofo = false
+   boomerangtext = false
+   swordtext = false
 end
 
 function drawText()
@@ -25,43 +25,37 @@ function drawText()
          love.graphics.draw(gateru,x-185,y+20)
       end
    end
-   if swofo then
+   if swordtext then
       love.graphics.draw(swordfoun,x-180,y-110)
    end
-   if fouboe then
+   if boomerangtext then
       love.graphics.draw(boemfoun,x-180,y-110)
    end 
 end
 
 function updateText(dt)
    if gamestarted then
-      count = count + 1
-      if count < 150 then
-          gamestarted = true
-      else
+      counttext = counttext + dt
+      if counttext > 2 then
          gamestarted = false
-         count = 0
+         counttext = 0
       end
    end
    if botsgate or drawgate then
       botsgate = false
    end
-   if foundboem then
-      count = count + 1
-      if count < 150 then
-         foundboem = true
-      else
-         foundboem = false
-         count = 0
+   if swordtext then
+      counttext = counttext + dt
+      if counttext > 2 then
+         swordtext = false
+         counttext = 0
       end
    end
-   if swofo then
-      count = count + 1
-      if count < 150 then
-         foundboem = true
-      else
-         foundboem = false
-         count = 0
+   if boomerangtext then
+      counttext = counttext + dt
+      if counttext > 2 then
+         boomerangtext = false
+         counttext = 0
       end
    end
 end
