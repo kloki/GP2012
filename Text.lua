@@ -43,14 +43,8 @@ function updateText(dt)
          count = 0
       end
    end
-   if botsgate then
-      count = count + 1
-      if count < 150 then
-         botsgate = true
-      else
-         botsgate =false
-         count = 0
-      end
+   if botsgate or drawgate then
+      botsgate = false
    end
    if foundboem then
       count = count + 1
