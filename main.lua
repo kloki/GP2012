@@ -101,8 +101,8 @@ function love.draw()
 		drawworld(worlds[currentworld]) 
 
       end
-      drawmap(overworld)
-      --drawmap(knownmap)
+      --drawmap(overworld)
+      drawmap(knownmap)
       drawHUD(health,inventory)
       drawObjects(Objects[currentworld])
       drawWeapons()
